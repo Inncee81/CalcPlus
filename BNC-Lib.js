@@ -1,7 +1,7 @@
 try {
-	var parseNums = function(num1, num2) {
+	function parseNums(num1, num2) {
 		var neg = [0, false, false];
-	
+
 		num1 = num1.split("-");
 		num2 = num2.split("-");
 
@@ -21,7 +21,7 @@ try {
 		var isNeg = false;
 
 		if(((neg[1] || neg[2]) && (neg[1]!=neg[2])) === true) {
-		isNeg = true;
+			isNeg = true;
 		}
 
 		num1 = num1.split('');
@@ -30,30 +30,30 @@ try {
 		var maxChar = Math.max(num1.length, num2.length);
 
 		if(maxChar > num1.length) {
-		for(var i=num1.length;i<maxChar;i++) {
-			num1.unshift("0");
-		}
+			for(var i=num1.length;i<maxChar;i++) {
+				num1.unshift("0");
+			}
 		} else if (maxChar > num2.length) {
-		for(var c=num2.length;c<maxChar;c++) {
-			num2.unshift("0");
-		}
+			for(var c=num2.length;c<maxChar;c++) {
+				num2.unshift("0");
+			}
 		}
 
 		return {
-		num1: {
-			num: num1,
-			isNeg: neg[1]
-		},
-		num2: {
-			num: num2,
-			isNeg: neg[2]
-		},
-		isNeg: isNeg,
-		maxChar: maxChar
+			num1: {
+				num: num1,
+				isNeg: neg[1]
+			},
+			num2: {
+				num: num2,
+				isNeg: neg[2]
+			},
+			isNeg: isNeg,
+			maxChar: maxChar
 		};
-		};
+	};
 
-		var add = function(num1, num2) {
+	function add(num1, num2) {
 		var parsedNums = parseNums(num1, num2);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
@@ -61,44 +61,44 @@ try {
 		var maxChar = parsedNums.maxChar;
 
 		if (neg[2]) {
-		if (neg[1]) {
-			num1.unshift("-");
-		}
-		return sub(num1.join(''), num2.join(''));
+			if (neg[1]) {
+				num1.unshift("-");
+			}
+			return sub(num1.join(''), num2.join(''));
 		} else if (neg[1]) {
-		return sub(num2.join(''), num1.join(''));
+			return sub(num2.join(''), num1.join(''));
 		}
 		var time;
 		var final = [];
 		var carry = "0";
 
 		for (var i=maxChar-1; i>=0;i--) {
-		var finali = maxChar-i-1;
-		if(time != i+1) {
-			carry = "0";
-		}
-
-		final[finali] = (parseInt(num1[i]) + parseInt(num2[i]) + parseInt(carry)).toString();
-
-		if(parseInt(final[finali]) > 9) {
-			var temp = final[finali].split('');
-			final[finali] = temp[1];
-			carry = temp[0];
-			time = i;
-			if (i-1<0) {
-				final[final.length] = carry;
+			var finali = maxChar-i-1;
+			if(time != i+1) {
+				carry = "0";
 			}
-		}
+
+			final[finali] = (parseInt(num1[i]) + parseInt(num2[i]) + parseInt(carry)).toString();
+
+			if(parseInt(final[finali]) > 9) {
+				var temp = final[finali].split('');
+				final[finali] = temp[1];
+				carry = temp[0];
+				time = i;
+				if (i-1<0) {
+					final[final.length] = carry;
+				}
+			}
 		}
 
 		if(neg[0]){
-		final.unshift("-");
+			final.unshift("-");
 		}
 
 		return final.reverse().join('');
-		};
+	}
 
-		var sub = function(num1, num2) {
+	function sub(num1, num2) {
 		var parsedNums = parseNums(num1, num2);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
@@ -106,41 +106,41 @@ try {
 		var maxChar = parsedNums.maxChar;
 
 		if (neg[2]) {
-		if (neg[1]) {
-			num1.unshift("-");
-		}
-		return add(num1.join(''), num1.join(''));
+			if (neg[1]) {
+				num1.unshift("-");
+			}
+			return add(num1.join(''), num1.join(''));
 		} else if (neg[1]) {
-		var ans = add(num1.join(''), num2.join(''));
-		return "-"+ans;
+			var ans = add(num1.join(''), num2.join(''));
+			return "-"+ans;
 		}
 
 		var final = [];
 
 		for (var i=maxChar-1; i>=0;i--) {
-		var finali = maxChar-i-1;
-		var fans = parseInt(num1[i]) - parseInt(num2[i]);
+			var finali = maxChar-i-1;
+			var fans = parseInt(num1[i]) - parseInt(num2[i]);
 
-		if (fans < 0) {
-			fans+=10;
-			num1[i-1]-=1;
-		}
+			if (fans < 0) {
+				fans+=10;
+				num1[i-1]-=1;
+			}
 
-		final[finali] = fans.toString();
+			final[finali] = fans.toString();
 		}
 
 		while (final[final.length-1] == '0') {
-		delete final[final.length-1];
+			delete final[final.length-1];
 		}
 
 		if(neg[0]){
-		final.unshift("-");
+			final.unshift("-");
 		}
 
 		return final.reverse().join('');
-		};
+	}
 
-		var multi = function(num1, num2) {
+	function multi(num1, num2) {
 		var parsedNums = parseNums(num1, num2);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
@@ -148,43 +148,43 @@ try {
 		var maxChar = parsedNums.maxChar;
 
 		if (num2.length === maxChar) {
-		var numsTemp = [false, num1, num2];
-		num1 = numsTemp[2];
-		num2 = numsTemp[1];
+			var numsTemp = [false, num1, num2];
+			num1 = numsTemp[2];
+			num2 = numsTemp[1];
 		}
 
 		var final = [];
 		maxChar = [false, num1.length, num2.length];
 
 		for (var i=maxChar[1]-1; i>=0;i--) {
-		var finali = maxChar-i-1;
-		final[finali] = [];
-		for (var j=maxChar[2]-1; j>=0; j--) {
-			var finalj = maxChar-j-1;
-			final[finali[finalj]]=(parseInt(num1[j])*parseInt(num2[i])).toString();
-			for (var u=0; u<finalj; u++) {
-				final[finali[finalj]] = final[finali[finalj]]+"0";
+			var finali = maxChar-i-1;
+			final[finali] = [];
+			for (var j=maxChar[2]-1; j>=0; j--) {
+				var finalj = maxChar-j-1;
+				final[finali[finalj]]=(parseInt(num1[j])*parseInt(num2[i])).toString();
+				for (var u=0; u<finalj; u++) {
+					final[finali[finalj]] = final[finali[finalj]]+"0";
+				}
 			}
-		}
-		var tempF = "0";
-		for (var k=maxChar[2]-1; k>=0; k--) {
-			tempF = (parseInt(tempF)+parseInt(final[finali[k]])).toString();
-		}
-		final[finali] = tempF;
+			var tempF = "0";
+			for (var k=maxChar[2]-1; k>=0; k--) {
+				tempF = (parseInt(tempF)+parseInt(final[finali[k]])).toString();
+			}
+			final[finali] = tempF;
 		}
 		var tempP = "0";
 		for (var p=maxChar[1]-1; p>=0;p--) {
-		tempP = (parseInt(tempP) + parseInt(final[p]));
+			tempP = (parseInt(tempP) + parseInt(final[p]));
 		}
 		final = tempP;
 
 		if (neg[0]) {
-		return "-"+final;
+			return "-"+final;
 		}
 
 		return final;
-		};
+	}
 } catch(err) {
-	alert("There was an ERROR in BNC-Lib.");
-	confirm(err);
+	alert("An unexpected error occured in BNC-Lib.");
+	comfirm(err);
 }
