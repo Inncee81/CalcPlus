@@ -23,5 +23,3 @@ For now, it only support JavaScipt. I have plans to eventually port it to Python
 For JavaScript, simply link somewhere in your HTML <head> tag this text:
 
 <script type="text/javascript" src="link will eventually be here"></script>
-
-PLEASE NOT THAT FOR JAVASCRIPT, THIS LIBRARY REQUIRES JQUERY.
