@@ -85,12 +85,12 @@
             console.log("ran");
             $("span.removeInput#id"+id).remove();
             inputBoxes--;
-          });
+          };
 
           $("button#addInput").click(function(){
             inputBoxes++;
             $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="'+inputBoxes+'" onclick="removeInput('+inputBoxes+')">X</button></span><br>');
-          };
+          });
 
           $("button#calc").click(function(){
             runCalc();
