@@ -12,6 +12,18 @@
       span.broken {color:red;}
       span.working {color:green;}
     </style>
+  <script>
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker
+          .register('https://i.ibb.co/X5SXrwQ/calc.png')
+          .register('https://virxepicoder.github.io/BigNumberCalculator/index.html')
+          .register('https://virxepicoder.github.io/BigNumberCalculator/AboutLibrary.html')
+          .register('https://combinatronics.com/VirxEpicoder/BigNumberCalculator/master/BNC-Lib.js')
+          .register('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js')
+          .register('https://virxepicoder.github.io/BigNumberCalculator/PreviewLibrary.html')
+          .then(function() { console.log("Service Worker Registered"); });
+    }
+  </script>
   </head>
   <body>
     <h1>Welcome the Big Number Calculator</h1>
