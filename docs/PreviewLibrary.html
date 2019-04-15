@@ -81,25 +81,15 @@
             }
           };
 
-          $("button#addInput").click(function(){
-            inputBoxes++;
-            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="'+inputBoxes+'" class="removeInput">X</button></span><br>');
+          var removeInput = function(id) {
+            console.log("ran");
+            $("span.removeInput#id"+id).remove();
+            inputBoxes--;
           });
 
-          $("button").click(function(e) {
-            var elem, evt = e ? e:event;
-            if (evt.srcElement)  elem = evt.srcElement;
-            else if (evt.target) elem = evt.target;
-            
-            var check = elem.className;
-            var id = elem.id
-            console.log(id);
-            console.log(check);
-            if (check == "removeInput") {
-              console.log("ran");
-              $("span.removeInput#id"+id).remove();
-              inputBoxes--;
-            }
+          $("button#addInput").click(function(){
+            inputBoxes++;
+            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="'+inputBoxes+'" onclick="removeInput('+inputBoxes+')">X</button></span><br>');
           });
 
           $("button#calc").click(function(){
