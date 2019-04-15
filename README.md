@@ -22,4 +22,4 @@ For now, it only support JavaScipt. I have plans to eventually port it to Python
 
 For JavaScript, simply link somewhere in your HTML <head> tag this text:
 
-<script script="text/javascript" src="https://raw.githubusercontent.com/VirxEpicoder/BigNumberCalculator/master/BNC-Lib.js "></script>
+<script script="text/javascript" src="https://combinatronics.com/VirxEpicoder/BigNumberCalculator/master/BNC-Lib.js "></script>
