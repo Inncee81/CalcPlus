@@ -5,7 +5,7 @@ try {
 		num1 = num1.split("-");
 		num2 = num2.split("-");
 
-		if(num1.length == 2) {
+		if (num1.length == 2) {
 			num1 = num1[1];
 			neg[1] = true;
 		} else {
@@ -20,7 +20,7 @@ try {
 
 		var isNeg = false;
 
-		if(((neg[1] || neg[2]) && (neg[1]!=neg[2])) === true) {
+		if (((neg[1] || neg[2]) && (neg[1]!=neg[2])) === true) {
 			isNeg = true;
 		}
 
