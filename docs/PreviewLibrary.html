@@ -45,20 +45,6 @@
       "use strict";
       var $ = jQuery;
       $(document).ready(function(){
-        var page = $("#console");
-        var log = function(message) {
-          page.append('<div class="log">'+message+'</div>');
-        };
-        var info = function(message) {
-          page.append('<div class="info">'+message+'</div>');
-        };
-        var warn = function(message) {
-          page.append('<div class="warn">'+message+'</div>');
-        };
-        var error = function(message) {
-          page.append('<div class="error">'+message+'</div>');
-        };
-
         try {
           var inputBoxes = 2;
           var getChecked = function(name) {
@@ -73,7 +59,6 @@
                   finala = add(finala, $("#input"+i.toString()).val());
                 }
               }
-              info("ran");
               $("#output").text("Answer: "+finala.toString());
             } else if (getChecked("sub")) {
               var finals = sub($("#input1").val(), $("#input2").val());
@@ -82,6 +67,7 @@
                   finals = sub(finals, $("#input"+s.toString()).val());
                 }
               }
+              console.info("ran");
               $("#output").text("Answer: "+finals.toString());
             } else if (getChecked("multi")) {
                 var finalm = multi($("#input1").val(), $("#input2").val());
@@ -91,7 +77,7 @@
                     }
                 }
             } else {
-              warn("ran nothing");
+              console.warn("ran nothing");
             }
           };
 
@@ -101,7 +87,7 @@
           });
 
           $(".removeInput").click(function(event){
-              info("ran");
+              console.info("ran");
               var buttonID = event.target.id;
               warn(buttonID);
               $("span#"+buttonID).remove();
@@ -111,7 +97,7 @@
             runCalc();
           });
         } catch(err) {
-          error(err);
+          console.error(err);
         }
       });
     </script>
@@ -121,7 +107,7 @@
     <form>
       <input type="radio" id="add" name="math-type" checked="checked"> Addition
       <br>
-      <input type="radio" id="sub" name="math-type"> Subtraction
+      <input type="radio" id="sub" name="math-type"> Subtraction (Broken)
       <br>
       <input type="radio" id="multi" name="math-type"> Multiplication (In development)
       <br>
