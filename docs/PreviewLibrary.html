@@ -13,6 +13,9 @@
         font-size:15pt;
         background:grey;
       }
+      a {
+        color:darkblue;
+      }
       .log {
         color:black;
       }
@@ -89,7 +92,7 @@
 
           $("button#addInput").click(function(){
             inputBoxes++;
-            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="'+inputBoxes+'" onclick="removeInput('+inputBoxes+')">X</button></span><br>');
+            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"> <button id="'+inputBoxes+'" onclick="removeInput('+inputBoxes+')" label="Delete input field #'+inputBoxes+'">X</button></span><br>');
           });
 
           $("button#calc").click(function(){
@@ -104,18 +107,18 @@
   <body>
     <a href="https://virxepicoder.github.io/BigNumberCalculator">Home</a>
     <form>
-      <input type="radio" id="add" name="math-type" checked="checked"> Addition
+      <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
       <br>
-      <input type="radio" id="sub" name="math-type"> Subtraction
+      <input type="radio" id="sub" name="math-type" label="Subtraction Algorithm"> Subtraction
       <br>
-      <input type="radio" id="multi" name="math-type"> Multiplication (In development)
+      <input type="radio" id="multi" name="math-type" label="Multiplication Algorithm - In development"> Multiplication (In development)
       <br>
-      <input type="radio" id="div" name="math-type"> Division (Unavailable)
+      <input type="radio" id="div" name="math-type" label="Division Algorithm - Unavailable"> Division (Unavailable)
     </form>
     <br>
-    Number: <input type="text" id="input1">
+    Number: <input type="text" id="input1" label="Number input field #1">
     <br>
-    Number: <input type="text" id="input2">
+    Number: <input type="text" id="input2" label="Number input field #2">
     <br>
     <span id="extraInputs"></span>
     <button id="addInput">Add another input field</button>
