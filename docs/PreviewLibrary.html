@@ -69,26 +69,28 @@
               }
               $("#output").text("Answer: "+finals.toString());
             } else if (getChecked("multi")) {
-                var finalm = multi($("#input1").val(), $("#input2").val());
-                if (inputBoxes > 2) {
-                    for (var m=3; m<=inputBoxes; m++) {
-                        finalm = multi(finalm, $("#input"+m.toString()).val());
-                    }
+              var finalm = multi($("#input1").val(), $("#input2").val());
+              if (inputBoxes > 2) {
+                for (var m=3; m<=inputBoxes; m++) {
+                  finalm = multi(finalm, $("#input"+m.toString()).val());
                 }
+              }
+            } else if (getChecked("div")) {
+              console.warn("Division algorithm was called, but doesn't exist.");
             } else {
-              console.warn("ran nothing");
+              console.error("ran nothing");
             }
           };
 
           $("button#addInput").click(function(){
             inputBoxes++;
-            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="id'+inputBoxes+'" class="removeInput">X</button></span><br>');
+            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="'+inputBoxes+'" class="removeInput">X</button></span><br>');
           });
 
           $(".removeInput").click(function(event){
             console.info("ran");
-            var buttonID = event.target.id;
-            console.log("Removing"+buttonID);
+            var buttonID = event.srcElement.id;
+            console.log("Removing "+buttonID);
             $("span#"+buttonID).remove();
             inputBoxes--;
           });
