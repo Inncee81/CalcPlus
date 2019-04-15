@@ -87,12 +87,17 @@
           });
 
           $("button").click(function(event) {
-            var check = document.getElementById(event.srcElement.id).className;
-            console.log(event.srcElement.id);
+            var elem, evt = e ? e:event;
+            if (evt.srcElement)  elem = evt.srcElement;
+            else if (evt.target) elem = evt.target;
+            
+            var check = elem.class;
+            var id = elem.id
+            console.log(id);
             console.log(check);
             if (check == "removeInput") {
               console.log("ran");
-              $("span.removeInput#id"+event.srcElement.id).remove();
+              $("span.removeInput#id"+id).remove();
               inputBoxes--;
             }
           });
