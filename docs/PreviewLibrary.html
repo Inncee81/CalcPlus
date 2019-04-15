@@ -88,10 +88,10 @@
 
           $("button").click(function(event) {
             var check = document.getElementById(this.id).className;
+            console.log(this.id);
             console.log(check);
             if (check === "removeInput") {
               console.log("ran");
-              console.log(this.id);
               $("span#id"+this.id).remove();
               inputBoxes--;
             }
