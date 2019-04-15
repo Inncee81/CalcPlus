@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+  	<meta charset="UTF-8">
+    <meta name="description" content="Works with really large numbers">
+    <meta name="keywords" content="HTML,CSS,JavaScript,InfiniCalc,BigCalc,Big,Infitite,Calculator,Large,Number,Not,Small,Numbers,CalcPlus,Calc,Plus">
+    <meta name="author" content="Virx">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://raw.githubusercontent.com/VirxEpicoder/BigNumberCalculator/master/BNC-Lib.js "></script>
+    <title>CalcPlus</title>
+    <style>
+      body {
+        font-size:15pt;
+        background:grey;
+      }
+      .log {
+        color:black;
+      }
+      .info {
+        color:blue;
+      }
+      .warn {
+        color:orange;
+      }
+      .error {
+        color:red;
+      }
+      .removeInput {
+          color: grey;
+          background: rgb(255, 110, 110);
+          border: none;
+      }
+      .removeInput:hover {
+          color:black;
+          background: red;
+          border: none;
+      }
+      #console {
+          font-size:10pt;
+          line-height:1;
+      }
+    </style>
+    <script>
+      "use strict";
+      var $ = jQuery;
+      $(document).ready(function(){
+        var page = $("#console");
+        var log = function(message) {
+          page.append('<div class="log">'+message+'</div>');
+        };
+        var info = function(message) {
+          page.append('<div class="info">'+message+'</div>');
+        };
+        var warn = function(message) {
+          page.append('<div class="warn">'+message+'</div>');
+        };
+        var error = function(message) {
+          page.append('<div class="error">'+message+'</div>');
+        };
+
+        try {
+          var inputBoxes = 2;
+          var getChecked = function(name) {
+            return $("#"+name).is(":checked");
+          };
+
+          var runCalc = function() {
+            if (getChecked("add")) {
+              var finala = add($("#input1").val(), $("#input2").val());
+              if (inputBoxes > 2) {
+                for (var i=3; i<=inputBoxes; i++) {
+                  finala = add(finala, $("#input"+i.toString()).val());
+                }
+              }
+              info("ran");
+              $("#output").text("Answer: "+finala.toString());
+            } else if (getChecked("sub")) {
+              var finals = sub($("#input1").val(), $("#input2").val());
+              if (inputBoxes > 2) {
+                for (var s=3; s<=inputBoxes; s++) {
+                  finals = sub(finals, $("#input"+s.toString()).val());
+                }
+              }
+              $("#output").text("Answer: "+finals.toString());
+            } else if (getChecked("multi")) {
+                var finalm = multi($("#input1").val(), $("#input2").val());
+                if (inputBoxes > 2) {
+                    for (var m=3; m<=inputBoxes; m++) {
+                        finalm = multi(finalm, $("#input"+m.toString()).val());
+                    }
+                }
+            } else {
+              warn("ran nothing");
+            }
+          };
+
+          $("button#addInput").click(function(){
+              inputBoxes++;
+            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="id'+inputBoxes+'" class="removeInput">X</button></span><br>');
+          });
+
+          $(".removeInput").click(function(event){
+              info("ran");
+              var buttonID = event.target.id;
+              warn(buttonID);
+              $("span#"+buttonID).remove();
+          });
+
+          $("button#calc").click(function(){
+            runCalc();
+          });
+        } catch(err) {
+          error(err);
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <span id="console"></span>
+    <form>
+      <input type="radio" id="add" name="math-type" checked="checked"> Addition
+      <br>
+      <input type="radio" id="sub" name="math-type"> Subtraction
+      <br>
+      <input type="radio" id="multi" name="math-type"> Multiplication (In development)
+      <br>
+      <input type="radio" id="div" name="math-type"> Division (Unavailable)
+    </form>
+    <br>
+    Number: <input type="text" id="input1">
+    <br>
+    Number: <input type="text" id="input2">
+    <br>
+    <span id="extraInputs"></span>
+    <button id="addInput">Add another input field</button>
+    <br>
+    <button id="calc">Calculate...</button>
+    <br>
+    <br>
+    <p id="output">Press "Calculate..."</p>
+  </body>
+</html>
