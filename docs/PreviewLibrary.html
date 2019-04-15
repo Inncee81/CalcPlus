@@ -87,13 +87,13 @@
             $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="'+inputBoxes+'" class="removeInput">X</button></span><br>');
           });
 
-          $(".removeInput").click(function(event){
-            console.info("ran");
-            var buttonID = event.srcElement.id;
-            console.log("Removing "+buttonID);
-            $("span#"+buttonID).remove();
-            inputBoxes--;
-          });
+          $("button").click(function(event) {
+            console.log("ran");
+            var check = document.getElementById(this.id).className;
+            if (check == ".removeInput") {
+              $("span#id"+this.id).remove();
+              inputBoxes--;
+            }
 
           $("button#calc").click(function(){
             runCalc();
