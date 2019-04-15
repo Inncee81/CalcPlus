@@ -86,7 +86,7 @@
             $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'"> <button id="'+inputBoxes+'" class="removeInput">X</button></span><br>');
           });
 
-          $("button").click(function(event) {
+          $("button").click(function(e) {
             var elem, evt = e ? e:event;
             if (evt.srcElement)  elem = evt.srcElement;
             else if (evt.target) elem = evt.target;
