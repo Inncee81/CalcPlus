@@ -67,7 +67,6 @@
                   finals = sub(finals, $("#input"+s.toString()).val());
                 }
               }
-              console.info("ran");
               $("#output").text("Answer: "+finals.toString());
             } else if (getChecked("multi")) {
                 var finalm = multi($("#input1").val(), $("#input2").val());
@@ -107,7 +106,7 @@
     <form>
       <input type="radio" id="add" name="math-type" checked="checked"> Addition
       <br>
-      <input type="radio" id="sub" name="math-type"> Subtraction (Broken)
+      <input type="radio" id="sub" name="math-type"> Subtraction
       <br>
       <input type="radio" id="multi" name="math-type"> Multiplication (In development)
       <br>
