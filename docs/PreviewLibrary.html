@@ -78,15 +78,9 @@
             }
           };
 
-          var removeInput = function(id) {
-            console.log("ran");
-            $("span.removeInput#id"+id).remove();
-            inputBoxes--;
-          };
-
           $("button#addInput").click(function(){
             inputBoxes++;
-            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="removeInput('+inputBoxes+')" label="Delete input field #'+inputBoxes+'">X</button></span><br>');
+            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();" label="Delete input field #'+inputBoxes+'">X</button></span><br>');
           });
 
           $("button#calc").click(function(){
