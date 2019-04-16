@@ -129,7 +129,7 @@ try {
 			final[finali] = fans.toString();
 		}
 
-		while (final[final.length-1] == '0') {
+		while (final[final.length-1] == '0' && final.length > 1) {
 			delete final[final.length-1];
 		}
 
