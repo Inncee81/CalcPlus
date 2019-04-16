@@ -55,33 +55,42 @@
           };
 
           var runCalc = function() {
+            var final = {
+              num: 0,
+              display: false
+            };
             if (getChecked("add")) {
-              var finala = add($("#input1").val(), $("#input2").val());
+              final.num = add($("#input1").val(), $("#input2").val());
               if (inputBoxes > 2) {
                 for (var i=3; i<=inputBoxes; i++) {
-                  finala = add(finala, $("#input"+i.toString()).val());
+                  final.num = add(final.num, $("#input"+i.toString()).val());
                 }
               }
-              $("#output").text("Answer: "+finala.toString());
+              final.display = true;
             } else if (getChecked("sub")) {
-              var finals = sub($("#input1").val(), $("#input2").val());
+              final.num = sub($("#input1").val(), $("#input2").val());
               if (inputBoxes > 2) {
                 for (var s=3; s<=inputBoxes; s++) {
-                  finals = sub(finals, $("#input"+s.toString()).val());
+                  final.num = sub(final.num, $("#input"+s.toString()).val());
                 }
               }
-              $("#output").text("Answer: "+finals.toString());
+              final.display = true;
             } else if (getChecked("multi")) {
-              var finalm = multi($("#input1").val(), $("#input2").val());
+              final.num = multi($("#input1").val(), $("#input2").val());
               if (inputBoxes > 2) {
                 for (var m=3; m<=inputBoxes; m++) {
-                  finalm = multi(finalm, $("#input"+m.toString()).val());
+                  final.num = multi(final.num, $("#input"+m.toString()).val());
                 }
               }
+              final.display = true;
             } else if (getChecked("div")) {
               console.warn("Division algorithm was called, but doesn't exist.");
             } else {
               console.error("ran nothing");
+            }
+            
+            if (final.display) {
+              $("#output").text("Answer: "+final.num.toString());
             }
           };
 
