@@ -20,7 +20,7 @@ try {
 
 		var isNeg = false;
 
-		if (((neg[1] || neg[2]) && (neg[1]!=neg[2])) === true) {
+		if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) {
 			isNeg = true;
 		}
 
