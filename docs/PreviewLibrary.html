@@ -29,8 +29,6 @@
       }
     </style>
     <script>
-      "use strict";
-      
       try {
         if (add("1", "1") != 2) {
           throw new Exception("Library Not Loaded");
@@ -39,7 +37,10 @@
         $("body").html("Library couldn't be loaded! Please allow <i>Chrome</i>, (Yes, I'm looking at you, <i>Chrome</i>,) to load the 'Unsafe Scripts'. I promise the script is safe, <i>CHROME</i> is just pickey because the script is coming from an HTTP source, and not HTTPS like this webpage. Thank you!");
         console.error("Library wasn't loaded!!!");
       }
-      
+    </script>
+    
+    <script>
+      "use strict";
       var $ = jQuery;
       $(document).ready(function(){
         try {
