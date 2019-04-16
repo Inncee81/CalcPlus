@@ -186,5 +186,5 @@ try {
 	}
 } catch(err) {
 	alert("An unexpected error occured in BNC-Lib.");
-	comfirm(err);
+	console.error(err);
 }
