@@ -1,4 +1,4 @@
-# BigNumberCalculator
+# Big Number Calculator Library
 
 ## About
 
