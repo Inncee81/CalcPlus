@@ -17,18 +17,6 @@
       a {
         color:lightblue;
       }
-      .log {
-        color:black;
-      }
-      .info {
-        color:blue;
-      }
-      .warn {
-        color:orange;
-      }
-      .error {
-        color:red;
-      }
       .removeInput {
           color: grey;
           background: rgb(255, 110, 110);
@@ -38,10 +26,6 @@
           color:black;
           background: red;
           border: none;
-      }
-      #console {
-          font-size:10pt;
-          line-height:1;
       }
     </style>
     <script>
@@ -102,7 +86,7 @@
 
           $("button#addInput").click(function(){
             inputBoxes++;
-            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button id="'+inputBoxes+'" onclick="removeInput('+inputBoxes+')" label="Delete input field #'+inputBoxes+'">X</button></span><br>');
+            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="removeInput('+inputBoxes+')" label="Delete input field #'+inputBoxes+'">X</button></span><br>');
           });
 
           $("button#calc").click(function(){
