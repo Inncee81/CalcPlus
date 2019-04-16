@@ -147,7 +147,7 @@ try {
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
 
-		if (num2.length === maxChar) {
+		if (num2.length == maxChar) {
 			var numsTemp = [false, num1, num2];
 			num1 = numsTemp[2];
 			num2 = numsTemp[1];
@@ -174,7 +174,7 @@ try {
 		}
 		var tempP = "0";
 		for (var p=maxChar[1]-1; p>=0;p--) {
-			tempP = (parseInt(tempP) + parseInt(final[p]));
+			tempP = (parseInt(tempP) + parseInt(final[p])).toString();
 		}
 		final = tempP;
 
