@@ -79,14 +79,13 @@
             }
           };
           
-          $("button.removeInput").click(function(){
-            this.parentNode.remove();
+          var removeInput = function() {
             inputBoxes--;
           }
 
           $("button#addInput").click(function(){
             inputBoxes++;
-            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();inputBoxes-=1;" label="Delete input field #'+inputBoxes+'">X</button><br></span>');
+            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();removeInput();" label="Delete input field #'+inputBoxes+'">X</button><br></span>');
           });
 
           $("button#calc").click(function(){
