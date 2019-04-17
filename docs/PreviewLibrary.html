@@ -78,6 +78,11 @@
               $("#output").text("Answer: "+final.num.toString());
             }
           };
+          
+          $("button.removeInput").click(function(){
+            this.parentNode.remove();
+            inputBoxes--;
+          }
 
           $("button#addInput").click(function(){
             inputBoxes++;
