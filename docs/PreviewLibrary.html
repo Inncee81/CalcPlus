@@ -29,17 +29,24 @@
       }
     </style>
     <script>
-      document.getElementById("goOffline").addEventListener("click", function() {
-        if('serviceWorker' in navigator) {
-          function swReg(ex) {
-            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
-          }
-
-          swReg("AboutLibrary.html");
-          swReg("LibrarySource.html");
-          swReg("index.html");
-        }
+      var docLoaded = false;
+      document.addEventListener("DOMContentLoaded", function(event){
+        docLoaded = true;
       });
+      
+      if (docLoaded) {
+        document.getElementById("goOffline").addEventListener("click", function() {
+          if('serviceWorker' in navigator) {
+            function swReg(ex) {
+              navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+            }
+
+            swReg("AboutLibrary.html");
+            swReg("LibrarySource.html");
+            swReg("index.html");
+          }
+        });
+      }
     </script>
     
     <script>
