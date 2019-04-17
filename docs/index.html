@@ -21,6 +21,7 @@
       
       if (docLoaded) {
         document.getElementById("goOffline").addEventListener("click", function() {
+          console.log("ran");
           if('serviceWorker' in navigator) {
             function swReg(ex) {
               navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
@@ -31,6 +32,7 @@
             swReg("index.html");
             
             document.getElementById("goOffline").parentNode.remove(0);
+            console.info("Element should have been removed");
           }
         });
       }
