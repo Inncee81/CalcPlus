@@ -9,6 +9,17 @@
     <style>
       body {text-align: center;}
     </style>
+    <script>
+      if('serviceWorker' in navigator) {
+        function swReg(ex) {
+          navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+        }
+        
+        swReg("PreviewLibrary.html");
+        swReg("LibrarySource.html");
+        swReg("index.html");
+      }
+    </script>
   </head>
   <body>
     <h1 id="bignumbercalculator">About Big Number Calculator (BNC)</h1>
