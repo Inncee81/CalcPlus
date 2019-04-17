@@ -14,34 +14,27 @@
       span.working {color:green;}
     </style>
     <script>
-      var docLoaded = false;
-      document.addEventListener("DOMContentLoaded", function(event){
-        docLoaded = true;
-      });
-      
-      if (docLoaded) {
-        document.getElementById("goOffline").addEventListener("click", function() {
-          console.log("ran");
-          if('serviceWorker' in navigator) {
-            function swReg(ex) {
-              navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
-            }
-
-            swReg("PreviewLibrary.html");
-            swReg("LibrarySource.html");
-            swReg("index.html");
-            
-            document.getElementById("goOffline").parentNode.remove(0);
-            console.info("Element should have been removed");
+      function registerWorkers() {
+        console.log("ran");
+        if('serviceWorker' in navigator) {
+          function swReg(ex) {
+            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
           }
-        });
+
+          swReg("PreviewLibrary.html");
+          swReg("LibrarySource.html");
+          swReg("index.html");
+
+          document.getElementById("goOffline").parentNode.remove(0);
+          console.info("Element should have been removed");
+        }
       }
     </script>
   </head>
   <body>
     <h1>Welcome the Big Number Calculator</h1>
     <h2>Status of Library: <span class="working">WORKING</span></h2>
-    <h3>Want to browse around offline?<button id="goOffline">Click here!!!</button></h3>
+    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
       
     <h3>Resources</h3>
     <a href="https://virxec.github.io/BigNumberCalculator/PreviewLibrary.html">Preview the library</a>
