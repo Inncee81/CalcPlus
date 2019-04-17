@@ -14,7 +14,7 @@
       span.working {color:green;}
     </style>
     <script>
-      $("button#goOffline").click(function(){
+      document.getElementById("goOffline").addEventListener("click", function(){
         if('serviceWorker' in navigator) {
           function swReg(ex) {
             navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
