@@ -5,9 +5,9 @@ try {
 		num1 = num1.split("-");
 		num2 = num2.split("-");
 
-		if (num1.length == 2) {
-			num1 = num1[1];
-			neg[1] = true;
+    if (num1.length == 2) {
+      num1 = num1[1];
+      neg[1] = true;
 		} else {
 			num1 = num1.toString();
 		}
