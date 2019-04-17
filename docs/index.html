@@ -14,19 +14,26 @@
       span.working {color:green;}
     </style>
     <script>
-      document.getElementById("goOffline").addEventListener("click", function(){
-        if('serviceWorker' in navigator) {
-          function swReg(ex) {
-            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
-          }
-
-          swReg("PreviewLibrary.html");
-          swReg("LibrarySource.html");
-          swReg("AboutLibrary.html");
-          
-          document.getElementById("goOffline").parentNode.remove(0);
-        }
+      var docLoaded = false;
+      document.addEventListener("DOMContentLoaded", function(event){
+        docLoaded = true;
       });
+      
+      if (docLoaded) {
+        document.getElementById("goOffline").addEventListener("click", function() {
+          if('serviceWorker' in navigator) {
+            function swReg(ex) {
+              navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+            }
+
+            swReg("PreviewLibrary.html");
+            swReg("LibrarySource.html");
+            swReg("index.html");
+            
+            document.getElementById("goOffline").parentNode.remove(0);
+          }
+        });
+      }
     </script>
   </head>
   <body>
