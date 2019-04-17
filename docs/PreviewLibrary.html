@@ -29,15 +29,17 @@
       }
     </style>
     <script>
-      if('serviceWorker' in navigator) {
-        function swReg(ex) {
-          navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+      document.getElementById("goOffline").addEventListener("click", function() {
+        if('serviceWorker' in navigator) {
+          function swReg(ex) {
+            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+          }
+
+          swReg("AboutLibrary.html"):
+          swReg("LibrarySource.html");
+          swReg("index.html");
         }
-        
-        swReg("AboutLibrary.html"):
-        swReg("LibrarySource.html");
-        swReg("index.html");
-      }
+      });
     </script>
     
     <script>
@@ -116,6 +118,8 @@
     </noscript>
     <span id="console"></span>
     <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
+    <h3>Want to browse around offline?<button id="goOffline">Click here!!!</button></h3>
+    
     <form>
       <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
       <br>
