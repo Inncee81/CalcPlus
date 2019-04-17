@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="http://www.calcplus.ml/lib/favicon.png">
     <title>BNC Source Code</title>
+    <script>
+      if('serviceWorker' in navigator) {
+        function swReg(ex) {
+          navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+        }
+        
+        swReg("AboutLibrary.html"):
+        swReg("PreviewLibrary.html");
+        swReg("LibrarySource.html");
+        swReg("index.html");
+      }
+    </script>
   </head>
   <body>
     <h1>BNC Library Source Code</h1>
