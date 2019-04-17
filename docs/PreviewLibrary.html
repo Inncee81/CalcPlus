@@ -28,6 +28,17 @@
           border: none;
       }
     </style>
+    <script>
+      if('serviceWorker' in navigator) {
+        function swReg(ex) {
+          navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+        }
+        
+        swReg("AboutLibrary.html"):
+        swReg("LibrarySource.html");
+        swReg("index.html");
+      }
+    </script>
     
     <script>
       "use strict";
