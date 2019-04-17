@@ -7,22 +7,25 @@
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="http://www.calcplus.ml/lib/favicon.png">
+    <script src="http://www.calcplus.ml/lib/jquery.js"></script>
     <title>CalcPlus</title>
     <style>
       span.broken {color:red;}
       span.working {color:green;}
     </style>
-    $("button#goOffline").click(function(){
-      if('serviceWorker' in navigator) {
-        function swReg(ex) {
-          navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+    <script>
+      $("button#goOffline").click(function(){
+        if('serviceWorker' in navigator) {
+          function swReg(ex) {
+            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+          }
+
+          swReg("PreviewLibrary.html");
+          swReg("LibrarySource.html");
+          swReg("AboutLibrary.html");
         }
-        
-        swReg("PreviewLibrary.html");
-        swReg("LibrarySource.html");
-        swReg("AboutLibrary.html");
-      }
-    });
+      });
+    </script>
   </head>
   <body>
     <h1>Welcome the Big Number Calculator</h1>
