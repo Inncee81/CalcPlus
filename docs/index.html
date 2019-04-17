@@ -14,8 +14,10 @@
     </style>
   <script>
     if('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('https://virxec.github.io/BigNumberCalculator/AboutLibrary.html');
-      navigator.serviceWorker.register('https://virxec.github.io/BigNumberCalculator/PreviewLibrary.html');
+      var root = "https://virxec.github.io/BigNumberCalculator/";
+      navigator.serviceWorker.register(root+"AboutLibrary.html");
+      navigator.serviceWorker.register(root+"PreviewLibrary.html");
+      navigator.serviceWorker.register(root+"LibrarySource.html);
     }
   </script>
   </head>
@@ -26,7 +28,7 @@
     <h3>Resources</h3>
     <a href="https://virxec.github.io/BigNumberCalculator/PreviewLibrary.html">Preview the library</a>
     <br>
-    <a href="https://raw.githubusercontent.com/VirxEC/BigNumberCalculator/master/BNC-Lib.js">View Library</a>
+    <a href="https://virxec.github.io/BigNumberCalculator/LibrarySource.html">View Library</a>
     
     <h3>About BNC and how to get BNC</h3>
     <a href="https://virxec.github.io/BigNumberCalculator/AboutLibrary.html">About</a>
