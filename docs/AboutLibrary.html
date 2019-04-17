@@ -10,7 +10,7 @@
       body {text-align: center;}
     </style>
     <script>
-      document.getElementById("click", function(){
+      document.getElementById("goOffline").addEventListener("click", function(){
         if('serviceWorker' in navigator) {
           function swReg(ex) {
             navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
@@ -19,6 +19,8 @@
           swReg("PreviewLibrary.html");
           swReg("LibrarySource.html");
           swReg("index.html");
+          
+          document.getElementById("goOffline").parentNode.remove();
         }
       });
     </script>
