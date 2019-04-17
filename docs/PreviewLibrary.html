@@ -80,7 +80,9 @@
           };
           
           var removeInput = function() {
+            $("#console").append("Function ran.<br>"+inputBoxes);
             inputBoxes--;
+            $("#console").append(inputBoxes);
           }
 
           $("button#addInput").click(function(){
@@ -101,6 +103,7 @@
     <noscript>
       Library couldn't be loaded! Please allow <i>Chrome</i>, (Yes, I'm looking at you, <i>Chrome</i>,) to load the 'Unsafe Scripts'. I promise the script is safe, <i>CHROME</i> is just pickey because the script is coming from an HTTP source, and not HTTPS like this webpage. Thank you!<br>
     </noscript>
+    <span id="console"></span>
     <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
     <form>
       <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
