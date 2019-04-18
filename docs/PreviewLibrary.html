@@ -28,10 +28,8 @@
       }
     </style>
     <script>
-      var goOffline;
-      
       document.onload = function() {
-        goOffline = document.getElementById("goOffline");
+        var goOffline = document.getElementById("goOffline");
         
         if(localStorage.getItem("isOffline") == "true") {
           goOffline.parentNode.remove(0);
