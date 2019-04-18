@@ -65,22 +65,46 @@
         goOffline.textContent = "Checking...";
         if('serviceWorker' in navigator) {
           goOffline.textContent = "Loading Service Wokers...";
-          function swReg(ex) {
-            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+          
+          function root(ex) {
+            return "https://virxec.github.io/BigNumberCalculator/"+ex
           }
           
-          try {
-            swReg("index.html");
-            swReg("PreviewLibrary.html");
-            swReg("LibrarySource.html");
-            swReg("AboutLibrary.html");
-          } catch(err){console.info(err);}
-
+          function swReg(ex) {
+            navigator.serviceWorker.register(root(ex));
+          }
+          
+          swReg("index.html");
+          swReg("PreviewLibrary.html");
+          swReg("LibrarySource.html");
+          swReg("AboutLibrary.html");
           localStorage.setItem("isOffline", "true");
           goOffline.parentNode.remove(0);
         } else {
           goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
         }
+      }
+      
+      if (localStorge.getItem("isOffline") == "true") {
+        self.addEventListener('install', function(event) {
+          event.waitUntil(
+            caches.open('v1').then(function(cache) {
+              return cache.addAll([
+                root("index.html"),
+                root("PreviewLibrary.html"),
+                root("LibrarySource.html"),
+                root("AboutLibrary.html")
+              ]);
+            })
+          );
+        });
+        
+        self.addEventListener('fetch', (e) => {
+         e.respondWith(caches.match(e.request).then((response) => {
+          if(response) return response
+          else return fetch(e.request)
+         }) )
+        })
       }
     </script>
     <script>
