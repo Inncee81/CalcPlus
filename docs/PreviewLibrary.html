@@ -60,12 +60,12 @@
         if('serviceWorker' in navigator) {
           goOffline.textContent = "Loading Service Wokers...";
           
-          navigator.serviceWorker.register("/index.html");
-          navigator.serviceWorker.register("/PreviewLibrary.html");
-          navigator.serviceWorker.register("/LibrarySource.html");
-          navigator.serviceWorker.register("/AboutLibrary.html");
-          navigator.serviceWorker.register("/BNC-Lib.js");
-          navigator.serviceWorker.register("/logo.png");
+          navigator.serviceWorker.register("index.html");
+          navigator.serviceWorker.register("PreviewLibrary.html");
+          navigator.serviceWorker.register("LibrarySource.html");
+          navigator.serviceWorker.register("AboutLibrary.html");
+          navigator.serviceWorker.register("BNC-Lib.js");
+          navigator.serviceWorker.register("logo.png");
           navigator.serviceWorker.ready.then(function (registration) {
             console.log('Service worker successfully registered on scope', registration.scope);
           });
@@ -82,8 +82,8 @@
           event.waitUntil(
             caches.open('bnc-github-v1').then(function(cache) {
               return cache.addAll([
-                "/BNC-Lib.js",
-                "/logo.png"
+                "BNC-Lib.js",
+                "logo.png"
               ]);
             })
           );
