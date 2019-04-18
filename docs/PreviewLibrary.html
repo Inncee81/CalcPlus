@@ -97,7 +97,7 @@
             display: false
           };
           if (getChecked("add")) {
-            final.num = add(document.getElementById("input1").value, document.getElementById("#input2").value);
+            final.num = add(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var i=3; i<=inputBoxes; i++) {
                 final.num = add(final.num, document.getElementById("input"+i.toString()).value);
@@ -108,7 +108,7 @@
             final.num = sub(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var s=3; s<=inputBoxes; s++) {
-                final.num = sub(final.num, document.getElementById("#input"+s.toString()).value);
+                final.num = sub(final.num, document.getElementById("input"+s.toString()).value);
               }
             }
             final.display = true;
@@ -127,7 +127,7 @@
           }
 
           if (final.display) {
-            document.getElementById("output").textContent = "Answer: "+final.num.toString();
+            document.getElementById("output").textContent = "Answer: "+final.num;
           }
         };
 
