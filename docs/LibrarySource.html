@@ -9,7 +9,7 @@
     <script>
       var goOffline;
       
-      function checkOffline() {
+      document.onload = function() {
         goOffline = document.getElementById("goOffline");
         
         if(localStorage.getItem("isOffline") == "true") {
@@ -44,7 +44,7 @@
   <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <h1>BNC Library Source Code</h1>
-    <h3 onload="checkOffline()">Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
+    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
     <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
     <br>
     <embed src="https://combinatronics.com/VirxEpicoder/BigNumberCalculator/master/BNC-Lib.js" width="100%" height="4000px">
