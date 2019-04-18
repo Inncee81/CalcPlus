@@ -5,9 +5,9 @@ try {
 		num1 = num1.split("-");
 		num2 = num2.split("-");
 
-    if (num1.length == 2) {
-      num1 = num1[1];
-      neg[1] = true;
+		if (num1.length == 2) {
+			num1 = num1[1];
+			neg[1] = true;
 		} else {
 			num1 = num1.toString();
 		}
@@ -39,11 +39,11 @@ try {
 			}
 		}
     
-    if (num2.length == maxChar) {
-      var temp = [false, num1, num2];
-      num1 = temp[2];
-      num2 = temp[1];
-    }
+		if (num2.length == maxChar) {
+			var temp = [false, num1, num2];
+			num1 = temp[2];
+			num2 = temp[1];
+		}
 
 		return {
 			num1: {
@@ -112,7 +112,7 @@ try {
 		var maxChar = parsedNums.maxChar;
 
 		if (neg[2]) {
-      num2.unshift("-");
+			num2.unshift("-");
 			if (neg[1]) {
 				num1.unshift("-");
 			}
