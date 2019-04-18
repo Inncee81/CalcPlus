@@ -60,19 +60,6 @@
           swReg("PreviewLibrary.html");
           swReg("LibrarySource.html");
           swReg("AboutLibrary.html");
-          
-          self.addEventListener('install', function(event) {
-            event.waitUntil(
-              caches.open('v1').then(function(cache) {
-                return cache.addAll([
-                  root("index.html"),
-                  root("PreviewLibrary.html"),
-                  root("LibrarySource.html"),
-                  root("AboutLibrary.html")
-                ]);
-              })
-            );
-          });
 
           localStorage.setItem("isOffline", "true");
           goOffline.parentNode.remove(0);
@@ -80,6 +67,29 @@
           goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
         }
       }
+      
+      if (localStorge.getItem("isOffline") == "true") {
+        self.addEventListener('install', function(event) {
+          event.waitUntil(
+            caches.open('v1').then(function(cache) {
+              return cache.addAll([
+                root("index.html"),
+                root("PreviewLibrary.html"),
+                root("LibrarySource.html"),
+                root("AboutLibrary.html")
+              ]);
+            })
+          );
+        });
+        
+        self.addEventListener('fetch', (e) => {
+         e.respondWith(caches.match(e.request).then((response) => {
+          if(response) return response
+          else return fetch(e.request)
+         }) )
+        })
+      }
+      
     </script>
   </body>
 </html>
