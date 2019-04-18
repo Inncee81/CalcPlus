@@ -19,7 +19,7 @@
       function checkOffline() {
         goOffline = document.getElementById("goOffline");
         
-        if(sessionStorage.getItem("isOffline") == "true") {
+        if(localStorage.getItem("isOffline") == "true") {
           goOffline.parentNode.remove(0);
         }
       }
@@ -39,7 +39,7 @@
             swReg("AboutLibrary.html");
           } catch(err){console.info(err);}
 
-          sessionStorage.setItem("isOffline", "true");
+          localStorage.setItem("isOffline", "true");
           goOffline.parentNode.remove(0);
         } else {
           goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
