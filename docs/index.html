@@ -23,6 +23,7 @@
       }
       
       function registerWorkers() {
+        var goOffline = document.getElementById("goOffline");
         goOffline.textContent = "Checking...";
         if('serviceWorker' in navigator) {
           goOffline.textContent = "Loading Service Wokers...";
