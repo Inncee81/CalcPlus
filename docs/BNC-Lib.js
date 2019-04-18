@@ -1,4 +1,18 @@
 try {
+	self.addEventListener('install', function(event) {
+          console.log('Installed BNC-Lib.js', event);
+        });
+        self.addEventListener('activate', function(event) {
+          console.log('Activated BNC-Lib.js', event);
+        });
+        
+        self.addEventListener('fetch', (e) => {
+         e.respondWith(caches.match(e.request).then((response) => {
+          if(response) return response
+          else return fetch(e.request)
+         }))
+        })
+	
 	function parseNums(num1, num2) {
 		var neg = [0, false, false];
 
