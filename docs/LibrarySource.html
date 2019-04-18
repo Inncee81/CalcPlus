@@ -9,9 +9,9 @@
     <script>
       function registerWorkers() {
         var goOffline = document.getElementById("goOffline");
-        goOffline.text("Checking...");
+        goOffline.textContent = "Checking...";
         if('serviceWorker' in navigator) {
-          goOffline.text("Loading Service Wokers...");
+          goOffline.textContent = "Loading Service Wokers...";
           function swReg(ex) {
             navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
           }
@@ -25,7 +25,7 @@
 
           goOffline.parentNode.remove(0);
         } else {
-          goOffline.text("Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.");
+          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
         }
       }
     </script>
