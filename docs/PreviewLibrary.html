@@ -62,71 +62,68 @@
     
     <script>
       "use strict";
-      $(document).ready(function(){
-        try {
-          var inputBoxes = 2;
-          var getChecked = function(name) {
-            return $("#"+name).is(":checked");
-          };
+      try {
+        var inputBoxes = 2;
+        var getChecked = function(name) {
+          return document.getElementById(name).checked;
+        };
 
-          var runCalc = function() {
-            var final = {
-              num: 0,
-              display: false
-            };
-            if (getChecked("add")) {
-              final.num = add($("#input1").val(), $("#input2").val());
-              if (inputBoxes > 2) {
-                for (var i=3; i<=inputBoxes; i++) {
-                  final.num = add(final.num, $("#input"+i.toString()).val());
-                }
-              }
-              final.display = true;
-            } else if (getChecked("sub")) {
-              final.num = sub($("#input1").val(), $("#input2").val());
-              if (inputBoxes > 2) {
-                for (var s=3; s<=inputBoxes; s++) {
-                  final.num = sub(final.num, $("#input"+s.toString()).val());
-                }
-              }
-              final.display = true;
-            } else if (getChecked("multi")) {
-              final.num = multi($("#input1").val(), $("#input2").val());
-              if (inputBoxes > 2) {
-                for (var m=3; m<=inputBoxes; m++) {
-                  final.num = multi(final.num, $("#input"+m.toString()).val());
-                }
-              }
-              final.display = true;
-            } else if (getChecked("div")) {
-              console.warn("Division algorithm was called, but doesn't exist.");
-            } else {
-              console.error("ran nothing");
-            }
-            
-            if (final.display) {
-              $("#output").text("Answer: "+final.num.toString());
-            }
+        var runCalc = function() {
+          var final = {
+            num: 0,
+            display: false
           };
-          
-          function removeInput() {
-            $("#console").append("Function ran.<br>"+inputBoxes);
-            inputBoxes--;
-            $("#console").append(inputBoxes);
+          if (getChecked("add")) {
+            final.num = add(document.getElementById("input1").value, document.getElementById("#input2").value);
+            if (inputBoxes > 2) {
+              for (var i=3; i<=inputBoxes; i++) {
+                final.num = add(final.num, document.getElementById("input"+i.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("sub")) {
+            final.num = sub(document.getElementById("input1").value, document.getElementById("input2").value);
+            if (inputBoxes > 2) {
+              for (var s=3; s<=inputBoxes; s++) {
+                final.num = sub(final.num, document.getElementById("#input"+s.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("multi")) {
+            final.num = multi(document.getElementById("input1").value, document.getElementById("input2").val());
+            if (inputBoxes > 2) {
+              for (var m=3; m<=inputBoxes; m++) {
+                final.num = multi(final.num, document.getElementById("input"+m.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("div")) {
+            console.warn("Division algorithm was called, but doesn't exist.");
+          } else {
+            console.error("ran nothing");
           }
 
-          $("button#addInput").click(function(){
-            inputBoxes++;
-            $("#extraInputs").append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();removeInput();" label="Delete input field #'+inputBoxes+'">X</button><br></span>');
-          });
+          if (final.display) {
+            document.getElementById("output").textContent = "Answer: "+final.num.toString();
+          }
+        };
 
-          $("button#calc").click(function(){
-            runCalc();
-          });
-        } catch(err) {
-          console.error(err);
+        function removeInput() {
+          inputBoxes--;
+          document.getElementById("console").innerHTML += inputBoxes;
         }
-      });
+
+        document.getElementById("addInput").addEventListener("click", function(){
+          inputBoxes++;
+          document.getElementById("extraInputs").innerHTML += '<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();removeInput();" label="Delete input field #'+inputBoxes+'">X</button><br></span>';
+        });
+
+        document.getElementById("calc").addEventListener("click", function(){
+          runCalc();
+        });
+      } catch(err) {
+        console.error(err);
+      }
     </script>
   </head>
   <body>
