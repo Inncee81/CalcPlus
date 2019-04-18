@@ -4,7 +4,7 @@
     <meta name="description" content="Works with really large numbers">
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://i.ibb.co/brGqmZW/calc.png">
+    <link rel="icon" href="https://virxec.github.io/BigNumberCalculator/logo.png">
     <title>BNC Source Code</title>
   </head>
   <body>
@@ -13,7 +13,7 @@
     <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
     <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
     <br>
-    <embed src="https://combinatronics.com/VirxEpicoder/BigNumberCalculator/master/BNC-Lib.js" width="100%" height="4000px">
+    <embed src="https://virxec.github.io/BigNumberCalculator/BNC-Lib.js" width="100%" height="4000px">
     <script>
       var goOffline = document.getElementById("goOffline");
       
@@ -26,18 +26,13 @@
         if('serviceWorker' in navigator) {
           goOffline.textContent = "Loading Service Wokers...";
           
-          function root(ex) {
-            return "https://virxec.github.io/BigNumberCalculator/"+ex
-          }
+          navigator.serviceWorker.register("/index.html");
+          navigator.serviceWorker.register("/PreviewLibrary.html");
+          navigator.serviceWorker.register("/LibrarySource.html");
+          navigator.serviceWorker.register("/AboutLibrary.html");
+          navigator.serviceWorker.register("/BNC-Lib.js");
+          navigator.serviceWorker.register("/logo.png");
           
-          function swReg(ex) {
-            navigator.serviceWorker.register(root(ex));
-          }
-          
-          swReg("index.html");
-          swReg("PreviewLibrary.html");
-          swReg("LibrarySource.html");
-          swReg("AboutLibrary.html");
           localStorage.setItem("isOffline", "true");
           goOffline.parentNode.remove(0);
         } else {
@@ -50,10 +45,12 @@
           event.waitUntil(
             caches.open('v1').then(function(cache) {
               return cache.addAll([
-                root("index.html"),
-                root("PreviewLibrary.html"),
-                root("LibrarySource.html"),
-                root("AboutLibrary.html")
+                "/index.html",
+                "/PreviewLibrary.html",
+                "/LibrarySource.html",
+                "/AboutLibrary.html",
+                "/BNC-Lib.js",
+                "/logo.png"
               ]);
             })
           );
