@@ -47,9 +47,19 @@
         goOffline.textContent = "Checking...";
         if('serviceWorker' in navigator) {
           goOffline.textContent = "Loading Service Wokers...";
+          
           function root(ex) {
             return "https://virxec.github.io/BigNumberCalculator/"+ex
           }
+          
+          function swReg(ex) {
+            navigator.serviceWorker.register(root(ex));
+          }
+          
+          swReg("index.html");
+          swReg("PreviewLibrary.html");
+          swReg("LibrarySource.html");
+          swReg("AboutLibrary.html");
           
           self.addEventListener('install', function(event) {
             event.waitUntil(
