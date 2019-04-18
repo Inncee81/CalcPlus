@@ -52,7 +52,6 @@
       var goOffline = document.getElementById("goOffline");
       
       if(localStorage.getItem("isOffline") == "true") {
-        document.getElementById("notification").innerHTML = "<h2>Please note that this page won't work completely, as since you're offline, the BNC Library couldn't be loaded.<h2>";
         goOffline.parentNode.remove(0);
       }
       
@@ -67,6 +66,9 @@
           navigator.serviceWorker.register("/AboutLibrary.html");
           navigator.serviceWorker.register("/BNC-Lib.js");
           navigator.serviceWorker.register("/logo.png");
+          navigator.serviceWorker.ready.then(function (registration) {
+            console.log('Service worker successfully registered on scope', registration.scope);
+          });
           
           localStorage.setItem("isOffline", "true");
           goOffline.parentNode.remove(0);
@@ -75,10 +77,10 @@
         }
       }
       
-      if (localStorage.getItem("isOffline") == "true") {
+      if (localStorge.getItem("isOffline") == "true") {
         self.addEventListener('install', function(event) {
           event.waitUntil(
-            caches.open('v1').then(function(cache) {
+            caches.open('bnc-github-v1').then(function(cache) {
               return cache.addAll([
                 "/index.html",
                 "/PreviewLibrary.html",
@@ -91,77 +93,20 @@
           );
         });
         
+        self.addEventListener('install', function(event) {
+          console.log('Installed sw.js', event);
+        });
+
+        self.addEventListener('activate', function(event) {
+          console.log('Activated sw.js', event);
+        });
+        
         self.addEventListener('fetch', (e) => {
          e.respondWith(caches.match(e.request).then((response) => {
           if(response) return response
           else return fetch(e.request)
          }) )
         })
-      }
-    </script>
-    <script>
-      "use strict";
-      try {
-        var inputBoxes = 2;
-        var getChecked = function(name) {
-          return document.getElementById(name).checked;
-        };
-
-        var runCalc = function() {
-          var final = {
-            num: 0,
-            display: false
-          };
-          if (getChecked("add")) {
-            final.num = add(document.getElementById("input1").value, document.getElementById("input2").value);
-            if (inputBoxes > 2) {
-              for (var i=3; i<=inputBoxes; i++) {
-                final.num = add(final.num, document.getElementById("input"+i.toString()).value);
-              }
-            }
-            final.display = true;
-          } else if (getChecked("sub")) {
-            final.num = sub(document.getElementById("input1").value, document.getElementById("input2").value);
-            if (inputBoxes > 2) {
-              for (var s=3; s<=inputBoxes; s++) {
-                final.num = sub(final.num, document.getElementById("input"+s.toString()).value);
-              }
-            }
-            final.display = true;
-          } else if (getChecked("multi")) {
-            final.num = multi(document.getElementById("input1").value, document.getElementById("input2").val());
-            if (inputBoxes > 2) {
-              for (var m=3; m<=inputBoxes; m++) {
-                final.num = multi(final.num, document.getElementById("input"+m.toString()).value);
-              }
-            }
-            final.display = true;
-          } else if (getChecked("div")) {
-            console.warn("Division algorithm was called, but doesn't exist.");
-          } else {
-            console.error("ran nothing");
-          }
-
-          if (final.display) {
-            document.getElementById("output").textContent = "Answer: "+final.num;
-          }
-        };
-
-        function removeInput() {
-          inputBoxes--;
-          document.getElementById("console").innerHTML += inputBoxes;
-        }
-
-        document.getElementById("addInput").addEventListener("click", function(){
-          inputBoxes++;
-          document.getElementById("extraInputs").innerHTML += '<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();removeInput();" label="Delete input field #'+inputBoxes+'">X</button><br></span>';
-        });
-
-        document.getElementById("calc").addEventListener("click", function(){
-          runCalc();
-        });
-      } catch(err) {
-        console.error(err);
       }
     </script>
   </body>
