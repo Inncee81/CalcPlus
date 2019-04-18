@@ -13,38 +13,6 @@
       span.broken {color:red;}
       span.working {color:green;}
     </style>
-    <script>
-      document.onload = function() {
-        var goOffline = document.getElementById("goOffline");
-        
-        if(localStorage.getItem("isOffline") == "true") {
-          goOffline.parentNode.remove(0);
-        }
-      }
-      
-      function registerWorkers() {
-        var goOffline = document.getElementById("goOffline");
-        goOffline.textContent = "Checking...";
-        if('serviceWorker' in navigator) {
-          goOffline.textContent = "Loading Service Wokers...";
-          function swReg(ex) {
-            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
-          }
-          
-          try {
-            swReg("index.html");
-            swReg("PreviewLibrary.html");
-            swReg("LibrarySource.html");
-            swReg("AboutLibrary.html");
-          } catch(err){console.info(err);}
-
-          localStorage.setItem("isOffline", "true");
-          goOffline.parentNode.remove(0);
-        } else {
-          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
-        }
-      }
-    </script>
   </head>
   <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
@@ -68,5 +36,35 @@
     <a href="https://github.com/VirxEC/BigNumberCalculator/issues/new?assignees=VirxEC&labels=enhancement&template=feature_request.md&title=%5BFEATURE+REQUEST%5D">Suggest a feature</a>
     <br>
     <a href="https://github.com/VirxEC/BigNumberCalculator/compare">Submit a pull request</a>
+    
+    <script>
+      var goOffline = document.getElementById("goOffline");
+      
+      if(localStorage.getItem("isOffline") == "true") {
+        goOffline.parentNode.remove(0);
+      }
+      
+      function registerWorkers() {
+        goOffline.textContent = "Checking...";
+        if('serviceWorker' in navigator) {
+          goOffline.textContent = "Loading Service Wokers...";
+          function swReg(ex) {
+            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+          }
+          
+          try {
+            swReg("index.html");
+            swReg("PreviewLibrary.html");
+            swReg("LibrarySource.html");
+            swReg("AboutLibrary.html");
+          } catch(err){console.info(err);}
+
+          localStorage.setItem("isOffline", "true");
+          goOffline.parentNode.remove(0);
+        } else {
+          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
+        }
+      }
+    </script>
   </body>
 </html>
