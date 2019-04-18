@@ -58,7 +58,7 @@
         }
       }
       
-      if (localStorge.getItem("isOffline") == "true") {
+      if (localStorage.getItem("isOffline") == "true") {
         self.addEventListener('install', function(event) {
           event.waitUntil(
             caches.open('bnc-github-v1').then(function(cache) {
