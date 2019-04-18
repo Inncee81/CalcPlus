@@ -82,10 +82,6 @@
           event.waitUntil(
             caches.open('bnc-github-v1').then(function(cache) {
               return cache.addAll([
-                "/index.html",
-                "/PreviewLibrary.html",
-                "/LibrarySource.html",
-                "/AboutLibrary.html",
                 "/BNC-Lib.js",
                 "/logo.png"
               ]);
