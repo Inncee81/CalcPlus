@@ -28,6 +28,16 @@
       }
     </style>
     <script>
+      var goOffline;
+      
+      function checkOffline() {
+        goOffline = document.getElementById("goOffline");
+        
+        if(sessionStorage.getItem("isOffline")) {
+          goOffline.parentNode.remove(0);
+        }
+      }
+      
       function registerWorkers() {
         var goOffline = document.getElementById("goOffline");
         goOffline.textContent = "Checking...";
@@ -123,7 +133,7 @@
   <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
-    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
+    <h3 onload="checkOffline()">Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
     <form>
       <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
       <br>
