@@ -16,7 +16,7 @@
     <script>
       var goOffline;
       
-      function checkOffline() {
+      document.onload = function() {
         goOffline = document.getElementById("goOffline");
         
         if(localStorage.getItem("isOffline") == "true") {
@@ -47,11 +47,11 @@
       }
     </script>
   </head>
-  <body >
+  <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <h1>Welcome the Big Number Calculator</h1>
     <h2>Status of Library: <span class="working">WORKING</span></h2>
-    <h3 onload="checkOffline()">Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
+    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
       
     <h3>Resources</h3>
     <a href="https://virxec.github.io/BigNumberCalculator/PreviewLibrary.html">Preview the library</a>
