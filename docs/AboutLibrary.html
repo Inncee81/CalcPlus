@@ -41,19 +41,16 @@
         if('serviceWorker' in navigator) {
           goOffline.textContent = "Loading Service Wokers...";
           
-          function root(ex) {
-            return "https://virxec.github.io/BigNumberCalculator/"+ex
-          }
+          navigator.serviceWorker.register("/index.html");
+          navigator.serviceWorker.register("/PreviewLibrary.html");
+          navigator.serviceWorker.register("/LibrarySource.html");
+          navigator.serviceWorker.register("/AboutLibrary.html");
+          navigator.serviceWorker.register("/BNC-Lib.js");
+          navigator.serviceWorker.register("/logo.png");
+          navigator.serviceWorker.ready.then(function (registration) {
+            console.log('Service worker successfully registered on scope', registration.scope);
+          });
           
-          function swReg(ex) {
-            navigator.serviceWorker.register(root(ex));
-          }
-          
-          swReg("index.html");
-          swReg("PreviewLibrary.html");
-          swReg("LibrarySource.html");
-          swReg("AboutLibrary.html");
-
           localStorage.setItem("isOffline", "true");
           goOffline.parentNode.remove(0);
         } else {
@@ -64,15 +61,24 @@
       if (localStorge.getItem("isOffline") == "true") {
         self.addEventListener('install', function(event) {
           event.waitUntil(
-            caches.open('v1').then(function(cache) {
+            caches.open('bnc-github-v1').then(function(cache) {
               return cache.addAll([
-                root("index.html"),
-                root("PreviewLibrary.html"),
-                root("LibrarySource.html"),
-                root("AboutLibrary.html")
+                "/index.html",
+                "/PreviewLibrary.html",
+                "/LibrarySource.html",
+                "/AboutLibrary.html",
+                "/BNC-Lib.js",
+                "/logo.png"
               ]);
             })
           );
+        });
+        
+        self.addEventListener('install', function(event) {
+          console.log('Installed AboutLibrary.html', event);
+        });
+        self.addEventListener('activate', function(event) {
+          console.log('Activated AboutLibrary.html', event);
         });
         
         self.addEventListener('fetch', (e) => {
