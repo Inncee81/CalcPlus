@@ -48,20 +48,12 @@
         if('serviceWorker' in navigator) {
           goOffline.textContent = "Loading Service Wokers...";
           
-          function root(ex) {
-            return "https://virxec.github.io/BigNumberCalculator/"+ex
-          }
-          
-          function swReg(ex) {
-            navigator.serviceWorker.register(root(ex));
-          }
-          
-          swReg("index.html");
-          swReg("PreviewLibrary.html");
-          swReg("LibrarySource.html");
-          swReg("AboutLibrary.html");
-          swReg("BNC-Lib.js");
-          swReg("logo.png");
+          navigator.serviceWorker.register("/index.html");
+          navigator.serviceWorker.register("/PreviewLibrary.html");
+          navigator.serviceWorker.register("/LibrarySource.html");
+          navigator.serviceWorker.register("/AboutLibrary.html");
+          navigator.serviceWorker.register("/BNC-Lib.js");
+          navigator.serviceWorker.register("/logo.png");
 
           localStorage.setItem("isOffline", "true");
           goOffline.parentNode.remove(0);
@@ -75,12 +67,12 @@
           event.waitUntil(
             caches.open('v1').then(function(cache) {
               return cache.addAll([
-                root("index.html"),
-                root("PreviewLibrary.html"),
-                root("LibrarySource.html"),
-                root("AboutLibrary.html")
-                root("BNC-Lib.js"),
-                root("logo.png")
+                "/index.html",
+                "/PreviewLibrary.html",
+                "/LibrarySource.html",
+                "/AboutLibrary.html",
+                "/BNC-Lib.js",
+                "/logo.png"
               ]);
             })
           );
