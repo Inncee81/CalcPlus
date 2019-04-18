@@ -27,6 +27,62 @@
           border: none;
       }
     </style>
+  </head>
+  <body>
+    <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
+    <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
+    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
+    <form>
+      <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
+      <br>
+      <input type="radio" id="sub" name="math-type" label="Subtraction Algorithm"> Subtraction
+      <br>
+      <input type="radio" id="multi" name="math-type" label="Multiplication Algorithm - In development"> Multiplication (In development)
+      <br>
+      <input type="radio" id="div" name="math-type" label="Division Algorithm - Unavailable"> Division (Unavailable)
+    </form>
+    <br>
+    <button id="addInput">Add another input field</button>
+    <br>
+    Number: <input type="text" id="input1" label="Number input field #1">
+    <br>
+    Number: <input type="text" id="input2" label="Number input field #2">
+    <br>
+    <span id="extraInputs"></span>
+    <button id="calc">Calculate...</button>
+    <br>
+    <br>
+    <p id="output">Press "Calculate..."</p>
+    
+    <script>
+      var goOffline = document.getElementById("goOffline");
+      
+      if(localStorage.getItem("isOffline") == "true") {
+        goOffline.parentNode.remove(0);
+      }
+      
+      function registerWorkers() {
+        goOffline.textContent = "Checking...";
+        if('serviceWorker' in navigator) {
+          goOffline.textContent = "Loading Service Wokers...";
+          function swReg(ex) {
+            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+          }
+          
+          try {
+            swReg("index.html");
+            swReg("PreviewLibrary.html");
+            swReg("LibrarySource.html");
+            swReg("AboutLibrary.html");
+          } catch(err){console.info(err);}
+
+          localStorage.setItem("isOffline", "true");
+          goOffline.parentNode.remove(0);
+        } else {
+          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
+        }
+      }
+    </script>
     <script>
       "use strict";
       try {
@@ -90,62 +146,6 @@
         });
       } catch(err) {
         console.error(err);
-      }
-    </script>
-  </head>
-  <body>
-    <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
-    <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
-    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
-    <form>
-      <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
-      <br>
-      <input type="radio" id="sub" name="math-type" label="Subtraction Algorithm"> Subtraction
-      <br>
-      <input type="radio" id="multi" name="math-type" label="Multiplication Algorithm - In development"> Multiplication (In development)
-      <br>
-      <input type="radio" id="div" name="math-type" label="Division Algorithm - Unavailable"> Division (Unavailable)
-    </form>
-    <br>
-    <button id="addInput">Add another input field</button>
-    <br>
-    Number: <input type="text" id="input1" label="Number input field #1">
-    <br>
-    Number: <input type="text" id="input2" label="Number input field #2">
-    <br>
-    <span id="extraInputs"></span>
-    <button id="calc">Calculate...</button>
-    <br>
-    <br>
-    <p id="output">Press "Calculate..."</p>
-    
-    <script>
-      var goOffline = document.getElementById("goOffline");
-      
-      if(localStorage.getItem("isOffline") == "true") {
-        goOffline.parentNode.remove(0);
-      }
-      
-      function registerWorkers() {
-        goOffline.textContent = "Checking...";
-        if('serviceWorker' in navigator) {
-          goOffline.textContent = "Loading Service Wokers...";
-          function swReg(ex) {
-            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
-          }
-          
-          try {
-            swReg("index.html");
-            swReg("PreviewLibrary.html");
-            swReg("LibrarySource.html");
-            swReg("AboutLibrary.html");
-          } catch(err){console.info(err);}
-
-          localStorage.setItem("isOffline", "true");
-          goOffline.parentNode.remove(0);
-        } else {
-          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
-        }
       }
     </script>
   </body>
