@@ -1,3 +1,6 @@
+---
+layout: default
+---
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -9,13 +12,6 @@
     <script src="https://virxec.github.io/BigNumberCalculator/BNC-Lib.js"></script>
     <title>CalcPlus</title>
     <style>
-      body {
-        font-size:15pt;
-        background:grey;
-      }
-      a {
-        color:lightblue;
-      }
       .removeInput {
           color: grey;
           background: rgb(255, 110, 110);
@@ -92,7 +88,7 @@
         }
       }
       
-      if (localStorge.getItem("isOffline") == "true") {
+      if (localStorage.getItem("isOffline") == "true") {
         self.addEventListener('install', function(event) {
           event.waitUntil(
             caches.open('v1').then(function(cache) {
