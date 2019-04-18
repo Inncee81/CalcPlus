@@ -28,39 +28,6 @@
       }
     </style>
     <script>
-      document.onload = function() {
-        var goOffline = document.getElementById("goOffline");
-        
-        if(localStorage.getItem("isOffline") == "true") {
-          goOffline.parentNode.remove(0);
-        }
-      }
-      
-      function registerWorkers() {
-        var goOffline = document.getElementById("goOffline");
-        goOffline.textContent = "Checking...";
-        if('serviceWorker' in navigator) {
-          goOffline.textContent = "Loading Service Wokers...";
-          function swReg(ex) {
-            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
-          }
-          
-          try {
-            swReg("index.html");
-            swReg("PreviewLibrary.html");
-            swReg("LibrarySource.html");
-            swReg("AboutLibrary.html");
-          } catch(err){console.info(err);}
-
-          localStorage.setItem("isOffline", "true");
-          goOffline.parentNode.remove(0);
-        } else {
-          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
-        }
-      }
-    </script>
-    
-    <script>
       "use strict";
       try {
         var inputBoxes = 2;
@@ -151,5 +118,35 @@
     <br>
     <br>
     <p id="output">Press "Calculate..."</p>
+    
+    <script>
+      var goOffline = document.getElementById("goOffline");
+      
+      if(localStorage.getItem("isOffline") == "true") {
+        goOffline.parentNode.remove(0);
+      }
+      
+      function registerWorkers() {
+        goOffline.textContent = "Checking...";
+        if('serviceWorker' in navigator) {
+          goOffline.textContent = "Loading Service Wokers...";
+          function swReg(ex) {
+            navigator.serviceWorker.register("https://virxec.github.io/BigNumberCalculator/"+ex);
+          }
+          
+          try {
+            swReg("index.html");
+            swReg("PreviewLibrary.html");
+            swReg("LibrarySource.html");
+            swReg("AboutLibrary.html");
+          } catch(err){console.info(err);}
+
+          localStorage.setItem("isOffline", "true");
+          goOffline.parentNode.remove(0);
+        } else {
+          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
+        }
+      }
+    </script>
   </body>
 </html>
