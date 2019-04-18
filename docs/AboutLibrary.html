@@ -10,6 +10,16 @@
       body {text-align: center;}
     </style>
     <script>
+      var goOffline;
+      
+      function checkOffline() {
+        goOffline = document.getElementById("goOffline");
+        
+        if(sessionStorage.getItem("isOffline")) {
+          goOffline.parentNode.remove(0);
+        }
+      }
+      
       function registerWorkers() {
         var goOffline = document.getElementById("goOffline");
         goOffline.textContent = "Checking...";
@@ -36,7 +46,8 @@
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <h1 id="bignumbercalculator">About Big Number Calculator (BNC)</h1>
     <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
-    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
+    <h3 onload="checkOffline()">Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
+    
     <h2 id="about">About</h2>
     <p>This is a library that let&#39;s numbers be calculated up to:</p>
     <p>64 bit OS: 2^64-1 digits <strong><em>long</em></strong>.</p>
