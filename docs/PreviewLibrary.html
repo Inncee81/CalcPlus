@@ -59,7 +59,7 @@
       var goOffline = document.getElementById("goOffline");
       
       if(localStorage.getItem("isOffline") == "true") {
-        document.getElementById("notification").innerHTML = "<h2>Please note that this page won't work completely, as since you're offline, the BNC Library couldn't be loaded. Please <h2>";
+        document.getElementById("notification").innerHTML = "<h2>Please note that this page won't work completely, as since you're offline, the BNC Library couldn't be loaded.<h2>";
         goOffline.parentNode.remove(0);
       }
       
@@ -82,8 +82,11 @@
           swReg("AboutLibrary.html");
           
           localStorage.setItem("isOffline", "true");
-          document.getElementById("notification").innerHTML = "<h2>Please note that this page won't work completely, as since you're offline, the BNC Library couldn't be loaded. Please <h2>";
           goOffline.parentNode.remove(0);
+          
+          if (add("0", "1") != "1") {
+            document.getElementById("notification").innerHTML = "<h2>Please note that this page won't work completely, as since you're offline, the BNC Library couldn't be loaded.<h2>";
+          }
         } else {
           goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
         }
