@@ -220,6 +220,7 @@ try {
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
 		
+		console.log(num1, num2);
 
 		var final = "";
 		var tempFinal = "";
@@ -240,7 +241,7 @@ try {
 			final = add(final, tempFinal);
 		}
 		
-		final = final.reverse();
+		final = final.split("").reverse();
 
 		if (decimals > 0) {
 			final.insert(decimals-1, ".");
