@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Works with really large numbers">
+    <meta name="author" content="Virx">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://virxec.github.io/BigNumberCalculator/logo.png">
+    <title>CalcPlus</title>
+  </head>
+  <body>
+    <h2>Page Options</h2>
+    <h3><a href="https://virxec.github.io/CalcPlus">Home</a></h3>
+    <br>
+    <h4>Offline Mode <button id="offlineMode" onclick="toggleOffline()">Off</button></h4>
+    <h4>Dark Mode <button id="darkMode" onclick="toggleDarkMode()">Off</button></h4>
+    
+    <script>
+      var offlineB = document.getElementById("offlineMode");
+      
+      if (localStorage.getItem("isOffline") == "Off" || "On") {
+        offlineB.textContent = localStorage.getItem("isOffline");
+      }
+      
+      function toggleOffline() {
+        offlineB.textContent = "Checking...";
+        if('serviceWorker' in navigator) {
+          if (localStorage.getItem("isOffline") == "Off") {
+            offlineB.textContent = "Loading Service Workers...";
+
+            navigator.serviceWorker.register("/PreviewLibrary.html");
+            navigator.serviceWorker.register("/LibrarySource.html");
+            navigator.serviceWorker.register("/AboutLibrary.html");
+            navigator.serviceWorker.register("/PageOptions.html");
+            navigator.serviceWorker.register("/index.html");
+            navigator.serviceWorker.register("/BNC-Lib.js");
+            navigator.serviceWorker.register("/logo.png");
+            navigator.serviceWorker.ready.then(function (registration) {
+              console.log('Service worker successfully registered on scope', registration.scope);
+            });
+
+            localStorage.setItem("isOffline", "On");
+            offlineB.textContent = localStorage.getItem("isOffline");
+          } else if (localStorage.getItem("isOffline") == "On") {
+            offlineB.textContent = "Removing Service Workers...";
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+              for(let registration of registrations) {
+                registration.unregister();
+              }
+            });
+
+            localStorage.setItem("isOffline", "Off");
+            offlineB.textContent = localStorage.getItem("isOffline");
+          }
+        } else {
+          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
+        }
+      }
+      
+      self.addEventListener('install', function(event) {
+        event.waitUntil(
+          caches.open('bnc-github-v1').then(function(cache) {
+            return cache.addAll([
+              "/logo.png"
+            ]);
+          });
+        );
+      });
+
+      self.addEventListener('install', function(event) {
+        console.log('Installed PageOptions.html', event);
+      });
+      self.addEventListener('activate', function(event) {
+        console.log('Activated PageOptions.html', event);
+      });
+
+      self.addEventListener('fetch', function(e) {
+       e.respondWith(caches.match(e.request).then(function(response) {
+        if(response) {
+          return response;
+        }
+        return fetch(e.request);
+       }));
+      });
+    </script>
+  </body>
+</html>
