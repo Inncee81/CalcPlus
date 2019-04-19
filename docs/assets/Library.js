@@ -140,6 +140,9 @@ try {
 			}
 		}
 		
+		while (final[final.length-1] == '0' && final.length > 1) {
+			delete final[final.length-1];
+		}
 		final = final.reverse();
 		
 		if (decimals > 0) {
@@ -205,13 +208,13 @@ try {
 
 	function multi(num1, num2) {
 		function addZeros(round) {
-			final = "";
+			var zeros = "";
 			if (round > 0) {
 				for (var i = 0; i < round; i++) {
-					final += "0";
+					zeros += "0";
 				}
 			}
-			return final;
+			return zeros;
 		}
 		
 		var parsedNums = parseNums(num1, num2, 2);
@@ -250,10 +253,6 @@ try {
 		}
 		
 		final = final.split("").reverse();
-		while (final[final.length-1] == '0' && final.length > 1) {
-			delete final[final.length-1];
-			console.log(final);
-		}
 
 		if (decimals > 0) {
 			final.insert(decimals-1, ".");
