@@ -139,24 +139,27 @@ try {
 				}
 			}
 		}
-
+		
+		final = final.reverse();
+		
 		if (decimals > 0) {
 			final.insert(decimals-1, ".");
 		}
 		
 		if(neg[0]){
-			final.unshift("-");
+			return "-"+final;
 		}
 
-		return final.reverse().join('');
+		return final.join('');
 	}
 
 	function sub(num1, num2) {
-		var parsedNums = parseNums(num1, num2);
+		var parsedNums = parseNums(num1, num2, 1);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
+		var decimals = parsedNums.decimals;
 
 		if (neg[2]) {
 			num2.unshift("-");
@@ -187,15 +190,21 @@ try {
 			delete final[final.length-1];
 		}
 
+		final = final.reverse();
+		
+		if (decimals > 0) {
+			final.insert(decimals-1, ".");
+		}
+		
 		if(neg[0]){
-			final.unshift("-");
+			return "-"+final;
 		}
 
-		return final.reverse().join('');
+		return final.join('');
 	}
 
 	function multi(num1, num2) {
-		var parsedNums = parseNums(num1, num2);
+		var parsedNums = parseNums(num1, num2, 2);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
