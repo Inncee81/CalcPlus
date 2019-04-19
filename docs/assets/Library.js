@@ -219,6 +219,7 @@ try {
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
+		var decimals = parsedNums.decimals;
 		
 		console.log(num1, num2);
 
