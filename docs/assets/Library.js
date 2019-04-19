@@ -58,11 +58,15 @@ try {
 				decimal = num1.length + num2.length;
 			}
 			
-			if (num1[1].length > 1) {
-				num1[1] = num1[1].join("");
+			if (num1.length > 1) {
+				if (num1[1].length > 1) {
+					num1[1] = num1[1].join("");
+				}
 			}
-			if (num2[1].length > 1) {
-				num2[1] = num2[1].join("");
+			if (num2.length > 1) {
+				if (num2[1].length > 1) {
+					num2[1] = num2[1].join("");
+				}
 			}
 			
 			num1 = num1.join("");
