@@ -221,7 +221,7 @@ try {
 		var maxChar = parsedNums.maxChar;
 		var decimals = parsedNums.decimals;
 
-		var final = "";
+		var final = "0";
 		var tempFinal = "";
 		maxChar = [maxChar, num1.length, num2.length];
 		
@@ -241,26 +241,27 @@ try {
 					temp -= 10;
 				}
 				tempFinal = temp.toString()+tempFinal;
-				console.log("tempFinal: "+tempFinal.toString());
+				console.log("tempFinal: "+tempFinal);
 			}
 			final = add(final, tempFinal);
+			console.log("final: "+final);
 		}
 		
 		final = final.split("").reverse();
 		while (final[final.length-1] == '0' && final.length > 1) {
+			console.log(final[final.length-1]);
 			delete final[final.length-1];
 		}
-		final = final.reverse();
 
 		if (decimals > 0) {
 			final.insert(decimals-1, ".");
 		}
 			     
 		if (neg[0]) {
-			return "-"+final.reverse().join("");
+			return "-"+final.join("");
 		}
 
-		return final.reverse().join("");
+		return final.join("");
 	}
 } catch(err) {
 	alert("An unexpected error occured in BNC-Lib.");
