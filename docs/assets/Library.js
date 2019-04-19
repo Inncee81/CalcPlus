@@ -246,11 +246,11 @@ try {
 			final = add(final, tempFinal);
 		}
 		
-		final = final.split("");
-
+		final = final.split("").reverse();
 		while (final[final.length-1] == '0' && final.length > 1) {
 			delete final[final.length-1];
 		}
+		final = final.reverse();
 
 		if (decimals > 0) {
 			final.insert(decimals-1, ".");
