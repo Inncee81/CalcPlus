@@ -48,6 +48,67 @@
     <p id="output">Press "Calculate..."</p>
     
     <script>
+      "use strict";
+      try {
+        var inputBoxes = 2;
+        var getChecked = function(name) {
+          return document.getElementById(name).checked;
+        };
+        var runCalc = function() {
+          var final = {
+            num: 0,
+            display: false
+          };
+          if (getChecked("add")) {
+            final.num = add(document.getElementById("input1").value, document.getElementById("input2").value);
+            if (inputBoxes > 2) {
+              for (var i=3; i<=inputBoxes; i++) {
+                final.num = add(final.num, document.getElementById("input"+i.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("sub")) {
+            final.num = sub(document.getElementById("input1").value, document.getElementById("input2").value);
+            if (inputBoxes > 2) {
+              for (var s=3; s<=inputBoxes; s++) {
+                final.num = sub(final.num, document.getElementById("input"+s.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("multi")) {
+            final.num = multi(document.getElementById("input1").value, document.getElementById("input2").val());
+            if (inputBoxes > 2) {
+              for (var m=3; m<=inputBoxes; m++) {
+                final.num = multi(final.num, document.getElementById("input"+m.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("div")) {
+            console.warn("Division algorithm was called, but doesn't exist.");
+          } else {
+            console.error("ran nothing");
+          }
+          if (final.display) {
+            document.getElementById("output").textContent = "Answer: "+final.num;
+          }
+        };
+        function removeInput() {
+          inputBoxes--;
+          document.getElementById("console").innerHTML += inputBoxes;
+        }
+        document.getElementById("addInput").addEventListener("click", function(){
+          inputBoxes++;
+          document.getElementById("extraInputs").innerHTML += '<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();removeInput();" label="Delete input field #'+inputBoxes+'">X</button><br></span>';
+        });
+        document.getElementById("calc").addEventListener("click", function(){
+          runCalc();
+        });
+      } catch(err) {
+        console.error(err);
+      }
+    </script>
+    
+    <script>
       self.addEventListener('install', function(event) {
         event.waitUntil(
           caches.open('bnc-github-v1').then(function(cache) {
