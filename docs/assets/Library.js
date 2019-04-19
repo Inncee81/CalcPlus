@@ -204,43 +204,45 @@ try {
 	}
 
 	function multi(num1, num2) {
+		function addZeros(round) {
+			final = "";
+			for (var i = 0; i < round; i++) {
+				final += "0";
+			}
+		}
+		
 		var parsedNums = parseNums(num1, num2, 2);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
+		
 
-		if (num2.length == maxChar) {
-			var numsTemp = [false, num1, num2];
-			num1 = numsTemp[2];
-			num2 = numsTemp[1];
-		}
-
-		var final = [];
-		maxChar = [false, num1.length, num2.length];
-
-		for (var i=maxChar[1]-1; i>=0;i--) {
-			var finali = maxChar-i-1;
-			final[finali] = [];
-			for (var j=maxChar[2]-1; j>=0; j--) {
-				var finalj = maxChar-j-1;
-				final[finali[finalj]]=(parseInt(num1[j])*parseInt(num2[i])).toString();
-				for (var u=0; u<finalj; u++) {
-					final[finali[finalj]] = final[finali[finalj]]+"0";
+		var final = "0";
+		var tempFinal = "0";
+		maxChar = [maxChar, num1.length, num2.length];
+		
+		for (var round = 0; round < num2.length; round++) {
+			var carry = 0;
+			for (var i = 0; i < num1.length; i++) {
+				var temp = parseInt(num1[i])*parseInt(num2[round])+carry;
+				carry = 0;
+				
+				while (temp > 9) {
+					carry += 1;
+					temp -= 10;
 				}
+				tempFinal = temp.toString()+tempFinal;
 			}
-			var tempF = "0";
-			for (var k=maxChar[2]-1; k>=0; k--) {
-				tempF = (parseInt(tempF)+parseInt(final[finali[k]])).toString();
-			}
-			final[finali] = tempF;
+			final = add(final, tempFinal);
 		}
-		var tempP = "0";
-		for (var p=maxChar[1]-1; p>=0;p--) {
-			tempP = (parseInt(tempP) + parseInt(final[p])).toString();
-		}
-		final = tempP;
+		
+		final = final.reverse();
 
+		if (decimals > 0) {
+			final.insert(decimals-1, ".");
+		}
+			     
 		if (neg[0]) {
 			return "-"+final;
 		}
