@@ -247,7 +247,7 @@ try {
 			final = add(final, tempFinal);
 		}
 		
-		final = final.split("").reverse();
+		final = final.split("");
 
 		if (decimals > 0) {
 			final.splice(decimals-1, 0, ".");
