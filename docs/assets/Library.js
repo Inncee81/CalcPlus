@@ -1,9 +1,9 @@
 try {
 	self.addEventListener('install', function(event) {
-          console.log('Installed BNC-Lib.js', event);
+          console.log('Installed Library.js', event);
         });
         self.addEventListener('activate', function(event) {
-          console.log('Activated BNC-Lib.js', event);
+          console.log('Activated Library.js', event);
         });
         
         self.addEventListener('fetch', (e) => {
