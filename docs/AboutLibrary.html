@@ -28,32 +28,30 @@
     <h2 id="how-do-i-install-this-library-">How do I install this library?</h2>
     <p>For JavaScript, simply link somewhere in your HTML <head> tag this text:</p>
     &lt;script type="text/javascript" src="https://virxec.github.io/CalcPlus/assets/Library.js"&gt;&lt;/script&gt;
-    <script>
-      if (localStorage.getItem("isOffline") == "true") {
-        self.addEventListener('install', function(event) {
-          event.waitUntil(
-            caches.open('bnc-github-v1').then(function(cache) {
-              return cache.addAll([
-                "/assets/logo.png"
-              ]);
-            })
-          );
-        });
-        
-        self.addEventListener('install', function(event) {
-          console.log('Installed AboutLibrary.html', event);
-        });
-        self.addEventListener('activate', function(event) {
-          console.log('Activated AboutLibrary.html', event);
-        });
-        
-        self.addEventListener('fetch', (e) => {
-         e.respondWith(caches.match(e.request).then((response) => {
-          if(response) return response
-          else return fetch(e.request)
-         }) )
-        })
-      }
+    <script>  
+      self.addEventListener('install', function(event) {
+        event.waitUntil(
+          caches.open('bnc-github-v1').then(function(cache) {
+            return cache.addAll([
+              "/assets/logo.png"
+            ]);
+          });
+        );
+      });
+      self.addEventListener('install', function(event) {
+        console.log('Installed AboutLibrary.html', event);
+      });
+      self.addEventListener('activate', function(event) {
+        console.log('Activated AboutLibrary.html', event);
+      });
+      self.addEventListener('fetch', function(e) {
+       e.respondWith(caches.match(e.request).then(function(response) {
+        if(response) {
+          return response;
+        }
+        return fetch(e.request);
+       }));
+      });
     </script>
   </body>
 </html>
