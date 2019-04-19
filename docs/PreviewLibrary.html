@@ -5,9 +5,9 @@
     <meta name="author" content="Virx">
     <meta name="description" content="Preview the Big Number Calculator open-source library">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://virxec.github.io/BigNumberCalculator/logo.png">
-    <script src="https://virxec.github.io/BigNumberCalculator/BNC-Lib.js"></script>
-    <title>CalcPlus</title>
+    <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
+    <script src="https://virxec.github.io/CalcPlus/assets/BNC-Lib.js"></script>
+    <title>Preview the CalcPlus Library</title>
     <style>
       .removeInput {
           color: grey;
@@ -24,8 +24,7 @@
   <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <span id="notification"></span>
-    <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
-    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
+    <a href="https://virxec.github.io/CalcPlus">Home</a>
     <form>
       <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
       <br>
@@ -49,61 +48,29 @@
     <p id="output">Press "Calculate..."</p>
     
     <script>
-      var goOffline = document.getElementById("goOffline");
-      
-      if(localStorage.getItem("isOffline") == "true") {
-        goOffline.parentNode.remove(0);
-      }
-      
-      function registerWorkers() {
-        goOffline.textContent = "Checking...";
-        if('serviceWorker' in navigator) {
-          goOffline.textContent = "Loading Service Wokers...";
-          
-          navigator.serviceWorker.register("index.html");
-          navigator.serviceWorker.register("PreviewLibrary.html");
-          navigator.serviceWorker.register("LibrarySource.html");
-          navigator.serviceWorker.register("AboutLibrary.html");
-          navigator.serviceWorker.register("BNC-Lib.js");
-          navigator.serviceWorker.register("logo.png");
-          navigator.serviceWorker.ready.then(function (registration) {
-            console.log('Service worker successfully registered on scope', registration.scope);
+      self.addEventListener('install', function(event) {
+        event.waitUntil(
+          caches.open('bnc-github-v1').then(function(cache) {
+            return cache.addAll([
+              "/assets/logo.png"
+            ]);
           });
-          
-          localStorage.setItem("isOffline", "true");
-          goOffline.parentNode.remove(0);
-        } else {
-          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
+        );
+      });
+      self.addEventListener('install', function(event) {
+        console.log('Installed PreviewLibrary.html', event);
+      });
+      self.addEventListener('activate', function(event) {
+        console.log('Activated PreviewLibrary.html', event);
+      });
+      self.addEventListener('fetch', function(e) {
+       e.respondWith(caches.match(e.request).then(function(response) {
+        if(response) {
+          return response;
         }
-      }
-      
-      if (localStorage.getItem("isOffline") == "true") {
-        self.addEventListener('install', function(event) {
-          event.waitUntil(
-            caches.open('bnc-github-v1').then(function(cache) {
-              return cache.addAll([
-                "BNC-Lib.js",
-                "logo.png"
-              ]);
-            })
-          );
-        });
-        
-        self.addEventListener('install', function(event) {
-          console.log('Installed PreviewLibrary.html', event);
-        });
-
-        self.addEventListener('activate', function(event) {
-          console.log('Activated PreviewLibrary.html', event);
-        });
-        
-        self.addEventListener('fetch', (e) => {
-         e.respondWith(caches.match(e.request).then((response) => {
-          if(response) return response
-          else return fetch(e.request)
-         }) )
-        })
-      }
+        return fetch(e.request);
+       }));
+      });
     </script>
   </body>
 </html>
