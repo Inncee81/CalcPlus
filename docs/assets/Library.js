@@ -14,7 +14,7 @@ try {
 		}));
 	});
 	
-	function parseNums(num1, num2) {
+	function parseNums(num1, num2, mode) {
 		var neg = [0, false, false];
 
 		num1 = num1.split("-");
@@ -38,7 +38,33 @@ try {
 		if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) {
 			isNeg = true;
 		}
+		
+		var decimal = 0;
 
+		num1 = num1.split(".");
+		num2 = num2.split(".");
+		
+		if (num1.length > 1 || num2.length >2) {
+			if (num1.length > 1) {
+				num1[1] = num1[1].split("");
+			}
+			if (num2.length > 2) {
+				num2[1] = num2[1].split("");
+			}
+			
+			if (mode == 1) {
+				decimal = Math.max(num1.length, num2.length);
+			} else if (mode == 2) {
+				decimal = num1.length + num2.length;
+			}
+			
+			num1[1] = num1[1].join("");
+			num2[1] = num2[1].join("");
+			
+			num1 = num1.join("");
+			num2 = num2.join("");
+		}
+		
 		num1 = num1.split('');
 		num2 = num2.split('');
 
@@ -70,16 +96,18 @@ try {
 				isNeg: neg[2]
 			},
 			isNeg: isNeg,
-			maxChar: maxChar
+			maxChar: maxChar,
+			decimals: decimal
 		};
 	};
 
 	function add(num1, num2) {
-		var parsedNums = parseNums(num1, num2);
+		var parsedNums = parseNums(num1, num2, 1);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
+		var decimals = parsedNums.decimals;
 
 		if (neg[2]) {
 			if (neg[1]) {
@@ -112,6 +140,10 @@ try {
 			}
 		}
 
+		if (decimals > 0) {
+			final.insert(decimals-1, ".");
+		}
+		
 		if(neg[0]){
 			final.unshift("-");
 		}
