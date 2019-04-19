@@ -150,7 +150,7 @@ try {
 		}
 		
 		if (decimals > 0) {
-			final.insert(decimals-1, ".");
+			final.splice(decimals-1, 0, ".");
 		}
 		
 		if(neg[0]){
@@ -200,7 +200,7 @@ try {
 		final = final.reverse();
 		
 		if (decimals > 0) {
-			final.insert(decimals-1, ".");
+			final.splice(decimals-1, 0, ".");
 		}
 		
 		if(neg[0]){
@@ -250,7 +250,7 @@ try {
 		final = final.split("").reverse();
 
 		if (decimals > 0) {
-			final.insert(decimals-1, ".");
+			final.splice(decimals-1, 0, ".");
 		}
 			     
 		if (neg[0]) {
