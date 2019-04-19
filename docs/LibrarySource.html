@@ -4,71 +4,39 @@
     <meta name="description" content="Works with really large numbers">
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://virxec.github.io/BigNumberCalculator/logo.png">
+    <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <title>BNC Source Code</title>
   </head>
   <body>
-    <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
+    <noscript>Please allow JavaScript to run on this page, or else some things won't work. Thank you!<br></noscript>
     <h1>BNC Library Source Code</h1>
-    <h3>Want to browse around offline?<button id="goOffline" onclick="registerWorkers()">Click here!!!</button></h3>
-    <a href="https://virxec.github.io/BigNumberCalculator">Home</a>
+    <a href="https://virxec.github.io/CalcPlus">Home</a>
     <br>
-    <embed src="https://virxec.github.io/BigNumberCalculator/BNC-Lib.js" width="100%" height="4000px">
+    <embed src="https://virxec.github.io/CalcPlus/Library.js" width="100%" height="4000px">
     <script>
-      var goOffline = document.getElementById("goOffline");
-      
-      if(localStorage.getItem("isOffline") == "true") {
-        goOffline.parentNode.remove(0);
-      }
-      
-      function registerWorkers() {
-        goOffline.textContent = "Checking...";
-        if('serviceWorker' in navigator) {
-          goOffline.textContent = "Loading Service Wokers...";
-          
-          navigator.serviceWorker.register("/index.html");
-          navigator.serviceWorker.register("/PreviewLibrary.html");
-          navigator.serviceWorker.register("/LibrarySource.html");
-          navigator.serviceWorker.register("/AboutLibrary.html");
-          navigator.serviceWorker.register("/BNC-Lib.js");
-          navigator.serviceWorker.register("/logo.png");
-          navigator.serviceWorker.ready.then(function (registration) {
-            console.log('Service worker successfully registered on scope', registration.scope);
+      self.addEventListener('install', function(event) {
+        event.waitUntil(
+          caches.open('calcplus-github-v1').then(function(cache) {
+            return cache.addAll([
+              "/assets/logo.png"
+            ]);
           });
-          
-          localStorage.setItem("isOffline", "true");
-          goOffline.parentNode.remove(0);
-        } else {
-          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
+        );
+      });
+      self.addEventListener('install', function(event) {
+        console.log('Installed LibrarySource.html', event);
+      });
+      self.addEventListener('activate', function(event) {
+        console.log('Activated LibrarySource.html', event);
+      });
+      self.addEventListener('fetch', function(e) {
+       e.respondWith(caches.match(e.request).then(function(response) {
+        if(response) {
+          return response;
         }
-      }
-      
-      if (localStorage.getItem("isOffline") == "true") {
-        self.addEventListener('install', function(event) {
-          event.waitUntil(
-            caches.open('bnc-github-v1').then(function(cache) {
-              return cache.addAll([
-                "/BNC-Lib.js",
-                "/logo.png"
-              ]);
-            })
-          );
-        });
-        
-        self.addEventListener('install', function(event) {
-          console.log('Installed LibrarySource.html', event);
-        });
-        self.addEventListener('activate', function(event) {
-          console.log('Activated LibrarySource.html', event);
-        });
-        
-        self.addEventListener('fetch', (e) => {
-         e.respondWith(caches.match(e.request).then((response) => {
-          if(response) return response
-          else return fetch(e.request)
-         }) )
-        })
-      }
+        return fetch(e.request);
+       }));
+      });
     </script>
   </body>
 </html>
