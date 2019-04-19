@@ -242,17 +242,21 @@ try {
 			final = add(final, tempFinal);
 		}
 		
-		final = final.split("").reverse();
+		final = final.split("");
+
+		while (final[final.length-1] == '0' && final.length > 1) {
+			delete final[final.length-1];
+		}
 
 		if (decimals > 0) {
 			final.insert(decimals-1, ".");
 		}
 			     
 		if (neg[0]) {
-			return "-"+final.join("");
+			return "-"+final.reverse().join("");
 		}
 
-		return final.join("");
+		return final.reverse().join("");
 	}
 } catch(err) {
 	alert("An unexpected error occured in BNC-Lib.");
