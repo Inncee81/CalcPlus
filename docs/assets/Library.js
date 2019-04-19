@@ -225,10 +225,10 @@ try {
 		var decimals = parsedNums.decimals;
 
 		var final = "0";
-		var tempFinal = "";
 		maxChar = [maxChar, num1.length, num2.length];
 		
 		for (var round = 0; round < num2.length; round++) {
+			var tempFinal = "";
 			var carry = 0;
 			for (var i = 0; i < num1.length; i++) {
 				console.log("num1: "+num1[i].toString());
