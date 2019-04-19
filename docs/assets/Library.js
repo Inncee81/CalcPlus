@@ -243,14 +243,16 @@ try {
 				tempFinal = temp.toString()+tempFinal;
 				console.log("tempFinal: "+tempFinal);
 			}
+			console.log(final);
+			console.log(tempFinal);
 			final = add(final, tempFinal);
 			console.log("final: "+final);
 		}
 		
 		final = final.split("").reverse();
 		while (final[final.length-1] == '0' && final.length > 1) {
-			console.log(final[final.length-1]);
 			delete final[final.length-1];
+			console.log(final);
 		}
 
 		if (decimals > 0) {
