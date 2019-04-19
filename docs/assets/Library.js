@@ -44,6 +44,9 @@ try {
 		num1 = num1.split(".");
 		num2 = num2.split(".");
 		
+		console.log(num1);
+		console.log(num2);
+		
 		if (num1.length > 1 || num2.length >2) {
 			if (num1.length > 1) {
 				num1[1] = num1[1].split("");
