@@ -92,13 +92,9 @@
             document.getElementById("output").textContent = "Answer: "+final.num;
           }
         };
-        function removeInput() {
-          inputBoxes--;
-          document.getElementById("console").innerHTML += inputBoxes;
-        }
         document.getElementById("addInput").addEventListener("click", function(){
           inputBoxes++;
-          document.getElementById("extraInputs").innerHTML += '<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();removeInput();" label="Delete input field #'+inputBoxes+'">X</button><br></span>';
+          document.getElementById("extraInputs").innerHTML += '<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();inputBoxes-=1;" label="Delete input field #'+inputBoxes+'">X</button><br></span>';
         });
         document.getElementById("calc").addEventListener("click", function(){
           runCalc();
