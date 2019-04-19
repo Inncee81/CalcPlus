@@ -17,8 +17,10 @@
     <script>
       var offlineB = document.getElementById("offlineMode");
       
-      if (localStorage.getItem("isOffline") == "Off" || "On") {
+      if (localStorage.getItem("isOffline") == "Off" || localStorage.getItem("isOffline") == "On") {
         offlineB.textContent = localStorage.getItem("isOffline");
+      } else {
+        localStorage.setItem("isOffline", "Off");
       }
       
       function toggleOffline() {
