@@ -1,17 +1,18 @@
 try {
 	self.addEventListener('install', function(event) {
-          console.log('Installed Library.js', event);
-        });
-        self.addEventListener('activate', function(event) {
-          console.log('Activated Library.js', event);
-        });
-        
-        self.addEventListener('fetch', (e) => {
-         e.respondWith(caches.match(e.request).then((response) => {
-          if(response) return response
-          else return fetch(e.request)
-         }))
-        })
+		console.log('Installed Library.js', event);
+	});
+	self.addEventListener('activate', function(event) {
+		console.log('Activated Library.js', event);
+	});
+	self.addEventListener('fetch', function(e) {
+		e.respondWith(caches.match(e.request).then(function(response) {
+			if(response) {
+				return response;
+			}
+			return fetch(e.request);
+		}));
+	});
 	
 	function parseNums(num1, num2) {
 		var neg = [0, false, false];
