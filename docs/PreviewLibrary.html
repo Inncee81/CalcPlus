@@ -76,7 +76,7 @@
             }
             final.display = true;
           } else if (getChecked("multi")) {
-            final.num = multi(document.getElementById("input1").value, document.getElementById("input2").val());
+            final.num = multi(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var m=3; m<=inputBoxes; m++) {
                 final.num = multi(final.num, document.getElementById("input"+m.toString()).value);
