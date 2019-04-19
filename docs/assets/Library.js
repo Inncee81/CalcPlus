@@ -44,9 +44,6 @@ try {
 		num1 = num1.split(".");
 		num2 = num2.split(".");
 		
-		console.log(num1);
-		console.log(num2);
-		
 		if (num1.length > 1 || num2.length >2) {
 			if (num1.length > 1) {
 				num1[1] = num1[1].split("");
@@ -209,9 +206,12 @@ try {
 	function multi(num1, num2) {
 		function addZeros(round) {
 			final = "";
-			for (var i = 0; i < round; i++) {
-				final += "0";
+			if (round > 0) {
+				for (var i = 0; i < round; i++) {
+					final += "0";
+				}
 			}
+			return final;
 		}
 		
 		var parsedNums = parseNums(num1, num2, 2);
@@ -221,8 +221,8 @@ try {
 		var maxChar = parsedNums.maxChar;
 		
 
-		var final = "0";
-		var tempFinal = "0";
+		var final = "";
+		var tempFinal = "";
 		maxChar = [maxChar, num1.length, num2.length];
 		
 		for (var round = 0; round < num2.length; round++) {
