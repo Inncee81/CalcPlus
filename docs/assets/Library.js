@@ -68,8 +68,8 @@ try {
 			num2 = num2.join("");
 		}
 		
-		num1 = num1.split('');
-		num2 = num2.split('');
+		num1 = num1.toString().split('');
+		num2 = num2.toString().split('');
 
 		var maxChar = Math.max(num1.length, num2.length);
 
