@@ -220,8 +220,6 @@ try {
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
 		var decimals = parsedNums.decimals;
-		
-		console.log(num1, num2);
 
 		var final = "";
 		var tempFinal = "";
@@ -230,7 +228,12 @@ try {
 		for (var round = 0; round < num2.length; round++) {
 			var carry = 0;
 			for (var i = 0; i < num1.length; i++) {
+				console.log("num1: "+num1[i].toString());
+				console.log("num2: "+num2[i].toString());
+				
 				var temp = parseInt(num1[i])*parseInt(num2[round])+carry;
+				console.log("temp: "+temp.toString());
+				console.log("carry: "+carry.toString());
 				carry = 0;
 				
 				while (temp > 9) {
@@ -238,6 +241,7 @@ try {
 					temp -= 10;
 				}
 				tempFinal = temp.toString()+tempFinal;
+				console.log("tempFinal: "+tempFinal.toString());
 			}
 			final = add(final, tempFinal);
 		}
