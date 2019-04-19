@@ -1,4 +1,4 @@
-# Big Number Calculator Library
+# CalcPlus Library
 
 ## About
 
@@ -8,7 +8,7 @@ This is a library that let's numbers be calculated up to:
   
   32 bit OS: 2^32-1 digits <i><b>long</b></i>.
 
-Want to see this library in action? Just go [here](https://virxepicoder.github.io/BigNumberCalculator/PreviewLibrary.html)!
+Want to see this library in action? Just go [here](https://virxepicoder.github.io/CalcPlus/PreviewLibrary.html)!
 
 ## Advantages of using this library
 Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.)
@@ -22,4 +22,4 @@ For now, it only support JavaScipt. I have plans to eventually port it to Python
 
 For JavaScript, simply link somewhere in your HTML <head> tag this text:
 
-<script script="text/javascript" src="https://virxec.github.io/BigNumberCalculator/BNC-Lib.js "></script>
+<script src="https://virxec.github.io/CalcPlus/assets/Library.js "></script>
