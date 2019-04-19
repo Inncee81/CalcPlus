@@ -249,10 +249,10 @@ try {
 		}
 			     
 		if (neg[0]) {
-			return "-"+final;
+			return "-"+final.join("");
 		}
 
-		return final;
+		return final.join("");
 	}
 } catch(err) {
 	alert("An unexpected error occured in BNC-Lib.");
