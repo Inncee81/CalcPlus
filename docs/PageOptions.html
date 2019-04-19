@@ -5,7 +5,7 @@
     <meta name="description" content="Works with really large numbers">
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://virxec.github.io/CalcPlus/logo.png">
+    <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <title>CalcPlus</title>
   </head>
   <body>
@@ -33,8 +33,10 @@
             navigator.serviceWorker.register("/AboutLibrary.html");
             navigator.serviceWorker.register("/PageOptions.html");
             navigator.serviceWorker.register("/index.html");
-            navigator.serviceWorker.register("/BNC-Lib.js");
-            navigator.serviceWorker.register("/logo.png");
+            
+            navigator.serviceWorker.register("/assets/BNC-Lib.js");
+            navigator.serviceWorker.register("/assets/logo.png");
+            
             navigator.serviceWorker.ready.then(function (registration) {
               console.log('Service worker successfully registered on scope', registration.scope);
             });
@@ -61,7 +63,7 @@
         event.waitUntil(
           caches.open('bnc-github-v1').then(function(cache) {
             return cache.addAll([
-              "/logo.png"
+              "/assets/logo.png"
             ]);
           });
         );
