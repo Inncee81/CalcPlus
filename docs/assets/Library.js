@@ -231,12 +231,7 @@ try {
 			var tempFinal = "";
 			var carry = 0;
 			for (var i = 0; i < num1.length; i++) {
-				console.log("num1: "+num1[i].toString());
-				console.log("num2: "+num2[i].toString());
-				
 				var temp = parseInt(num1[i])*parseInt(num2[round])+carry;
-				console.log("temp: "+temp.toString());
-				console.log("carry: "+carry.toString());
 				carry = 0;
 				
 				while (temp > 9) {
@@ -244,12 +239,8 @@ try {
 					temp -= 10;
 				}
 				tempFinal = temp.toString()+tempFinal;
-				console.log("tempFinal: "+tempFinal);
 			}
-			console.log(final);
-			console.log(tempFinal);
 			final = add(final, tempFinal);
-			console.log("final: "+final);
 		}
 		
 		final = final.split("").reverse();
