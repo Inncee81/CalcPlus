@@ -48,7 +48,7 @@ try {
 			if (num1.length > 1) {
 				num1[1] = num1[1].split("");
 			}
-			if (num2.length > 2) {
+			if (num2.length > 1) {
 				num2[1] = num2[1].split("");
 			}
 			
@@ -58,8 +58,12 @@ try {
 				decimal = num1.length + num2.length;
 			}
 			
-			num1[1] = num1[1].join("");
-			num2[1] = num2[1].join("");
+			if (num1[1].length > 1) {
+				num1[1] = num1[1].join("");
+			}
+			if (num2[1].length > 1) {
+				num2[1] = num2[1].join("");
+			}
 			
 			num1 = num1.join("");
 			num2 = num2.join("");
