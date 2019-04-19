@@ -140,10 +140,10 @@ try {
 			}
 		}
 		
+		final = final.reverse();
 		while (final[final.length-1] == '0' && final.length > 1) {
 			delete final[final.length-1];
 		}
-		final = final.reverse();
 		
 		if (decimals > 0) {
 			final.insert(decimals-1, ".");
