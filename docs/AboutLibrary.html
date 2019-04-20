@@ -7,7 +7,13 @@
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <title>About CalcPlus Library</title>
     <style>
-      body {text-align: center;}
+      body {
+        text-align: center;color: black;
+        background-color: white;
+      }
+      a {
+        color: dark_blue;
+      }
     </style>
   </head>
   <body>
@@ -31,7 +37,18 @@
     <h2>How do I install this library?</h2>
     <p>For JavaScript, simply link somewhere in your HTML <head> tag this text:</p>
     &lt;script src="https://virxec.github.io/CalcPlus/assets/Library.js"&gt;&lt;/script&gt;
-    <script>  
+    <script>
+      var sheet = window.document.styleSheets[0];
+      
+      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
+        if (localStorage.getItem("isDark") == "On") {
+          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
+          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
+        }
+      } else {
+        localStorage.setItem("isDark", "Off");
+      }
+      
       self.addEventListener('install', function(event) {
         event.waitUntil(
           caches.open('calcplus-github-v1').then(function(cache) {
