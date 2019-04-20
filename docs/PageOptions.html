@@ -24,8 +24,10 @@
     <h3>Dark Mode <button id="darkMode" onclick="toggleDarkMode()">Off</button></h3>
     
     <script>
+      var darkB = document.getElementById("darkMode");
+      
       if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
-        offlineB.textContent = localStorage.getItem("isDark");
+        darkB.textContent = localStorage.getItem("isDark");
         if (localStorage.getItem("isDark") == "On") {
           sheet.insertRule('body { color: back; background-color:white; }, a { color: dark_blue; }', sheet.cssRules.length);
         }
@@ -37,8 +39,12 @@
         var sheet = window.document.styleSheets[0];
         if (localStorage.getItem("isDark") == "Off") {
           sheet.insertRule('body { color: white; background-color:black; }, a { color: light_blue; }', sheet.cssRules.length);
+          localStorage.setItem("isDark", "On");
+          darkB.textContent = localStorage.getItem("isDark");
         } else if (localStorage.getItem("isDark") == "On") {
           sheet.insertRule('body { color: back; background-color:white; }, a { color: dark_blue; }', sheet.cssRules.length);
+          localStorage.setItem("isDark", "Off");
+          darkB.textContent = localStorage.getItem("isDark");
         }
       }
       
