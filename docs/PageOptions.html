@@ -7,6 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <title>CalcPlus Page Options</title>
+    <style type="text/css">
+      body {
+        color: black;
+        background-color: white;
+      },
+      a {
+        color: dark_blue;
+      }
+    </style>
   </head>
   <body>
     <h1>Page Options</h1>
@@ -17,16 +26,19 @@
     <script>
       if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
         offlineB.textContent = localStorage.getItem("isDark");
+        if (localStorage.getItem("isDark") == "On") {
+          sheet.insertRule('body { color: back; background-color:white; }, a { color: dark_blue; }', sheet.cssRules.length);
+        }
       } else {
         localStorage.setItem("isDark", "Off");
       }
       
       function toggleDarkMode() {
-          var sheet = window.document.styleSheets[0];
+        var sheet = window.document.styleSheets[0];
         if (localStorage.getItem("isDark") == "Off") {
-          sheet.insertRule('body { color: white; background-color:black; }, a { color: dark_blue; }', sheet.cssRules.length);
+          sheet.insertRule('body { color: white; background-color:black; }, a { color: light_blue; }', sheet.cssRules.length);
         } else if (localStorage.getItem("isDark") == "On") {
-          sheet.insertRule('body { color: back; background-color:white; }, a { color: light_blue; }', sheet.cssRules.length);
+          sheet.insertRule('body { color: back; background-color:white; }, a { color: dark_blue; }', sheet.cssRules.length);
         }
       }
       
