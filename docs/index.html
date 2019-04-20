@@ -9,6 +9,13 @@
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <title>CalcPlus</title>
     <style>
+      body {
+        color: black;
+        background-color: white;
+      }
+      a {
+        color: dark_blue;
+      }
       span.broken {color:red;}
       span.working {color:green;}
     </style>
@@ -36,7 +43,19 @@
     <br>
     <a href="https://github.com/VirxEC/CalcPlus/compare">Submit a pull request</a>
     
-    <script>  
+    <script>
+      var sheet = window.document.styleSheets[0];
+      
+      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
+        darkB.textContent = localStorage.getItem("isDark");
+        if (localStorage.getItem("isDark") == "On") {
+          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
+          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
+        }
+      } else {
+        localStorage.setItem("isDark", "Off");
+      }
+      
       self.addEventListener('install', function(event) {
         event.waitUntil(
           caches.open('calcplus-github-v1').then(function(cache) {
