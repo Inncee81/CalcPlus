@@ -30,8 +30,8 @@
       if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
         darkB.textContent = localStorage.getItem("isDark");
         if (localStorage.getItem("isDark") == "On") {
-          sheet.insertRule('body { color: black; background-color:white; }', sheet.cssRules.length);
-          sheet.insertRule('a { color: dark_blue; }', sheet.cssRules.length);
+          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
+          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
         }
       } else {
         localStorage.setItem("isDark", "Off");
