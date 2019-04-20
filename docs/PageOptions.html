@@ -25,6 +25,7 @@
     
     <script>
       var darkB = document.getElementById("darkMode");
+      var sheet = window.document.styleSheets[0];
       
       if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
         darkB.textContent = localStorage.getItem("isDark");
@@ -37,7 +38,6 @@
       }
       
       function toggleDarkMode() {
-        var sheet = window.document.styleSheets[0];
         if (localStorage.getItem("isDark") == "Off") {
           sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
           sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
