@@ -15,6 +15,21 @@
     <h3>Dark Mode <button id="darkMode" onclick="toggleDarkMode()">Off</button></h3>
     
     <script>
+      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
+        offlineB.textContent = localStorage.getItem("isDark");
+      } else {
+        localStorage.setItem("isDark", "Off");
+      }
+      
+      function toggleDarkMode() {
+          var sheet = window.document.styleSheets[0];
+        if (localStorage.getItem("isDark") == "Off") {
+          sheet.insertRule('body { color: white; background-color:black; }, a { color: dark_blue; }', sheet.cssRules.length);
+        } else if (localStorage.getItem("isDark") == "On") {
+          sheet.insertRule('body { color: back; background-color:white; }, a { color: light_blue; }', sheet.cssRules.length);
+        }
+      }
+      
       var offlineB = document.getElementById("offlineMode");
       
       if (localStorage.getItem("isOffline") == "Off" || localStorage.getItem("isOffline") == "On") {
