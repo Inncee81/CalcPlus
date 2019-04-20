@@ -26,7 +26,6 @@
       var sheet = window.document.styleSheets[0];
       
       if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
-        darkB.textContent = localStorage.getItem("isDark");
         if (localStorage.getItem("isDark") == "On") {
           sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
           sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
