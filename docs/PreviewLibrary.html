@@ -9,6 +9,13 @@
     <script src="https://virxec.github.io/CalcPlus/assets/Library.js"></script>
     <title>Preview the CalcPlus Library</title>
     <style>
+      body {
+        color: black;
+        background-color: white;
+      }
+      a {
+        color: dark_blue;
+      }
       .removeInput {
           color: grey;
           background: rgb(255, 110, 110);
@@ -105,6 +112,18 @@
     </script>
     
     <script>
+      var sheet = window.document.styleSheets[0];
+      
+      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
+        darkB.textContent = localStorage.getItem("isDark");
+        if (localStorage.getItem("isDark") == "On") {
+          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
+          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
+        }
+      } else {
+        localStorage.setItem("isDark", "Off");
+      }
+      
       self.addEventListener('install', function(event) {
         event.waitUntil(
           caches.open('bnc-github-v1').then(function(cache) {
