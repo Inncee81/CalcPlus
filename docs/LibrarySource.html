@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <title>CalcPlus Library Source Code</title>
+    <style type="text/css">
+      body {
+        color: black;
+        background-color: white;
+      }
+      a {
+        color: dark_blue;
+      }
+    </style>
   </head>
   <body>
     <noscript>Please allow JavaScript to run on this page, or else some things won't work. Thank you!<br></noscript>
@@ -14,6 +23,18 @@
     <br>
     <embed src="https://virxec.github.io/CalcPlus/assets/Library.js" width="100%" height="4000px">
     <script>
+      var sheet = window.document.styleSheets[0];
+      
+      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
+        darkB.textContent = localStorage.getItem("isDark");
+        if (localStorage.getItem("isDark") == "On") {
+          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
+          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
+        }
+      } else {
+        localStorage.setItem("isDark", "Off");
+      }
+      
       self.addEventListener('install', function(event) {
         event.waitUntil(
           caches.open('calcplus-github-v1').then(function(cache) {
@@ -22,12 +43,15 @@
             ]);
           }));
       });
+      
       self.addEventListener('install', function(event) {
         console.log('Installed LibrarySource.html', event);
       });
+      
       self.addEventListener('activate', function(event) {
         console.log('Activated LibrarySource.html', event);
       });
+      
       self.addEventListener('fetch', function(e) {
        e.respondWith(caches.match(e.request).then(function(response) {
         if(response) {
