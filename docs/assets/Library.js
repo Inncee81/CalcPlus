@@ -268,6 +268,37 @@ try {
 			return final;
 		}
 	}
+	function div(num1, num2, maxDecimal) {
+		
+	}
+	function isLessThan(num1, num1) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 1) {
+			return false;
+		}
+		return true;
+	}
+	function isGreaterThan(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 2 || num[0] == "0") {
+			return false;
+		}
+		return true;
+	}
+	function isLessThanEqual(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num1.length == 1 && num[0] != "0") {
+			return false;
+		}
+		return true;
+	}
+	function isGreaterThanEqual(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 2) {
+			return false;
+		}
+		return true;
+	}
 } catch(err) {
 	alert("An unexpected error occured in BNC-Lib.");
 	console.error(err);
