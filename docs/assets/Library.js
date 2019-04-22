@@ -87,12 +87,6 @@ try {
 				num2.unshift("0");
 			}
 		}
-    
-		if (num2.length == maxChar) {
-			var temp = [false, num1, num2];
-			num1 = temp[2];
-			num2 = temp[1];
-		}
 
 		return {
 			num1: {
@@ -262,6 +256,17 @@ try {
 		}
 
 		return final.reverse().join("");
+	}
+	function expo(num1, num2) {
+		if (num2.split("-").length == 2) {
+			return div("1", multi(num1, num2);
+		} else {
+			var final = multi(num1, num1);
+			for (var i=3; isLessThan(i.toString(), num2); i++) {
+				final = multi(final, num1);
+			}
+			return final;
+		}
 	}
 } catch(err) {
 	alert("An unexpected error occured in BNC-Lib.");
