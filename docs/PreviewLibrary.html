@@ -39,7 +39,17 @@
       <br>
       <input type="radio" id="multi" name="math-type" label="Multiplication Algorithm"> Multiplication
       <br>
-      <input type="radio" id="div" name="math-type" label="Division Algorithm - Unavailable"> Division (Unavailable)
+      <input type="radio" id="expo" name="math-type" label="Exponents Algorithm (No decimals)"> Exponents (No decimals)
+      <br>
+      <input type="radio" id="div" name="math-type" label="Division Algorithm - In development"> Division (In development)
+      <br>
+      <input type="radio" id="isLessThan" name="math-type" label="Is Less Than Algorithm"> Is Less Than
+      <br>
+      <input type="radio" id="isGreaterThan" name="math-type" label="Is Greater Than Algorithm"> Is Greater Than
+      <br>
+      <input type="radio" id="isLessThanEqual" name="math-type" label="Is Less Than or Equal to Algorithm"> Is Less Than or Equal to
+      <br>
+      <input type="radio" id="isGreaterThanEqual" name="math-type" label="Is Greater Than or Equal to Algorithm"> Is Greater Than or Equal to
     </form>
     <br>
     <button id="addInput">Add another input field</button>
@@ -90,8 +100,54 @@
               }
             }
             final.display = true;
+          } else if (getChecked("expo")) {
+            final.num = expo(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = expo(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
           } else if (getChecked("div")) {
-            console.warn("Division algorithm was called, but doesn't exist.");
+            final.num = div(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = div(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("isLessThan")) {
+            final.num = isLessThan(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = isLessThan(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("isGreaterThan")) {
+            final.num = isGreaterThan(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = isGreaterThan(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("isLessThanEqual")) {
+            final.num = isLessThanEqual(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = isLessThanEqual(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("isGreaterThanEqual")) {
+            final.num = isGreaterThanEqual(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = isGreaterThanEqual(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
           } else {
             console.error("ran nothing");
           }
