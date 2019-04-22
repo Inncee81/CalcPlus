@@ -30,7 +30,7 @@
   </head>
   <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
-    <span id="notification"></span>
+    <pre class="console"></pre>
     <a href="https://virxec.github.io/CalcPlus">Home</a>
     <form>
       <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
@@ -176,6 +176,21 @@
     </script>
     
     <script>
+      /*
+      const c = document.querySelector(".console");
+      console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
+      console.error = (...args) => args.forEach(e => {
+        const s = document.createElement("span");
+        s.textContent = "\n" + e;
+        s.style.color = "red";
+        s.style.position = "fixed";
+        c.appendChild(s);
+      });
+        
+      window.onerror = (e, s, l, c) => {
+        console.error(`Error: ${e} at: ${s}  : ${l} : ${c}`);
+      };*/
+      
       var sheet = window.document.styleSheets[0];
       
       if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
