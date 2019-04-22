@@ -40,6 +40,8 @@ try {
 		}
 		
 		var decimal = 0;
+		var decimal1 = 0;
+		var decimal2 = 0;
 
 		num1 = num1.split(".");
 		num2 = num2.split(".");
@@ -56,6 +58,10 @@ try {
 				decimal = Math.max(num1.length, num2.length);
 			} else if (mode == 2) {
 				decimal = num1.length + num2.length;
+			} else if (mode == 3) {
+				decimal = num2.length;
+				decimal1 = num1.length;
+				decimal2 = num2.length;
 			}
 			
 			if (num1.length > 1) {
@@ -91,11 +97,13 @@ try {
 		return {
 			num1: {
 				num: num1,
-				isNeg: neg[1]
+				isNeg: neg[1],
+				decimals: decimal1
 			},
 			num2: {
 				num: num2,
-				isNeg: neg[2]
+				isNeg: neg[2],
+				decimals: decimal2
 			},
 			isNeg: isNeg,
 			maxChar: maxChar,
@@ -269,7 +277,37 @@ try {
 		}
 	}
 	function div(num1, num2, maxDecimal) {
+		var parsedNums = parseNums(num1, num2, 3);
+		num1 = parsedNums.num1.num;
+		num2 = parsedNums.num2.num;
+		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
+		var maxChar = parsedNums.maxChar;
+		var decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
+
+		while (num2[num2.length-1] == '0' && num2.length > 1) {
+			delete num2[num2.length-1];
+		}
+		while (num1[num1.length-1] == '0' && num1.length > 1) {
+			delete num2[num1.length-1];
+		}
 		
+		maxDecimal = maxDecimal.split("");
+		if (decimal.length != 1 && decimal[0] != "-") {
+			maxDecimal = maxDecimal.join("");
+			for (var i = 0; isLessThan(decimal[1], decimal[2]); i++) {
+				num1[num1.length] = "0";
+				decimals[0] -= 1;
+			}
+		}
+		
+		var final = "";
+		var carry = "0";
+		
+		for (var i = 0; i < num1.length; i++) {
+			if (isLessThanEqual(decimals[0], maxDecimal)) {
+			    
+			}
+		}
 	}
 	function isLessThan(num1, num1) {
 		var num = sub(num1, num2).split("-");
