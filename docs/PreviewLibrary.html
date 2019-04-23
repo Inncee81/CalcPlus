@@ -50,6 +50,12 @@
       <input type="radio" id="isLessThanEqual" name="math-type" label="Is Less Than or Equal to Algorithm"> Is Less Than or Equal to
       <br>
       <input type="radio" id="isGreaterThanEqual" name="math-type" label="Is Greater Than or Equal to Algorithm"> Is Greater Than or Equal to
+      <br>
+      <input type="radio" id="round" name="math-type" label="Round Algorithm"> Round
+      <br>
+      <input type="radio" id="roundUp" name="math-type" label="Round up Algorithm"> Round Up
+      <br>
+      <input type="radio" id="roundDown" name="math-type" label="Round down Algorithm"> Round Down
     </form>
     <br>
     <button id="addInput">Add another input field</button>
@@ -153,6 +159,30 @@
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
                 final.num = isGreaterThanEqual(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("round")) {
+            final.num = round(document.getElementById("input1").value, document.getElementById("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = round(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("roundUp")) {
+            final.num = roundUp(document.getElementById("input1").value, document.getElementById("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = roundUp(final.num, document.getElementById("input"+e.toString()).value);
+              }
+            }
+            final.display = true;
+          } else if (getChecked("roundDown")) {
+            final.num = roundDown(document.getElementById("input1").value, document.getElementById("input2").value);
+            if (inputBoxes > 2) {
+              for (var e=3; e<=inputBoxes; e++) {
+                final.num = roundDown(final.num, document.getElementById("input"+e.toString()).value);
               }
             }
             final.display = true;
