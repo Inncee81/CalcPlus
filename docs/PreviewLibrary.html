@@ -108,7 +108,7 @@
             }
             final.display = true;
           } else if (getChecked("expo")) {
-            final.num = expo(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            final.num = expo(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
                 final.num = expo(final.num, document.getElementById("input"+e.toString()).value);
@@ -117,7 +117,7 @@
             final.display = true;
           } else if (getChecked("div")) {
             var maxDecimals = document.getElementById("maxDecimals").value;
-            final.num = div(document.getElementById("input1").value, document.getElementByIt("input2").value, maxDecimals);
+            final.num = div(document.getElementById("input1").value, document.getElementById("input2").value, maxDecimals);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
                 final.num = div(final.num, document.getElementById("input"+e.toString()).value, maxDecimals);
@@ -125,7 +125,7 @@
             }
             final.display = true;
           } else if (getChecked("isLessThan")) {
-            final.num = isLessThan(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            final.num = isLessThan(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
                 final.num = isLessThan(final.num, document.getElementById("input"+e.toString()).value);
@@ -133,7 +133,7 @@
             }
             final.display = true;
           } else if (getChecked("isGreaterThan")) {
-            final.num = isGreaterThan(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            final.num = isGreaterThan(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
                 final.num = isGreaterThan(final.num, document.getElementById("input"+e.toString()).value);
@@ -141,7 +141,7 @@
             }
             final.display = true;
           } else if (getChecked("isLessThanEqual")) {
-            final.num = isLessThanEqual(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            final.num = isLessThanEqual(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
                 final.num = isLessThanEqual(final.num, document.getElementById("input"+e.toString()).value);
@@ -149,7 +149,7 @@
             }
             final.display = true;
           } else if (getChecked("isGreaterThanEqual")) {
-            final.num = isGreaterThanEqual(document.getElementById("input1").value, document.getElementByIt("input2").value);
+            final.num = isGreaterThanEqual(document.getElementById("input1").value, document.getElementById("input2").value);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
                 final.num = isGreaterThanEqual(final.num, document.getElementById("input"+e.toString()).value);
