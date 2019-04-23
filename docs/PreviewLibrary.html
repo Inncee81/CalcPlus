@@ -176,28 +176,28 @@
     </script>
     
     <script>
-      const c = document.getElementById(".console");
+      const c = document.querySelector("#console");
       console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
       console.info = (...args) => args.forEach(e => {
         const s = document.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "blue";
         s.style.position = "fixed";
-        c.innerHTML += s;
+        c.appendChild(s);
       });
       console.warn = (...args) => args.forEach(e => {
         const s = document.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "yellow";
         s.style.position = "fixed";
-        c.innerHTML += s;
+        c.appendChild(s);
       });
       console.error = (...args) => args.forEach(e => {
         const s = document.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "red";
         s.style.position = "fixed";
-        c.innerHTML += s;
+        c.appendChild(s);
       });
         
       window.onerror = (e, s, l, c) => {
