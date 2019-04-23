@@ -215,7 +215,7 @@ try {
 
 		return final.join('');
 	}
-	function isLessThan(num1, num1) {
+	function isLessThan(num1, num2) {
 		var num = sub(num1, num2).split("-");
 		if (num.length == 1) {
 			return false;
