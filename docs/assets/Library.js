@@ -215,6 +215,51 @@ try {
 
 		return final.join('');
 	}
+	function isLessThan(num1, num1) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 1) {
+			return false;
+		}
+		return true;
+	}
+	
+	function isGreaterThan(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 2 || num[0] == "0") {
+			return false;
+		}
+		return true;
+	}
+	function isLessThanEqual(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num1.length == 1 && num[0] != "0") {
+			return false;
+		}
+		return true;
+	}
+	function isGreaterThanEqual(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 2) {
+			return false;
+		}
+		return true;
+	}
+	function round(num) {
+		num = num.split(".");
+		num[1] = num.split("");
+		if (isGreaterThanEqual(num[1][0], "5")) {
+		    return add(num[0], "1");
+		}
+		return num[0];
+	}
+	function roundDown(num) {
+		num = num.split(".");
+		return num[0];
+	}
+	function roundUp(num) {
+		num = num.split(".");
+		return add(num[0], "1");
+	}
 
 	function multi(num1, num2) {
 		function addZeros(round) {
@@ -302,42 +347,32 @@ try {
 		
 		var final = "";
 		var carry = "0";
-		
 		for (var i = 0; i < num1.length; i++) {
 			if (isLessThanEqual(decimals[0], maxDecimal)) {
-			    
+				var tempFinal = roundDown((parseInt(num1)/parseInt(carry+num2[i])).toString());
+				carry = (parseInt(num1)%parseInt(carry+num2[i])).toString();
+				if (carry != 0 && i+1 == num1.length) {
+					num1[num1.length] = "0";
+					decimals += 1;
+				}
 			}
 		}
-	}
-	function isLessThan(num1, num1) {
-		var num = sub(num1, num2).split("-");
-		if (num.length == 1) {
-			return false;
+		
+		final = final.split("");
+
+		if (decimals > 0) {
+			final.splice(decimals-1, 0, ".");
 		}
-		return true;
-	}
-	function isGreaterThan(num1, num2) {
-		var num = sub(num1, num2).split("-");
-		if (num.length == 2 || num[0] == "0") {
-			return false;
+		
+		final = final.reverse().join("");
+		
+		if (neg[0]) {
+			return "-"+final;
 		}
-		return true;
-	}
-	function isLessThanEqual(num1, num2) {
-		var num = sub(num1, num2).split("-");
-		if (num1.length == 1 && num[0] != "0") {
-			return false;
-		}
-		return true;
-	}
-	function isGreaterThanEqual(num1, num2) {
-		var num = sub(num1, num2).split("-");
-		if (num.length == 2) {
-			return false;
-		}
-		return true;
+
+		return final;
 	}
 } catch(err) {
-	alert("An unexpected error occured in BNC-Lib.");
+	alert("An unexpected error occured in virxec.github.io/CalcPlusLibrary.js.");
 	console.error(err);
 }
