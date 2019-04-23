@@ -176,9 +176,22 @@
     </script>
     
     <script>
-      /*
       const c = document.querySelector(".console");
       console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
+      console.info = (...args) => args.forEach(e => {
+        const s = document.createElement("span");
+        s.textContent = "\n" + e;
+        s.style.color = "blue";
+        s.style.position = "fixed";
+        c.appendChild(s);
+      });
+      console.warn = (...args) => args.forEach(e => {
+        const s = document.createElement("span");
+        s.textContent = "\n" + e;
+        s.style.color = "yellow";
+        s.style.position = "fixed";
+        c.appendChild(s);
+      });
       console.error = (...args) => args.forEach(e => {
         const s = document.createElement("span");
         s.textContent = "\n" + e;
@@ -189,7 +202,7 @@
         
       window.onerror = (e, s, l, c) => {
         console.error(`Error: ${e} at: ${s}  : ${l} : ${c}`);
-      };*/
+      };
       
       var sheet = window.document.styleSheets[0];
       
