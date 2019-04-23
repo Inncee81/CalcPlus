@@ -75,7 +75,7 @@
         };
         document.getElementById("div").addEventListener("click", function() {
           divChecked = true;
-          document.getElementById("extraInputs").innerHTML += '<span id="divMax">Number: <input type="text" id="maxDecimal" label="Max number of decimals for division algorithm"/> <button class="removeInput" id="divMax" onclick="this.parentNode.remove();divChecked=false;document.getElementById("div").checked=false;document.getElementById("add").checked=true;" label="Delete max decimal field for division algorithm">X</button><br></span>';
+          document.getElementById("extraInputs").innerHTML += '<span id="divMax">Max decimal place: <input type="text" id="maxDecimal" label="Max number of decimals for division algorithm"/> <button class="removeInput" id="divMax" onclick="this.parentNode.remove();divChecked=false;document.getElementById("div").checked=false;document.getElementById("add").checked=true;" label="Delete max decimal field for division algorithm">X</button><br></span>';
         });
         
         var runCalc = function() {
