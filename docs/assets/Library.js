@@ -312,7 +312,7 @@ try {
 	}
 	function expo(num1, num2) {
 		if (num2.split("-").length == 2) {
-			return div("1", multi(num1, num2);
+			return div("1", multi(num1, num2));
 		} else {
 			var final = multi(num1, num1);
 			for (var i=3; isLessThan(i.toString(), num2); i++) {
