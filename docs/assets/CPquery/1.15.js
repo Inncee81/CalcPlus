@@ -2,6 +2,7 @@ function $(query) {
 	if (query == undefined) {
 		return;
 	} else {
+		query = query.toString();
 		var local = function(item2) {
 			if (item2 == undefined) {
 				return localStorage.getItem(query);
@@ -26,11 +27,11 @@ function $(query) {
 		
 		var css = {
 			append: function(item) {
-				var sheet = window.document.styleSheets[query];
+				var sheet = window.document.styleSheets[parseInt(query)];
 				sheet.insertRule(item, sheet.cssRules.length);
 			},
 			replace: function(item) {
-				var sheet = window.document.styleSheets[query];
+				var sheet = window.document.styleSheets[parseInt(query)];
 				var prelength = sheet.cssRules.length;
 				sheet.insertRule(item, sheet.cssRules.length);
 				var postlength = sheet.cssRules.length;
