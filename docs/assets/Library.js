@@ -102,8 +102,6 @@ try {
 			}
 		}
 		
-		throw new Error(num1, num2);
-		
 		return {
 			num1: {
 				num: num1,
@@ -181,7 +179,6 @@ try {
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
-		throw new Error(neg);
 		var maxChar = parsedNums.maxChar;
 		var decimals = parsedNums.decimals;
 
