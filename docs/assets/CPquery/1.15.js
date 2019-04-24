@@ -107,8 +107,14 @@ function $(query) {
 				click: click,
 				val: val,
 				get: get,
-				html: html,
-				text: text
+				html: {
+					append: html.append,
+					replace: html.replace
+				},
+				text: {
+					append: text.append,
+					replace: text.replace
+				}
 			}
 		}
 	} catch(err) {
