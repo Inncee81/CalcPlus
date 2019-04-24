@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <script type="text/javascript" src="https://virxec.github.io/CalcPlus/assets/Library.js"></script>
+    <script type="text/javascript" src="https://virxec.github.io/CalcPlus/assets/CPquery/1.15.js"></script>
     <title>Preview the CalcPlus Library</title>
     <style>
       body {
@@ -77,11 +78,11 @@
         var divChecked = false;
         
         var getChecked = function(name) {
-          return document.getElementById(name).checked;
+          return $("#name").checked();
         };
-        document.getElementById("div").addEventListener("click", function() {
+        $("#div").click(function() {
           divChecked = true;
-          document.getElementById("extraInputs").innerHTML += '<span id="divMax">Max decimal place: <input type="text" id="maxDecimal" label="Max number of decimals for division algorithm"/> <button class="removeInput" id="divMax" onclick="this.parentNode.remove();divChecked=false;document.getElementById("div").checked=false;document.getElementById("add").checked=true;" label="Delete max decimal field for division algorithm">X</button><br></span>';
+          $("#extraInputs").html.append('<span id="divMax">Max decimal place: <input type="text" id="maxDecimal" label="Max number of decimals for division algorithm"/> <button class="removeInput" id="divMax" onclick="this.parentNode.remove();divChecked=false;document.getElementById("div").checked=false;document.getElementById("add").checked=true;" label="Delete max decimal field for division algorithm">X</button><br></span>');
         });
         
         var runCalc = function() {
@@ -90,10 +91,10 @@
             display: false
           };
           if (getChecked("add")) {
-            final.num = add(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = add($("#input1").val()), $("#input2").val());
             if (inputBoxes > 2) {
               for (var i=3; i<=inputBoxes; i++) {
-                final.num = add(final.num, document.getElementById("input"+i.toString()).value);
+                final.num = add(final.num, $("#input"+i.toString()).val());
               }
             }
             final.display = true;
@@ -190,14 +191,14 @@
             console.error("ran nothing");
           }
           if (final.display) {
-            document.getElementById("output").textContent = "Answer: "+final.num;
+            $("#output").text.replace("Answer: "+final.num);
           }
         };
-        document.getElementById("addInput").addEventListener("click", function(){
+        $("#addInput").click(function(){
           inputBoxes++;
-          document.getElementById("extraInputs").innerHTML += '<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();inputBoxes-=1;" label="Delete input field #'+inputBoxes+'">X</button><br></span>';
+          $("#extraInputs").html.append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();inputBoxes-=1;" label="Delete input field #'+inputBoxes+'">X</button><br></span>');
         });
-        document.getElementById("calc").addEventListener("click", function(){
+        $("#calc").click(function(){
           runCalc();
         });
       } catch(err) {
@@ -206,24 +207,24 @@
     </script>
     
     <script>
-      const c = document.querySelector("#console");
+      var c = $("#console").select();
       console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
       console.info = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
+        const s = $("span").create();
         s.textContent = "\n" + e;
         s.style.color = "blue";
         s.style.position = "fixed";
         c.appendChild(s);
       });
       console.warn = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
+        const s = $("span").create();
         s.textContent = "\n" + e;
         s.style.color = "yellow";
         s.style.position = "fixed";
         c.appendChild(s);
       });
       console.error = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
+        const s = $("span").create();
         s.textContent = "\n" + e;
         s.style.color = "red";
         s.style.position = "fixed";
@@ -234,21 +235,20 @@
         console.error(`Error: ${e} at: ${s}  : ${l} : ${c}`);
       };
       
-      var sheet = window.document.styleSheets[0];
-      
-      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
-        if (localStorage.getItem("isDark") == "On") {
-          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
-          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
+      if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
+        if ($("isDark").local() == "On") {
+          $(0).css.replace('body { color: white; background-color: black; }');
+          $(0).css.append('a { color: light_blue; }');
         }
       } else {
-        localStorage.setItem("isDark", "Off");
+        $("isDark").local("Off");
       }
       
       self.addEventListener('install', function(event) {
         event.waitUntil(
-          caches.open('bnc-github-v1').then(function(cache) {
+          caches.open('calcplus-github-v1').then(function(cache) {
             return cache.addAll([
+              "/assets/CPquery/1.15.js",
               "/assets/logo.png"
             ]);
           }));
