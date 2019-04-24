@@ -94,6 +94,14 @@ try {
 			}
 		}
 
+		if (mode != 3) {
+			if (num2.length == maxChar) {
+				var temp = [false, num1, num2];
+				num1 = temp[2];
+				num2 = temp[1];
+			}
+		}
+		
 		return {
 			num1: {
 				num: num1,
@@ -171,6 +179,7 @@ try {
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
+		console.info(neg);
 		var maxChar = parsedNums.maxChar;
 		var decimals = parsedNums.decimals;
 
