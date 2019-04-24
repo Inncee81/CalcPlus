@@ -207,6 +207,7 @@
     </script>
     
     <script>
+      /*
       var c = $("#console").select();
       console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
       console.info = (...args) => args.forEach(e => {
@@ -233,7 +234,7 @@
         
       window.onerror = (e, s, l, c) => {
         console.error(`Error: ${e} at: ${s}  : ${l} : ${c}`);
-      };
+      };*/
       
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
