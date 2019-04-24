@@ -91,7 +91,7 @@
             display: false
           };
           if (getChecked("add")) {
-            final.num = add($("#input1").val()), $("#input2").val());
+            final.num = add($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var i=3; i<=inputBoxes; i++) {
                 final.num = add(final.num, $("#input"+i.toString()).val());
