@@ -94,5 +94,18 @@ function $(query) {
 				element.textContent = item;
 			}
 		};
+		return {
+			local: local,
+			session: session,
+			select: select,
+			create: create,
+			css: css,
+			checked: checked,
+			click: click,
+			val: val,
+			get: get,
+			html: html,
+			text: text
+		}
 	}
 }
