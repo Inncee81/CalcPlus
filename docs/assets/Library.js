@@ -42,8 +42,6 @@ try {
 		var decimal = 0;
 		var decimal1 = 0;
 		var decimal2 = 0;
-
-		
 		
 		num1 = num1.split(".");
 		num2 = num2.split(".");
