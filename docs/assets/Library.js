@@ -219,7 +219,7 @@ try {
 		}
 		
 		if(neg[0]){
-			return "-"+final;
+			return "-"+final.join('');
 		}
 
 		return final.join('');
