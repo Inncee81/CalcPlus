@@ -19,18 +19,27 @@ function $(query) {
 			return document.querySelector(query);
 		}
 		
+		var create = function() {
+			return document.createElement(query);
+		}
+		
 		var css = {
-			sheet = window.document.styleSheets[query];
 			append: function(item) {
+				var sheet = window.document.styleSheets[query];
 				sheet.insertRule(item, sheet.cssRules.length);
 			},
 			replace: function(item) {
+				var sheet = window.document.styleSheets[query];
 				var prelength = sheet.cssRules.length;
 				sheet.insertRule(item, sheet.cssRules.length);
 				var postlength = sheet.cssRules.length;
 				for (var i=0; i<2*prelength-postlength; i++) {
 					sheet.deleteRule(i);
 				}
+			},
+			delete: function(index) {
+				var sheet = window.document.styleSheets[query];
+				sheet.deleteRule(i);
 			}
 		};
 
