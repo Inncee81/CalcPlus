@@ -48,9 +48,11 @@ function $(query) {
 
 			var element;
 			query.split("#");
+			console.log(query);
 			if (query.length == 2) {
 				query = query[1];
 				element = document.getElementById(query);
+				console.log(element);
 			} else {
 				query = query.toString().split(".");
 				if (query.length == 2) {
