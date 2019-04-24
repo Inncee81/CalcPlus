@@ -86,9 +86,11 @@ try {
 
 		if (mode != 3) {
 			if (num2.length == maxChar) {
-				var temp = [false, num1, num2];
-				num1 = temp[2];
-				num2 = temp[1];
+				if (mode != 3) {
+					var temp = [false, num1, num2];
+					num1 = temp[2];
+					num2 = temp[1];
+				}
 				isNeg = true;
 			}
 		}
@@ -100,6 +102,21 @@ try {
 		} else if (maxChar > num2.length) {
 			for(var c=num2.length;c<maxChar;c++) {
 				num2.unshift("0");
+			}
+		}
+		
+		if (isNeg == false) {
+			for (var i=num2.length-1; i>=0; i--) {
+				if (isNeg == false) {
+					if (num2[i] > num1[i]) {
+						if (mode != 3) {
+							var temp = [false, num1, num2];
+							num1 = temp[2];
+							num2 = temp[1];
+						}
+						isNeg = true;
+					}
+				}
 			}
 		}
 		
