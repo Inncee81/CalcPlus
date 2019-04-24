@@ -78,7 +78,7 @@
         var divChecked = false;
         
         var getChecked = function(name) {
-          return $("#name").checked();
+          return $(`#${name}`).checked();
         };
         $("#div").click(function() {
           divChecked = true;
@@ -196,7 +196,7 @@
         };
         $("#addInput").click(function(){
           inputBoxes++;
-          $("#extraInputs").html.append('<span id="id'+inputBoxes+'">Number: <input type="text" id="input'+inputBoxes+'" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();inputBoxes-=1;" label="Delete input field #'+inputBoxes+'">X</button><br></span>');
+          $("#extraInputs").html.append(`<span id="id${inputBoxes}">Number: <input type="text" id="input${inputBoxes}" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();inputBoxes-=1;" label="Delete input field #'+inputBoxes+'">X</button><br></span>');
         });
         $("#calc").click(function(){
           runCalc();
