@@ -1,5 +1,6 @@
 function $(query) {
 	if (query == undefined) {
+		return;
 	} else {
 		var local = function(item2) {
 			if (item2 == undefined) {
