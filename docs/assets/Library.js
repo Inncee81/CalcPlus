@@ -86,7 +86,6 @@ try {
 
 		var maxChar = Math.max(num1.length, num2.length);
 
-
 		if (mode != 3) {
 			if (num2.length == maxChar) {
 				var temp = [false, num1, num2];
@@ -104,6 +103,9 @@ try {
 				num2.unshift("0");
 			}
 		}
+		
+		throw new Error(num1);
+		throw new Error(num2);
 		
 		return {
 			num1: {
@@ -182,7 +184,7 @@ try {
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
-		console.info(neg);
+		throw new Error(neg);
 		var maxChar = parsedNums.maxChar;
 		var decimals = parsedNums.decimals;
 
@@ -386,5 +388,5 @@ try {
 	}
 } catch(err) {
 	alert("An unexpected error occured in virxec.github.io/CalcPlusLibrary.js.");
-	console.error(err);
+	throw new Error(err);
 }
