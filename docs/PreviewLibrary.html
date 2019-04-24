@@ -99,10 +99,10 @@
             }
             final.display = true;
           } else if (getChecked("sub")) {
-            final.num = sub(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = sub($("#input1").val(), $("input2").val());
             if (inputBoxes > 2) {
               for (var s=3; s<=inputBoxes; s++) {
-                final.num = sub(final.num, document.getElementById("input"+s.toString()).value);
+                final.num = sub(final.num, $("input"+s.toString()).val());
               }
             }
             final.display = true;
@@ -123,7 +123,7 @@
             }
             final.display = true;
           } else if (getChecked("div")) {
-            var maxDecimals = document.getElementById("maxDecimals").value;
+            var maxDecimals = document.getElementById("divMax").value;
             final.num = div(document.getElementById("input1").value, document.getElementById("input2").value, maxDecimals);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
@@ -238,7 +238,7 @@
       
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
-          $(0).css.replace('body { color: white; background-color: black; }');
+          $(0).css.append('body { color: white; background-color: black; }');
           $(0).css.append('a { color: light_blue; }');
         }
       } else {
