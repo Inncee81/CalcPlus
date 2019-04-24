@@ -1,5 +1,6 @@
 function $(query) {
 	if (query == undefined) {
+	} else {
 		var local = function(item2) {
 			if (item2 == undefined) {
 				return localStorage.getItem(item);
@@ -13,7 +14,7 @@ function $(query) {
 			}
 			return sessionStorage.setItem(item, item2);
 		}
-	} else {
+		
 		var select = function() {
 			return document.querySelector(query);
 		}
