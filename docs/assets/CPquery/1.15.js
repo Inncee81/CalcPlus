@@ -3,16 +3,16 @@ function $(query) {
 	} else {
 		var local = function(item2) {
 			if (item2 == undefined) {
-				return localStorage.getItem(item);
+				return localStorage.getItem(query);
 			}
-			return localStorage.setItem(item, item2);
+			return localStorage.setItem(query, item2);
 		}
 		
 		var session = function(item2) {
 			if (item2 == undefined) {
-				return sessionStorage.getItem(item);
+				return sessionStorage.getItem(query);
 			}
-			return sessionStorage.setItem(item, item2);
+			return sessionStorage.setItem(query, item2);
 		}
 		
 		var select = function() {
