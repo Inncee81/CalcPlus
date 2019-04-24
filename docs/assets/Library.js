@@ -43,6 +43,8 @@ try {
 		var decimal1 = 0;
 		var decimal2 = 0;
 
+		
+		
 		num1 = num1.split(".");
 		num2 = num2.split(".");
 		
@@ -84,6 +86,15 @@ try {
 
 		var maxChar = Math.max(num1.length, num2.length);
 
+
+		if (mode != 3) {
+			if (num2.length == maxChar) {
+				var temp = [false, num1, num2];
+				num1 = temp[2];
+				num2 = temp[1];
+			}
+		}
+		
 		if(maxChar > num1.length) {
 			for(var i=num1.length;i<maxChar;i++) {
 				num1.unshift("0");
@@ -91,14 +102,6 @@ try {
 		} else if (maxChar > num2.length) {
 			for(var c=num2.length;c<maxChar;c++) {
 				num2.unshift("0");
-			}
-		}
-
-		if (mode != 3) {
-			if (num2.length == maxChar) {
-				var temp = [false, num1, num2];
-				num1 = temp[2];
-				num2 = temp[1];
 			}
 		}
 		
