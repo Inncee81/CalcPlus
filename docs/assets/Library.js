@@ -104,8 +104,7 @@ try {
 			}
 		}
 		
-		throw new Error(num1);
-		throw new Error(num2);
+		throw new Error(num1, num2);
 		
 		return {
 			num1: {
