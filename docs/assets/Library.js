@@ -89,6 +89,7 @@ try {
 				var temp = [false, num1, num2];
 				num1 = temp[2];
 				num2 = temp[1];
+				isNeg = true;
 			}
 		}
 		
