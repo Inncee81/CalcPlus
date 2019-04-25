@@ -234,7 +234,7 @@
       
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
-          $(0).css.append('body { color: white; background-color: black; }');
+          $(0).css.replace('body { color: white; background-color: black; }');
           $(0).css.append('a { color: light_blue; }');
         }
       } else {
