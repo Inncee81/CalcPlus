@@ -31,7 +31,7 @@
   </head>
   <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
-    <span id="console"></span>
+    <span class="console"></span>
     <a href="https://virxec.github.io/CalcPlus">Home</a>
     <form>
       <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
@@ -207,27 +207,24 @@
     </script>
     
     <script>
-      var c = $("#console").select();
+      var c = document.querySelector(".console");
       console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
       console.info = (...args) => args.forEach(e => {
-        const s = $("span").create();
+        const s = docuemnt.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "blue";
-        s.style.position = "fixed";
         c.appendChild(s);
       });
       console.warn = (...args) => args.forEach(e => {
-        const s = $("span").create();
+        const s = docuemnt.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "yellow";
-        s.style.position = "fixed";
         c.appendChild(s);
       });
       console.error = (...args) => args.forEach(e => {
-        const s = $("span").create();
+        const s = docuemnt.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "red";
-        s.style.position = "fixed";
         c.appendChild(s);
       });
         
