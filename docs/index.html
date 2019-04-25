@@ -56,9 +56,9 @@
       
       if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
         if (localStorage.getItem("isDark") == "On") {
-          $(0).append(window, 'body { color: white; background-color: black; }');
-          $(0).append(window, 'a { color: rgb(0, 0, 255); }');
-          $(0).append(window, 'span.fix { color: rgb(255, 255, 0); }');
+          $(0).css.append(window, 'body { color: white; background-color: black; }');
+          $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
+          $(0).css.append(window, 'span.fix { color: rgb(255, 255, 0); }');
         }
       } else {
         localStorage.setItem("isDark", "Off");
