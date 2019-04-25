@@ -33,12 +33,10 @@ function $(query) {
 				},
 				replace: function(item) {
 					var sheet = window.document.styleSheets[parseInt(query)];
-					var prelength = sheet.cssRules.length;
-					sheet.insertRule(item, sheet.cssRules.length);
-					var postlength = sheet.cssRules.length;
-					for (var i=0; i<prelength-(postlength-prelength); i++) {
+					for (var i=0; i<sheet.cssRules.length; i++) {
 						sheet.deleteRule(i);
 					}
+					sheet.insertRule(item, sheet.cssRules.length);
 				},
 				delete: function(index) {
 					var sheet = window.document.styleSheets[query];
