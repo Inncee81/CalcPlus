@@ -5,6 +5,7 @@
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
+    <script type="text/javascript" src="https://virxec.github.io/CalcPlus/assets/CPquery/1.15.js"></script>
     <title>CalcPlus Library Source Code</title>
     <style type="text/css">
       body {
@@ -12,7 +13,7 @@
         background-color: white;
       }
       a {
-        color: dark_blue;
+        color: rgb(0, 0, 192);
       }
       embed {
         background-color: white;
@@ -27,21 +28,21 @@
     <br>
     <embed src="https://virxec.github.io/CalcPlus/assets/Library.js" width="100%" height="8000px">
     <script>
-      var sheet = window.document.styleSheets[0];
-      
-      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
-        if (localStorage.getItem("isDark") == "On") {
-          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
-          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
+      if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
+        if ($("isDark").local() == "On") {
+          $(0).css.append(window, 'body { color: white; background-color: black; }');
+          $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
+          $(0).css.append(window, 'span.fix { color: rgb(255, 255, 0); }');
         }
       } else {
-        localStorage.setItem("isDark", "Off");
+        $("isDark").local("Off");
       }
       
       self.addEventListener('install', function(event) {
         event.waitUntil(
-          caches.open('calcplus-github-v1').then(function(cache) {
+          caches.open('calcplus-github-v2').then(function(cache) {
             return cache.addAll([
+              "/assets/CPquery/1.15.js",
               "/assets/logo.png"
             ]);
           }));
