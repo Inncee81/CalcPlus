@@ -94,7 +94,7 @@
             final.num = add($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var i=3; i<=inputBoxes; i++) {
-                final.num = add(final.num, $("#input"+i.toString()).val());
+                final.num = add(final.num, $(`#input${i.toString()}`).val());
               }
             }
             final.display = true;
@@ -102,88 +102,88 @@
             final.num = sub($("#input1").val(), $("input2").val());
             if (inputBoxes > 2) {
               for (var s=3; s<=inputBoxes; s++) {
-                final.num = sub(final.num, $("input"+s.toString()).val());
+                final.num = sub(final.num, $(`#input${s.toString()}`).val());
               }
             }
             final.display = true;
           } else if (getChecked("multi")) {
-            final.num = multi(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = multi($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var m=3; m<=inputBoxes; m++) {
-                final.num = multi(final.num, document.getElementById("input"+m.toString()).value);
+                final.num = multi(final.num, $(`#input${m.toString()}`).val());
               }
             }
             final.display = true;
           } else if (getChecked("expo")) {
-            final.num = expo(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = expo($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = expo(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = expo(final.num, $(`#input${e.toString()}`).val());
               }
             }
             final.display = true;
           } else if (getChecked("div")) {
-            var maxDecimals = document.getElementById("divMax").value;
-            final.num = div(document.getElementById("input1").value, document.getElementById("input2").value, maxDecimals);
+            var maxDecimals = $("#divMax").val();
+            final.num = div($("#input1").val(), $("#input2").val(), maxDecimals);
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = div(final.num, document.getElementById("input"+e.toString()).value, maxDecimals);
+                final.num = div(final.num, $(`#input${e.toString()}`).val(), maxDecimals);
               }
             }
             final.display = true;
           } else if (getChecked("isLessThan")) {
-            final.num = isLessThan(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = isLessThan($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = isLessThan(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = isLessThan(final.num, $("#input${e.toString()}`).val());
               }
             }
             final.display = true;
           } else if (getChecked("isGreaterThan")) {
-            final.num = isGreaterThan(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = isGreaterThan($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = isGreaterThan(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = isGreaterThan(final.num, $("#input${e.toString()}`).val());
               }
             }
             final.display = true;
           } else if (getChecked("isLessThanEqual")) {
-            final.num = isLessThanEqual(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = isLessThanEqual($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = isLessThanEqual(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = isLessThanEqual(final.num, $("#input${e.toString()}).val());
               }
             }
             final.display = true;
           } else if (getChecked("isGreaterThanEqual")) {
-            final.num = isGreaterThanEqual(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = isGreaterThanEqual($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = isGreaterThanEqual(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = isGreaterThanEqual(final.num, $(`#input${e.toString()}`).val());
               }
             }
             final.display = true;
           } else if (getChecked("round")) {
-            final.num = round(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = round($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = round(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = round(final.num, $(`#input${e.toString()}`).val());
               }
             }
             final.display = true;
           } else if (getChecked("roundUp")) {
-            final.num = roundUp(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = roundUp($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = roundUp(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = roundUp(final.num, $(`#input${e.toString()}`).value);
               }
             }
             final.display = true;
           } else if (getChecked("roundDown")) {
-            final.num = roundDown(document.getElementById("input1").value, document.getElementById("input2").value);
+            final.num = roundDown($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = roundDown(final.num, document.getElementById("input"+e.toString()).value);
+                final.num = roundDown(final.num, $(`#input${e.toString()}`).val());
               }
             }
             final.display = true;
@@ -207,7 +207,6 @@
     </script>
     
     <script>
-      /*
       var c = $("#console").select();
       console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
       console.info = (...args) => args.forEach(e => {
@@ -233,8 +232,8 @@
       });
         
       window.onerror = (e, s, l, c) => {
-        console.error(`Error: ${e} at: ${s}  : ${l} : ${c}`);
-      };*/
+        console.error(`Error: ${e} at: ${s} : ${l} : ${c}`);
+      };
       
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
