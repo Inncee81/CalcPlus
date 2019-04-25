@@ -54,14 +54,14 @@
     
     <script>
       
-      if (localStorage.getItem("isDark") == "Off" || localStorage.getItem("isDark") == "On") {
-        if (localStorage.getItem("isDark") == "On") {
+      if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
+        if ($("isDark").local() == "On") {
           $(0).css.append(window, 'body { color: white; background-color: black; }');
           $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
           $(0).css.append(window, 'span.fix { color: rgb(255, 255, 0); }');
         }
       } else {
-        localStorage.setItem("isDark", "Off");
+        $("isDark").local("Off");
       }
       
       self.addEventListener('install', function(event) {
