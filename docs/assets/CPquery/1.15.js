@@ -27,20 +27,20 @@ function $(query) {
 			}
 
 			var css = {
-				append: function(item) {
-					var sheet = window.document.styleSheets[parseInt(query)];
+				append: function(wndw, item) {
+					var sheet = wndw.document.styleSheets[parseInt(query)];
 					sheet.insertRule(item, sheet.cssRules.length);
 				},
-				replace: function(item) {
-					var sheet = window.document.styleSheets[parseInt(query)];
+				replace: function(wndw, item) {
+					var sheet = wndw.document.styleSheets[parseInt(query)];
 					for (var i=0; i<sheet.cssRules.length; i++) {
 						sheet.deleteRule(i);
 					}
 					sheet.insertRule(item, sheet.cssRules.length);
 				},
-				delete: function(index) {
-					var sheet = window.document.styleSheets[query];
-					sheet.deleteRule(i);
+				delete: function(wndw, index) {
+					var sheet = wndw.document.styleSheets[query];
+					sheet.deleteRule(index);
 				}
 			};
 
