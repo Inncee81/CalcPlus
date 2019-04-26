@@ -25,13 +25,12 @@
     <h3>Dark Mode <button id="darkMode" onclick="toggleDarkMode()">Off</button></h3>
     
     <script>
-      var darkB = document.getElementById("darkMode");
+      var darkB = $("#darkMode");
       
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
           $(0).css.replace(window, 'body { color: white; background-color: black; }');
           $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
-          $(0).css.append(window, 'span.fix { color: rgb(255, 255, 0); }');
         }
       } else {
         $("isDark").local("Off");
@@ -39,31 +38,31 @@
       
       function toggleDarkMode() {
         if ($("isDark").local() == "Off") {
-          sheet.insertRule('body { color: white; background-color: black; }', sheet.cssRules.length);
-          sheet.insertRule('a { color: light_blue; }', sheet.cssRules.length);
-          localStorage.setItem("isDark", "On");
-          darkB.textContent = localStorage.getItem("isDark");
-        } else if (localStorage.getItem("isDark") == "On") {
-          sheet.insertRule('body { color: black; background-color: white; }', sheet.cssRules.length);
-          sheet.insertRule('a { color: dark_blue; }', sheet.cssRules.length);
-          localStorage.setItem("isDark", "Off");
-          darkB.textContent = localStorage.getItem("isDark");
+          $(0).css.replace(window, 'body { color: white; background-color: black; }');
+          $(0).css.append('a { color: rgb(0, 0, 192); }');
+          $("isDark").local("On");
+          darkB.text.replace = $("isDark").local();
+        } else if ($("isDark").local() == "On") {
+          $(0).css.replace(window, 'body { color: black; background-color: white; }');
+          $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
+          $("isDark").local("Off");
+          darkB.text.replace = $("isDark").local();
         }
       }
       
-      var offlineB = document.getElementById("offlineMode");
+      var offlineB = $("offlineMode");
       
-      if (localStorage.getItem("isOffline") == "Off" || localStorage.getItem("isOffline") == "On") {
-        offlineB.textContent = localStorage.getItem("isOffline");
+      if ($("isOffline").local() == "Off" || $("isOffline").local() == "On") {
+        offlineB.text.replace($("isOffline").local());
       } else {
-        localStorage.setItem("isOffline", "Off");
+        $("isOffline").local("Off");
       }
       
       function toggleOffline() {
-        offlineB.textContent = "Checking...";
+        offlineB.text.replace("Checking...");
         if('serviceWorker' in navigator) {
-          if (localStorage.getItem("isOffline") == "Off") {
-            offlineB.textContent = "Loading Service Workers...";
+          if ($("isOffline").local() == "Off") {
+            offlineB.text.replace("Loading Service Workers...");
 
             navigator.serviceWorker.register("/PreviewLibrary.html");
             navigator.serviceWorker.register("/LibrarySource.html");
@@ -78,21 +77,21 @@
               console.log('Service worker successfully registered on scope', registration.scope);
             });
 
-            localStorage.setItem("isOffline", "On");
-            offlineB.textContent = localStorage.getItem("isOffline");
-          } else if (localStorage.getItem("isOffline") == "On") {
-            offlineB.textContent = "Removing Service Workers...";
+            $("isOffline").local("On");
+            offlineB.text.replace($("isOffline").local());
+          } else if ($("isOffline").local() == "On") {
+            offlineB.text.replace("Removing Service Workers...");
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
               for(let registration of registrations) {
                 registration.unregister();
               }
             });
 
-            localStorage.setItem("isOffline", "Off");
-            offlineB.textContent = localStorage.getItem("isOffline");
+            $("isOffline").local("Off");
+            offlineB.text.replace($("isOffline").local());
           }
         } else {
-          goOffline.textContent = "Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.";
+          goOffline.text.replace("Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.");
         }
       }
       
