@@ -50,7 +50,7 @@
         console.error(`Error: ${e} at: ${s} : ${l} : ${c}`);
       };
       
-      var darkB = $("#darkMode");
+      var darkB = $("#darkMode").this();
       
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
@@ -66,16 +66,16 @@
           $(0).css.replace(window, 'body { color: white; background-color: black; }');
           $(0).css.append('a { color: rgb(0, 0, 192); }');
           $("isDark").local("On");
-          darkB.text.replace = $("isDark").local();
+          darkB.text.replace($("isDark").local());
         } else if ($("isDark").local() == "On") {
           $(0).css.replace(window, 'body { color: black; background-color: white; }');
           $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
           $("isDark").local("Off");
-          darkB.text.replace = $("isDark").local();
+          darkB.text.replace($("isDark").local());
         }
       }
       
-      var offlineB = $("offlineMode");
+      var offlineB = $("offlineMode").this();
       
       if ($("isOffline").local() == "Off" || $("isOffline").local() == "On") {
         offlineB.text.replace($("isOffline").local());
