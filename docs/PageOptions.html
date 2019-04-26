@@ -6,7 +6,7 @@
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
-    <script type="text/javascript" src="https://virxec.github.io/CalcPlus/assets/CPquery/1.15.js"></script>
+    <script type="text/javascript" src="https://virxec.github.io/CalcPlus/assets/CPquery.js"></script>
     <title>CalcPlus Page Options</title>
     <style type="text/css">
       body {
@@ -51,40 +51,40 @@
         console.error(`Error: ${e} at: ${s} : ${l} : ${c}`);
       };
       
-      if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
-        if ($("isDark").local() == "On") {
-          $(0).css.replace(window, 'body { color: white; background-color: black; }');
-          $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
+      if ($("@isDark").this == "Off" || $("@isDark").this == "On") {
+        if ($("@isDark").this == "On") {
+          $(window).css.replace(0, 'body { color: white; background-color: black; }');
+          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
         }
       } else {
-        $("isDark").local("Off");
+        $("@isDark").set("Off");
       }
       
       function toggleDarkMode() {
-        if ($("isDark").local() == "Off") {
-          $(0).css.replace(window, 'body { color: white; background-color: black; }');
-          $(0).css.append('a { color: rgb(0, 0, 192); }');
-          $("isDark").local("On");
-          $("#darkMode").text.replace($("isDark").local());
+        if ($("@isDark").this == "Off") {
+          $(window).css.replace(0, 'body { color: white; background-color: black; }');
+          $(window).css.append(0, 'a { color: rgb(0, 0, 192); }');
+          $("@isDark").set("On");
+          $("#darkMode").text.replace($("isDark").this);
         } else if ($("isDark").local() == "On") {
-          $(0).css.replace(window, 'body { color: black; background-color: white; }');
-          $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
-          $("isDark").local("Off");
-          $("#darkMode").text.replace($("isDark").local());
+          $(window).css.replace(0, 'body { color: black; background-color: white; }');
+          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
+          $("@isDark").set("Off");
+          $("#darkMode").text.replace($("@isDark").this);
         }
       }
       
-      if ($("isOffline").local() == "Off" || $("isOffline").local() == "On") {
-        $("offlineMode").text.replace($("isOffline").local());
+      if ($("@isOffline").this == "Off" || $("@isOffline").this == "On") {
+        $("#offlineMode").text.replace($("@isOffline").this);
       } else {
-        $("isOffline").local("Off");
+        $("@isOffline").set("Off");
       }
       
       function toggleOffline() {
-        offlineB.text.replace("Checking...");
+        $("#offlineMode").text.replace("Checking...");
         if('serviceWorker' in navigator) {
           if ($("isOffline").local() == "Off") {
-            $("offlineMode").text.replace("Loading Service Workers...");
+            $("#offlineMode").text.replace("Loading Service Workers...");
 
             navigator.serviceWorker.register("/PreviewLibrary.html");
             navigator.serviceWorker.register("/LibrarySource.html");
@@ -99,21 +99,21 @@
               console.log('Service worker successfully registered on scope', registration.scope);
             });
 
-            $("isOffline").local("On");
-            $("offlineMode").text.replace($("isOffline").local());
+            $("@isOffline").set("On");
+            $("#offlineMode").text.replace($("@isOffline").this);
           } else if ($("isOffline").local() == "On") {
-            $("offlineMode").text.replace("Removing Service Workers...");
+            $("#offlineMode").text.replace("Removing Service Workers...");
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
               for(let registration of registrations) {
                 registration.unregister();
               }
             });
 
-            $("isOffline").local("Off");
-            $("offlineMode").text.replace($("isOffline").local());
+            $("@isOffline").set("Off");
+            $("#offlineMode").text.replace($("@isOffline").this);
           }
         } else {
-          $("offlineMode").text.replace("Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.");
+          $("#offlineMode").text.replace("Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.");
         }
       }
       
@@ -121,7 +121,7 @@
         event.waitUntil(
           caches.open('calcplus-github-v2').then(function(cache) {
             return cache.addAll([
-              "/assets/CPquery/1.15.js",
+              "/assets/CPquery.js",
               "/assets/logo.png"
             ]);
           }));
