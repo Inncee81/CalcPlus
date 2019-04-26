@@ -14,20 +14,20 @@ function $(query) {
 			}
 
 			var css = {
-				append: function(wndw, item) {
-					var sheet = wndw.document.styleSheets[parseInt(query)];
+				append: function(index, item) {
+					var sheet = query.document.styleSheets[parseInt(index)];
 					sheet.insertRule(item, sheet.cssRules.length);
 				},
-				replace: function(wndw, item) {
-					var sheet = wndw.document.styleSheets[parseInt(query)];
+				replace: function(index, item) {
+					var sheet = query.document.styleSheets[parseInt(index)];
 					for (var i=0; i<sheet.cssRules.length; i++) {
 						sheet.deleteRule(i);
 					}
 					sheet.insertRule(item, sheet.cssRules.length);
 				},
-				delete: function(wndw, index) {
-					var sheet = wndw.document.styleSheets[query];
-					sheet.deleteRule(index);
+				delete: function(index, index2) {
+					var sheet = query.document.styleSheets[index];
+					sheet.deleteRule(index2);
 				}
 			};
 
