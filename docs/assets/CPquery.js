@@ -73,14 +73,16 @@ function $(query) {
 			var val = function() {
 				return element.value;
 			}
-
-			var me = element;
-			if (local) {
-				me = localStorage.getItem(query);
-			} else if (session) {
-				me = sessionStorage.getItem(query);
-			}
 			
+			var me = function() {
+				var me = element;
+				if (local) {
+					me = localStorage.getItem(query);
+				} else if (session) {
+					me = sessionStorage.getItem(query);
+				}
+			}
+
 			var set = function(item) {
 				if (local) {
 					localStorage.setItem(query, item);
