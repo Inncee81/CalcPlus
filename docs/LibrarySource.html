@@ -30,9 +30,8 @@
     <script>
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
-          $(0).css.append(window, 'body { color: white; background-color: black; }');
+          $(0).css.replace(window, 'body { color: white; background-color: black; }');
           $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
-          $(0).css.append(window, 'span.fix { color: rgb(255, 255, 0); }');
         }
       } else {
         $("isDark").local("Off");
