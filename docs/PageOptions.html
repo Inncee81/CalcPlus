@@ -85,7 +85,7 @@
       function toggleOffline() {
         $("#offlineMode").text.replace("Checking...");
         if('serviceWorker' in navigator) {
-          if ($("isOffline").me() == "Off") {
+          if ($("@isOffline").me() == "Off") {
             $("#offlineMode").text.replace("Loading Service Workers...");
 
             navigator.serviceWorker.register("/PreviewLibrary.html");
@@ -103,7 +103,7 @@
 
             $("@isOffline").set("On");
             $("#offlineMode").text.replace($("@isOffline").me());
-          } else if ($("isOffline").me() == "On") {
+          } else if ($("@isOffline").me() == "On") {
             $("#offlineMode").text.replace("Removing Service Workers...");
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
               for(let registration of registrations) {
@@ -113,6 +113,8 @@
 
             $("@isOffline").set("Off");
             $("#offlineMode").text.replace($("@isOffline").me());
+          } else {
+            @("#offlineMode").text.replace("Something went wrong.");
           }
         } else {
           $("#offlineMode").text.replace("Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.");
