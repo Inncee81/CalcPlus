@@ -151,7 +151,7 @@
             final.num = isLessThanEqual($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var e=3; e<=inputBoxes; e++) {
-                final.num = isLessThanEqual(final.num, $(`#input${e.toString()}).val());
+                final.num = isLessThanEqual(final.num, $(`#input${e.toString()}`).val());
               }
             }
             final.display = true;
