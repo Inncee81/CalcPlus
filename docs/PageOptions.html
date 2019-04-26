@@ -29,19 +29,19 @@
       var c = document.querySelector(".console");
       console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
       console.info = (...args) => args.forEach(e => {
-        const s = docuemnt.createElement("span");
+        const s = document.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "blue";
         c.appendChild(s);
       });
       console.warn = (...args) => args.forEach(e => {
-        const s = docuemnt.createElement("span");
+        const s = document.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "yellow";
         c.appendChild(s);
       });
       console.error = (...args) => args.forEach(e => {
-        const s = docuemnt.createElement("span");
+        const s = document.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "red";
         c.appendChild(s);
