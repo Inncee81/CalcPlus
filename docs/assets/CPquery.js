@@ -76,7 +76,6 @@ function $(query) {
 			
 			var me = function() {
 				if (local) {
-					console.log(localStorage.getItem(query));
 					return localStorage.getItem(query);
 				} else if (session) {
 					return sessionStorage.getItem(query);
