@@ -119,3 +119,7 @@ function $(query) {
 		throw new Error(err);
 	}
 }
+
+function cpQuery() {
+	return $();
+}
