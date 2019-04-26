@@ -4,20 +4,7 @@ function $(query) {
 			return;
 		} else {
 			query = query.toString();
-			var local = function(item2) {
-				if (item2 == undefined) {
-					return localStorage.getItem(query);
-				}
-				return localStorage.setItem(query, item2);
-			}
-
-			var session = function(item2) {
-				if (item2 == undefined) {
-					return sessionStorage.getItem(query);
-				}
-				return sessionStorage.setItem(query, item2);
-			}
-
+			
 			var select = function() {
 				return document.querySelector(query);
 			}
@@ -45,6 +32,8 @@ function $(query) {
 			};
 
 			var element;
+			var local = false;
+			var session = false;
 			query = query.split("#");
 			if (query.length == 2) {
 				query = query[1];
@@ -54,8 +43,19 @@ function $(query) {
 				if (query.length == 2) {
 					query = query[1];
 					element = document.getElementsByClassName(query);
-				} else  {
-					element = document.getElementsByTagName(query);
+				} else {
+					query = query.toString().split("@");
+					if (query.length == 2) {
+						query = query[1];
+						local = true;
+					} else {
+						query = query.toString().split("*");
+						if (query.length == 2) {
+							query = query[1];
+							session = true;
+						}
+						element = document.getElementsByTagName(query);
+					}
 				}
 			}
 
@@ -75,7 +75,20 @@ function $(query) {
 			}
 
 			var get = function() {
+				if (local) {
+					return localStorage.getItem(query);
+				} else if (session) {
+					return sessionStorage.getItem(query);
+				}
 				return element;
+			}
+			
+			var set = function(item) {
+				if (local) {
+					localStorage.setItem(query, item);
+				} else if (session) {
+					sessionStorage.setItem(query, item);
+				}
 			}
 
 			var html = {
@@ -96,10 +109,6 @@ function $(query) {
 				}
 			};
 			
-			var this = function() {
-				return element;
-			}
-			
 			return {
 				local: local,
 				session: session,
@@ -110,6 +119,7 @@ function $(query) {
 				click: click,
 				val: val,
 				get: get,
+				set: set,
 				html: {
 					append: html.append,
 					replace: html.replace
@@ -117,8 +127,7 @@ function $(query) {
 				text: {
 					append: text.append,
 					replace: text.replace
-				},
-				this: this
+				}
 			}
 		}
 	} catch(err) {
