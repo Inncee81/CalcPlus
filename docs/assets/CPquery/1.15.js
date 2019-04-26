@@ -95,6 +95,11 @@ function $(query) {
 					element.textContent = item;
 				}
 			};
+			
+			var this = function() {
+				return element;
+			}
+			
 			return {
 				local: local,
 				session: session,
@@ -112,7 +117,8 @@ function $(query) {
 				text: {
 					append: text.append,
 					replace: text.replace
-				}
+				},
+				this: this
 			}
 		}
 	} catch(err) {
