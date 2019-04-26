@@ -51,8 +51,8 @@
         console.error(`Error: ${e} at: ${s} : ${l} : ${c}`);
       };
       
-      if ($("@isDark").this == "Off" || $("@isDark").this == "On") {
-        if ($("@isDark").this == "On") {
+      if ($("@isDark").me == "Off" || $("@isDark").me == "On") {
+        if ($("@isDark").me == "On") {
           $(window).css.replace(0, 'body { color: white; background-color: black; }');
           $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
         }
@@ -61,21 +61,21 @@
       }
       
       function toggleDarkMode() {
-        if ($("@isDark").this == "Off") {
+        if ($("@isDark").me == "Off") {
           $(window).css.replace(0, 'body { color: white; background-color: black; }');
           $(window).css.append(0, 'a { color: rgb(0, 0, 192); }');
           $("@isDark").set("On");
-          $("#darkMode").text.replace($("isDark").this);
-        } else if ($("isDark").local() == "On") {
+          $("#darkMode").text.replace($("isDark").me);
+        } else if ($("isDark").me == "On") {
           $(window).css.replace(0, 'body { color: black; background-color: white; }');
           $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
           $("@isDark").set("Off");
-          $("#darkMode").text.replace($("@isDark").this);
+          $("#darkMode").text.replace($("@isDark").me);
         }
       }
       
-      if ($("@isOffline").this == "Off" || $("@isOffline").this == "On") {
-        $("#offlineMode").text.replace($("@isOffline").this);
+      if ($("@isOffline").me == "Off" || $("@isOffline").me == "On") {
+        $("#offlineMode").text.replace($("@isOffline").me);
       } else {
         $("@isOffline").set("Off");
       }
@@ -83,7 +83,7 @@
       function toggleOffline() {
         $("#offlineMode").text.replace("Checking...");
         if('serviceWorker' in navigator) {
-          if ($("isOffline").local() == "Off") {
+          if ($("isOffline").me == "Off") {
             $("#offlineMode").text.replace("Loading Service Workers...");
 
             navigator.serviceWorker.register("/PreviewLibrary.html");
@@ -100,8 +100,8 @@
             });
 
             $("@isOffline").set("On");
-            $("#offlineMode").text.replace($("@isOffline").this);
-          } else if ($("isOffline").local() == "On") {
+            $("#offlineMode").text.replace($("@isOffline").me);
+          } else if ($("isOffline").me == "On") {
             $("#offlineMode").text.replace("Removing Service Workers...");
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
               for(let registration of registrations) {
@@ -110,7 +110,7 @@
             });
 
             $("@isOffline").set("Off");
-            $("#offlineMode").text.replace($("@isOffline").this);
+            $("#offlineMode").text.replace($("@isOffline").me);
           }
         } else {
           $("#offlineMode").text.replace("Your browser doesn't support Service Workers. Please use one of the major browsers, like Google Chrome.");
