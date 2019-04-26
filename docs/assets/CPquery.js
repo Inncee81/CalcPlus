@@ -116,7 +116,7 @@ function $(query) {
 				checked: checked,
 				click: click,
 				val: val,
-				this: me,
+				me: me,
 				set: set,
 				html: {
 					append: html.append,
