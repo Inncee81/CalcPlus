@@ -27,8 +27,8 @@ function $(query) {
 			}
 
 			var css = {
-				append: function(item) {
-					var sheet = window.document.styleSheets[parseInt(query)];
+				append: function(wndw, item) {
+					var sheet = wndw.document.styleSheets[parseInt(query)];
 					sheet.insertRule(item, sheet.cssRules.length);
 				},
 				replace: function(item) {
