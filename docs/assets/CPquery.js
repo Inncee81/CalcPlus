@@ -75,12 +75,12 @@ function $(query) {
 			}
 			
 			var me = function() {
-				var me = element;
 				if (local) {
-					me = localStorage.getItem(query);
+					return localStorage.getItem(query);
 				} else if (session) {
-					me = sessionStorage.getItem(query);
+					return sessionStorage.getItem(query);
 				}
+				return element;
 			}
 
 			var set = function(item) {
