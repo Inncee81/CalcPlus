@@ -74,13 +74,11 @@ function $(query) {
 				return element.value;
 			}
 
-			var get = function() {
-				if (local) {
-					return localStorage.getItem(query);
-				} else if (session) {
-					return sessionStorage.getItem(query);
-				}
-				return element;
+			var this = element;
+			if (local) {
+				this = localStorage.getItem(query);
+			} else if (session) {
+				this = sessionStorage.getItem(query);
 			}
 			
 			var set = function(item) {
@@ -118,7 +116,7 @@ function $(query) {
 				checked: checked,
 				click: click,
 				val: val,
-				get: get,
+				this: this,
 				set: set,
 				html: {
 					append: html.append,
