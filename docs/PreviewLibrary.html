@@ -15,7 +15,7 @@
         background-color: white;
       }
       a {
-        color: dark_blue;
+        color: rgb(0, 0, 192);
       }
       .removeInput {
           color: grey;
@@ -234,8 +234,8 @@
       
       if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
         if ($("isDark").local() == "On") {
-          $(0).css.replace('body { color: white; background-color: black; }');
-          $(0).css.append('a { color: light_blue; }');
+          $(0).css.replace(window, 'body { color: white; background-color: black; }');
+          $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
         }
       } else {
         $("isDark").local("Off");
