@@ -15,18 +15,18 @@ function $(query) {
 
 			var css = {
 				append: function(index, item) {
-					var sheet = query.document.styleSheets[parseInt(index)];
+					var sheet = document.styleSheets[parseInt(index)];
 					sheet.insertRule(item, sheet.cssRules.length);
 				},
 				replace: function(index, item) {
-					var sheet = query.document.styleSheets[parseInt(index)];
+					var sheet = document.styleSheets[parseInt(index)];
 					for (var i=0; i<sheet.cssRules.length; i++) {
 						sheet.deleteRule(i);
 					}
 					sheet.insertRule(item, sheet.cssRules.length);
 				},
 				delete: function(index, index2) {
-					var sheet = query.document.styleSheets[index];
+					var sheet = document.styleSheets[index];
 					sheet.deleteRule(index2);
 				}
 			};
