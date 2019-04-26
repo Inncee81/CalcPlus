@@ -1,4 +1,0 @@
-php_value display_errors 1
-
-ErrorDocument 404 /index.html
-ErrorDocument 401 /401.html
