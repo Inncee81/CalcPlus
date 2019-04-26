@@ -399,6 +399,6 @@ try {
 		return final;
 	}
 } catch(err) {
-	alert("An unexpected error occured in virxec.github.io/CalcPlusLibrary.js.");
+	alert("An unexpected error occured in virxec.github.io/CalcPlus/Library.js.");
 	throw new Error(err);
 }
