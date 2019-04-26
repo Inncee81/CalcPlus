@@ -101,7 +101,7 @@
             });
 
             $("@isOffline").set("On");
-            $("#offlineMode").text.replace($("@isOffline").me);
+            $("#offlineMode").text.replace($("@isOffline").me());
           } else if ($("isOffline").me() == "On") {
             $("#offlineMode").text.replace("Removing Service Workers...");
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
