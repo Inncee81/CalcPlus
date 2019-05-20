@@ -218,7 +218,7 @@
       console.warn = (...args) => args.forEach(e => {
         const s = document.createElement("span");
         s.textContent = "\n" + e;
-        s.style.color = "yellow";
+        s.style.color = "rgb(205, 205, 0)";
         c.appendChild(s);
       });
       console.error = (...args) => args.forEach(e => {
@@ -245,7 +245,7 @@
         event.waitUntil(
           caches.open('calcplus-github-v1').then(function(cache) {
             return cache.addAll([
-              "/assets/CPquery/1.15.js",
+              "/assets/CPquery.js",
               "/assets/logo.png"
             ]);
           }));
