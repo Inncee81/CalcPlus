@@ -185,6 +185,8 @@ try {
 			final.splice(decimals-1, 0, ".");
 		}
 		
+		console.log(final);
+		
 		if(neg[0]){
 			return "-"+final.join('');
 		}
