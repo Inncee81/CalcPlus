@@ -84,7 +84,7 @@ try {
 
 		var maxChar = Math.max(num1.length, num2.length);
 
-		if (mode != 3) {
+		if (mode != 3 || mode != 4) {
 			if (num2.length == maxChar && num1.length != maxChar) {
 				if (mode != 3) {
 					var temp = [false, num1, num2];
@@ -138,7 +138,7 @@ try {
 	};
 
 	function add(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 1);
+		var parsedNums = parseNums(num1, num2, 4);
 		num1 = parsedNums.num1.num;
 		num2 = parsedNums.num2.num;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
