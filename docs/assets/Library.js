@@ -104,7 +104,7 @@ try {
 				num2.unshift("0");
 			}
 		}
-		throw new Error(isNeg);
+		
 		if (isNeg == false && mode != 4) {
 			for (var i=num2.length-1; i>=0; i--) {
 				if (isNeg == false) {
