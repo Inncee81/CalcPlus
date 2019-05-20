@@ -53,14 +53,14 @@
     <a href="https://github.com/VirxEC/CalcPlus/compare">Submit a pull request</a>
     
     <script>
-      if ($("isDark").local() == "Off" || $("isDark").local() == "On") {
-        if ($("isDark").local() == "On") {
-          $(0).css.append(window, 'body { color: white; background-color: black; }');
-          $(0).css.append(window, 'a { color: rgb(0, 0, 255); }');
-          $(0).css.append(window, 'span.fix { color: rgb(255, 255, 0); }');
+      if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
+        if ($("@isDark").me() == "On") {
+          $(window).css.replace(0, 'body { color: white; background-color: black; }');
+          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
+          $("#darkMode").text.replace($("@darkMode").me());
         }
       } else {
-        $("isDark").local("Off");
+        $("@isDark").set("Off");
       }
       
       self.addEventListener('install', function(event) {
