@@ -49,11 +49,6 @@ function $(query) {
 						query = query[1];
 						local = true;
 					} else {
-						query = query.toString().split("*");
-						if (query.length == 2) {
-							query = query[1];
-							session = true;
-						}
 						element = document.getElementsByTagName(query);
 					}
 				}
