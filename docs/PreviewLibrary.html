@@ -208,7 +208,7 @@
         const s = document.createElement("span");
         s.textContent = "\n" + e;
         s.style.color = "blue";
-        c.appendChild(s);
+        c.appendChild(s+"<br>");
       });
       console.warn = (...args) => args.forEach(e => {
         const s = document.createElement("span");
@@ -224,7 +224,7 @@
       });
         
       window.onerror = (e, s, l, c) => {
-        console.error(`Error: ${e} at: ${s} : ${l} : ${c}`);
+        console.error(`${e} at: ${s} : ${l}:${c}`);
       };
       
       if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
