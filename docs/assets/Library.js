@@ -94,6 +94,7 @@ try {
 				isNeg = true;
 			}
 		}
+		throw new Error(isNeg);
 		
 		if(maxChar > num1.length) {
 			for(var i=num1.length;i<maxChar;i++) {
