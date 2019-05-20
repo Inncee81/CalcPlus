@@ -84,7 +84,7 @@ try {
 
 		var maxChar = Math.max(num1.length, num2.length);
 
-		if (mode != 3 || mode != 4) {
+		if (mode != 3 && mode != 4) {
 			if (num2.length == maxChar && num1.length != maxChar) {
 				if (mode != 3) {
 					var temp = [false, num1, num2];
