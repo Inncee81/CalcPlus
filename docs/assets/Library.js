@@ -38,6 +38,7 @@ try {
 		if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) {
 			isNeg = true;
 		}
+		console.log(isNeg);
 		
 		var decimal = 0;
 		var decimal1 = 0;
@@ -104,7 +105,7 @@ try {
 				num2.unshift("0");
 			}
 		}
-		
+		console.log(isNeg);
 		if (isNeg == false && mode != 4) {
 			for (var i=num2.length-1; i>=0; i--) {
 				if (isNeg == false) {
@@ -117,6 +118,7 @@ try {
 						isNeg = true;
 					}
 				}
+				return;
 			}
 		}
 		
