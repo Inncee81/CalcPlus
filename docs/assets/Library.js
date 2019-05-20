@@ -105,7 +105,7 @@ try {
 			}
 		}
 		
-		if (isNeg == false) {
+		if (isNeg == false && mode != 4) {
 			for (var i=num2.length-1; i>=0; i--) {
 				if (isNeg == false) {
 					if (num2[i] > num1[i]) {
