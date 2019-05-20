@@ -38,7 +38,6 @@ try {
 		if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) {
 			isNeg = true;
 		}
-		throw new Error(isNeg);
 		
 		var decimal = 0;
 		var decimal1 = 0;
