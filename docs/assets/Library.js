@@ -141,19 +141,31 @@ try {
 	function add(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 4);
 		num1 = parsedNums.num1.num;
+		var num1D = parsedNums.num1.decimals;
 		num2 = parsedNums.num2.num;
+		var num2D = parsedNums.num2.decimals;
 		var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 		var maxChar = parsedNums.maxChar;
 		var decimals = parsedNums.decimals;
-
-		if (neg[2]) {
-			if (neg[1]) {
-				num1.unshift("-");
+		
+		if (neg[1] || neg[2]) {
+			if (decimals > 0) {
+				if (num1D > 0) {
+ 					num1.splice(decimals-1, 0, ".");
+				}
+				if (num2D > 0) {
+					num2.splice(decimals-1, 0, ".");
+				}
 			}
-			return sub(num1.join(''), num2.join(''));
-		} else if (neg[1]) {
-			return sub(num2.join(''), num1.join(''));
+			if (neg[1] && neg[2]) {
+				return sub("-"+num1.join(''), num2.join(''));
+			} else if (neg[2]) {
+				return sub(num1.join(''), num2.join(''));
+			} else if (neg[1]) {
+				return sub(num2.join(''), num1.join(''));
+			}
 		}
+		
 		var time;
 		var final = [];
 		var carry = "0";
@@ -201,15 +213,22 @@ try {
 		var maxChar = parsedNums.maxChar;
 		var decimals = parsedNums.decimals;
 
-		if (neg[2]) {
-			num2.unshift("-");
-			if (neg[1]) {
-				num1.unshift("-");
+		if (neg[1] || neg[2]) {
+			if (decimals > 0) {
+				if (num1D > 0) {
+ 					num1.splice(decimals-1, 0, ".");
+				}
+				if (num2D > 0) {
+					num2.splice(decimals-1, 0, ".");
+				}
 			}
-			return add(num1.join(''), num1.join(''));
-		} else if (neg[1]) {
-			var ans = add(num1.join(''), num2.join(''));
-			return "-"+ans;
+			if (neg[1] && neg[2]) {
+				return add("-"+num1.join(''), num2.join(''));
+			} else if (neg[2]) {
+				return add(num1.join(''), num2.join(''));
+			} else if (neg[1]) {
+				return "-"+add(num1.join(''), num2.join(''));
+			}
 		}
 
 		var final = [];
@@ -291,7 +310,7 @@ try {
 	function multi(num1, num2) {
 		function addZeros(round) {
 			var zeros = "";
-			if (round > 0) {
+			if (isGreaterThan(round, 0)) {
 				for (var i = 0; i < round; i++) {
 					zeros += "0";
 				}
