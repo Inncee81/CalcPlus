@@ -54,7 +54,7 @@ try {
 				num2[1] = num2[1].split("");
 			}
 			
-			if (mode == 1) {
+			if (mode == 1 || mode == 4) {
 				decimal = Math.max(num1.length, num2.length);
 			} else if (mode == 2) {
 				decimal = num1.length + num2.length;
