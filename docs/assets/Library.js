@@ -117,7 +117,7 @@ try {
 						isNeg = true;
 					}
 				}
-				return;
+				break;
 			}
 		}
 		
