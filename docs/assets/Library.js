@@ -7,9 +7,7 @@ try {
 	});
 	self.addEventListener('fetch', function(e) {
 		e.respondWith(caches.match(e.request).then(function(response) {
-			if(response) {
-				return response;
-			}
+			if(response) return response;
 			return fetch(e.request);
 		}));
 	});
@@ -35,9 +33,7 @@ try {
 
 		var isNeg = false;
 
-		if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) {
-			isNeg = true;
-		}
+		if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) isNeg = true;
 		
 		var decimal = 0;
 		var decimal1 = 0;
@@ -47,12 +43,8 @@ try {
 		num2 = num2.split(".");
 		
 		if (num1.length > 1 || num2.length >2) {
-			if (num1.length > 1) {
-				num1[1] = num1[1].split("");
-			}
-			if (num2.length > 1) {
-				num2[1] = num2[1].split("");
-			}
+			if (num1.length > 1) num1[1] = num1[1].split("");
+			if (num2.length > 1) num2[1] = num2[1].split("");
 			
 			if (mode == 1 || mode == 4) {
 				decimal = Math.max(num1.length, num2.length);
@@ -116,8 +108,7 @@ try {
 						}
 						isNeg = true;
 					}
-				}
-				break;
+				} else break;
 			}
 		}
 		
@@ -183,25 +174,16 @@ try {
 				final[finali] = temp[1];
 				carry = temp[0];
 				time = i;
-				if (i-1<0) {
-					final[final.length] = carry;
-				}
+				if (i-1<0) final[final.length] = carry;
 			}
 		}
 		
 		final = final.reverse();
-		while (final[final.length-1] == '0' && final.length > 1) {
-			delete final[final.length-1];
-		}
+		while (final[final.length-1] == '0' && final.length > 1) delete final[final.length-1];
 		
-		if (decimals > 0) {
-			final.splice(decimals-1, 0, ".");
-		}
+		if (decimals > 0) final.splice(decimals-1, 0, ".");
 		
-		if(neg[0]){
-			return "-"+final.join('');
-		}
-
+		if(neg[0]) return "-"+final.join('');
 		return final.join('');
 	}
 
@@ -245,57 +227,40 @@ try {
 			final[finali] = fans.toString();
 		}
 
-		while (final[final.length-1] == '0' && final.length > 1) {
-			delete final[final.length-1];
-		}
+		while (final[final.length-1] == '0' && final.length > 1) delete final[final.length-1];
 
 		final = final.reverse();
 		
-		if (decimals > 0) {
-			final.splice(decimals-1, 0, ".");
-		}
+		if (decimals > 0) final.splice(decimals-1, 0, ".");
 		
-		if(neg[0]){
-			return "-"+final.join('');
-		}
-
+		if(neg[0]) return "-"+final.join('');
 		return final.join('');
 	}
 	function isLessThan(num1, num2) {
 		var num = sub(num1, num2).split("-");
-		if (num.length == 1) {
-			return false;
-		}
+		if (num.length == 1) return false;
 		return true;
 	}
 	
 	function isGreaterThan(num1, num2) {
 		var num = sub(num1, num2).split("-");
-		if (num.length == 2 || num[0] == "0") {
-			return false;
-		}
+		if (num.length == 2 || num[0] == "0") return false;
 		return true;
 	}
 	function isLessThanEqual(num1, num2) {
 		var num = sub(num1, num2).split("-");
-		if (num1.length == 1 && num[0] != "0") {
-			return false;
-		}
+		if (num1.length == 1 && num[0] != "0") return false;
 		return true;
 	}
 	function isGreaterThanEqual(num1, num2) {
 		var num = sub(num1, num2).split("-");
-		if (num.length == 2) {
-			return false;
-		}
+		if (num.length == 2) return false;
 		return true;
 	}
 	function round(num) {
 		num = num.split(".");
 		num[1] = num.split("");
-		if (isGreaterThanEqual(num[1][0], "5")) {
-		    return add(num[0], "1");
-		}
+		if (isGreaterThanEqual(num[1][0], "5")) return add(num[0], "1");
 		return num[0];
 	}
 	function roundDown(num) {
@@ -310,11 +275,7 @@ try {
 	function multi(num1, num2) {
 		function addZeros(round) {
 			var zeros = "";
-			if (isGreaterThan(round, 0)) {
-				for (var i = 0; i < round; i++) {
-					zeros += "0";
-				}
-			}
+			if (isGreaterThan(round, 0)) for (var i = 0; i < round; i++) zeros += "0";
 			return zeros;
 		}
 		
@@ -346,26 +307,18 @@ try {
 		
 		final = final.split("");
 
-		if (decimals > 0) {
-			final.splice(decimals-1, 0, ".");
-		}
+		if (decimals > 0) final.splice(decimals-1, 0, ".");
 			     
-		if (neg[0]) {
-			return "-"+final.reverse().join("");
-		}
-
+		if (neg[0]) return "-"+final.reverse().join("");
 		return final.reverse().join("");
 	}
 	function expo(num1, num2) {
 		if (num2.split("-").length == 2) {
 			return div("1", multi(num1, num2));
-		} else {
-			var final = multi(num1, num1);
-			for (var i=3; isLessThan(i.toString(), num2); i++) {
-				final = multi(final, num1);
-			}
-			return final;
 		}
+		var final = multi(num1, num1);
+		for (var i=3; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
+		return final;
 	}
 	function div(num1, num2, maxDecimal) {
 		var parsedNums = parseNums(num1, num2, 3);
@@ -375,12 +328,8 @@ try {
 		var maxChar = parsedNums.maxChar;
 		var decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
 
-		while (num2[num2.length-1] == '0' && num2.length > 1) {
-			delete num2[num2.length-1];
-		}
-		while (num1[num1.length-1] == '0' && num1.length > 1) {
-			delete num2[num1.length-1];
-		}
+		while (num2[num2.length-1] == '0' && num2.length > 1) delete num2[num2.length-1];
+		while (num1[num1.length-1] == '0' && num1.length > 1) elete num2[num1.length-1];
 		
 		maxDecimal = maxDecimal.split("");
 		if (decimal.length != 1 && decimal[0] != "-") {
@@ -406,16 +355,10 @@ try {
 		
 		final = final.split("");
 
-		if (decimals > 0) {
-			final.splice(decimals-1, 0, ".");
-		}
-		
+		if (decimals > 0) final.splice(decimals-1, 0, ".")
 		final = final.reverse().join("");
 		
-		if (neg[0]) {
-			return "-"+final;
-		}
-
+		if (neg[0]) return "-"+final;
 		return final;
 	}
 } catch(err) {
