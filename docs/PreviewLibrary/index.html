@@ -93,7 +93,7 @@
             }
             final.display = true;
           } else if (getChecked("sub")) {
-            final.num = sub($("#input1").val(), $("input2").val());
+            final.num = sub($("#input1").val(), $("#input2").val());
             if (inputBoxes > 2) {
               for (var s=3; s<=inputBoxes; s++) {
                 final.num = sub(final.num, $(`#input${s.toString()}`).val());
