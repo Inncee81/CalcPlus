@@ -329,7 +329,7 @@ try {
 		var decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
 
 		while (num2[num2.length-1] == '0' && num2.length > 1) delete num2[num2.length-1];
-		while (num1[num1.length-1] == '0' && num1.length > 1) elete num2[num1.length-1];
+		while (num1[num1.length-1] == '0' && num1.length > 1) delete num2[num1.length-1];
 		
 		maxDecimal = maxDecimal.split("");
 		if (decimal.length != 1 && decimal[0] != "-") {
