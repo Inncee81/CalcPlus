@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
@@ -7,7 +8,7 @@
     <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
     <script src="https://virxec.github.io/CalcPlus/assets/CPquery.js"></script>
     <title>CalcPlus Library Source Code</title>
-    <style type="text/css">
+    <style>
       body {
         color: black;
         background-color: white;
@@ -15,8 +16,8 @@
       a {
         color: rgb(0, 0, 192);
       }
-      span.antiDark {
-        background-color: white;
+      embed {
+        overflow:visable;
       }
     </style>
   </head>
@@ -25,12 +26,12 @@
     <h1>CalcPlus Library Source Code</h1>
     <a href="https://virxec.github.io/CalcPlus">Home</a>
     <br>
-    <span id="antiDark"><embed src="https://virxec.github.io/CalcPlus/assets/Library.js" width="100%" height="8000px"></span>
+    <span id="antiDark"></span>
+    <embed src="https://virxec.github.io/CalcPlus/assets/Library.js" width="100%">
     <script>
       if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
         if ($("@isDark").me() == "On") {
-          $(window).css.replace(0, 'body { color: white; background-color: black; }');
-          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
+          $("#antiDark").text.replace("This page isn't compatible with dark mode. Sorry!");
         }
       } else {
         $("@isDark").set("Off");
