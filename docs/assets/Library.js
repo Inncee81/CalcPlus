@@ -105,9 +105,9 @@ try {
 			}
 		}
 		
-		if (isNeg == false && mode != 4) {
+		if (!isNeg && mode != 4) {
 			for (var i=num2.length-1; i>=0; i--) {
-				if (isNeg == false) {
+				if (!isNeg) {
 					if (num2[i] > num1[i]) {
 						if (mode != 3) {
 							var temp = [false, num1, num2];
