@@ -15,8 +15,8 @@ try {
 	function parseNums(num1, num2, mode) {
 		var neg = [0, false, false];
 
-		num1 = num1.replace(",", "");
-		num2 = num2.replace(",", "");
+		num1 = num1.toString().replace(",", "");
+		num2 = num2.toString().replace(",", "");
 		num1 = num1.split("-");
 		num2 = num2.split("-");
 
@@ -45,13 +45,6 @@ try {
 		num2 = num2.split('');
 		var maxChar = Math.max(num1.length, num2.length);
 		
-		decimal1 = num1.splice(num1.indexOf(".")+1).length;
-		decimal2 = num2.splice(num2.indexOf(".")+1).length;
-		
-		if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
-		else if (mode == 2) decimal = decimal1 + decimal2;
-		else if (mode == 3) decimal = decimal2;
-		
 		Array.prototype.remove = function() {
 			var what, a = arguments, L = a.length, ax;
 			while (L && this.length) {
@@ -62,6 +55,12 @@ try {
 			}
 			return this;
 		};
+		decimal1 = num1.remove(".")).length;
+		decimal2 = num2.remove(".")).length;
+		
+		if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
+		else if (mode == 2) decimal = decimal1 + decimal2;
+		else if (mode == 3) decimal = decimal2;
 
 		num1 = num1.remove(".");
 		num2 = num2.remove(".");
