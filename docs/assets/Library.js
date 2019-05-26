@@ -51,9 +51,13 @@ try {
 		if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
 		else if (mode == 2) decimal = decimal1 + decimal2;
 		else if (mode == 3) decimal = decimal2;
-			
-		num1 = num1.filter(".", "");
-		num2 = num2.filter(".", "");
+		
+		function decimalF(d) {
+			return d == ".";
+		}
+		
+		num1 = num1.filter(decimalF);
+		num2 = num2.filter(decimalF);
 
 		if (mode != 3 && mode != 4) {
 			if (num2.length == maxChar && num1.length != maxChar) {
