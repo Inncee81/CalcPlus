@@ -55,8 +55,8 @@ try {
 			}
 			return this;
 		};
-		decimal1 = num1.remove(".")).length;
-		decimal2 = num2.remove(".")).length;
+		decimal1 = num1.remove(".").length;
+		decimal2 = num2.remove(".").length;
 		
 		if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
 		else if (mode == 2) decimal = decimal1 + decimal2;
