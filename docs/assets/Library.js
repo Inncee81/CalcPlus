@@ -52,12 +52,19 @@ try {
 		else if (mode == 2) decimal = decimal1 + decimal2;
 		else if (mode == 3) decimal = decimal2;
 		
-		function decimalF(d) {
-			return d == ".";
-		}
-		
-		num1 = num1.filter(decimalF);
-		num2 = num2.filter(decimalF);
+		Array.prototype.remove = function() {
+			var what, a = arguments, L = a.length, ax;
+			while (L && this.length) {
+				what = a[--L];
+				while ((ax = this.indexOf(what)) !== -1) {
+					this.splice(ax, 1);
+				}
+			}
+			return this;
+		};
+
+		num1 = num1.remove(".");
+		num2 = num2.remove(".");
 
 		if (mode != 3 && mode != 4) {
 			if (num2.length == maxChar && num1.length != maxChar) {
