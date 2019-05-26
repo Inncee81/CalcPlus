@@ -119,7 +119,7 @@ function add(num1, num2) {
 	if (neg[1] || neg[2]) {
 		if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
 		else if (neg[2]) return sub(num1.join(''), num2.join(''));
-		} else if (neg[1]) return sub(num2.join(''), num1.join(''));
+		else if (neg[1]) return sub(num2.join(''), num1.join(''));
 	}
 
 	var time;
