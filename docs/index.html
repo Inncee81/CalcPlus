@@ -23,6 +23,9 @@
       span.fix {
         color:rgb(205, 205, 0);
       }
+      span.verify {
+        color:orange;
+      }
       span.working {
         color:green;
       }
@@ -31,7 +34,7 @@
   <body>
     <noscript>Please allow JavaScript to run on this page, or else some things won't work. Thank you!<br></noscript>
     <h1>Welcome the CalcPlus Library</h1>
-    <h2>Status of Library: <span class="fix">Verifying fixes...</span></h2>
+    <h2>Status of Library: <span class="fix">Fixing...</span></h2>
     <p>That's the life style of a Library: Developed, new feature(s), broken, then fixed/developed.</p>
       
     <h3>Resources</h3>
@@ -57,9 +60,6 @@
         if ($("@isDark").me() == "On") {
           $(window).css.replace(0, 'body { color: white; background-color: black; }');
           $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
-          $(window).css.append(0, 'span.broken { color: red; }');
-          $(window).css.append(0, 'span.fix { color: rgb(205, 205, 0); }');
-          $(window).css.append(0, 'span.working { color: green; }');
         }
       } else {
         $("@isDark").set("Off");
