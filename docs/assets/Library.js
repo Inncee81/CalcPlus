@@ -15,6 +15,8 @@ try {
 	function parseNums(num1, num2, mode) {
 		var neg = [0, false, false];
 
+		num1 = num1.replace(",", "");
+		num2 = num2.replace(",", "");
 		num1 = num1.split("-");
 		num2 = num2.split("-");
 
