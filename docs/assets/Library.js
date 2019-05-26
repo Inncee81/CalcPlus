@@ -41,42 +41,19 @@ try {
 		var decimal1 = 0;
 		var decimal2 = 0;
 		
-		num1 = num1.split(".");
-		num2 = num2.split(".");
-		
-		if (num1.length > 1 || num2.length >2) {
-			if (num1.length > 1) num1[1] = num1[1].split("");
-			if (num2.length > 1) num2[1] = num2[1].split("");
-			
-			if (mode == 1 || mode == 4) {
-				decimal = Math.max(num1.length, num2.length);
-			} else if (mode == 2) {
-				decimal = num1.length + num2.length;
-			} else if (mode == 3) {
-				decimal = num2.length;
-				decimal1 = num1.length;
-				decimal2 = num2.length;
-			}
-			
-			if (num1.length > 1) {
-				if (num1[1].length > 1) {
-					num1[1] = num1[1].join("");
-				}
-			}
-			if (num2.length > 1) {
-				if (num2[1].length > 1) {
-					num2[1] = num2[1].join("");
-				}
-			}
-			
-			num1 = num1.join("");
-			num2 = num2.join("");
-		}
-		
-		num1 = num1.toString().split('');
-		num2 = num2.toString().split('');
-
+		num1 = num1.split('');
+		num2 = num2.split('');
 		var maxChar = Math.max(num1.length, num2.length);
+		
+		decimal1 = num1.splice(num1.indexOf(".")+1).length;
+		decimal2 = num2.splice(num2.indexOf(".")+1).length;
+		
+		if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
+		else if (mode == 2) decimal = decimal1 + decimal2;
+		else if (mode == 3) decimal = decimal2;
+			
+		num1 = num1.replace(".", "");
+		num2 = num2.replace(".", "");
 
 		if (mode != 3 && mode != 4) {
 			if (num2.length == maxChar && num1.length != maxChar) {
