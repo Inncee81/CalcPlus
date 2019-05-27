@@ -150,7 +150,7 @@
             }
             var responseToCache = response.clone();
 
-            caches.open(calcplus-github-v3)
+            caches.open("calcplus-github-v3")
               .then(function(cache) {
                 cache.put(e.request, responseToCache);
               });
