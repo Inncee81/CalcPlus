@@ -65,15 +65,14 @@
         $("@isDark").set("Off");
       }
       
-      if (!('serviceWorker' in navigator)) {
-        console.log('Service Worker not supported');
-        return;
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceworker
+            .register("/sw.js")
+            .then(reg => console.log('Service Worker: Registered'))
+            .catch(err => console.log(`Service Worker failed: ${err}`));
+        });
       }
-      navigator.serviceWorker.register('/assets/service-worker.js')
-        .then(function(registration) {
-          console.log('SW registered! Scope is:', registration.scope);
-      });
-
     </script>
   </body>
 </html>
