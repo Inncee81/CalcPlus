@@ -6,8 +6,18 @@ self.addEventListener('activate', function(event) {
 });
 self.addEventListener('fetch', function(e) {
 	e.respondWith(caches.match(e.request).then(function(response) {
-		if(response) return response;
-		return fetch(e.request);
+	if(response) return response;
+	return fetch(e.request).then(
+	  function(response) {
+	    if(!response || response.status !== 200 || response.type !== 'basic') return response;
+	    var responseToCache = response.clone();
+	    caches.open("calcplus-github-v3")
+	      .then(function(cache) {
+		cache.put(e.request, responseToCache);
+	      });
+	    return response;
+	  }
+	);
 	}));
 });
 
