@@ -67,7 +67,7 @@
       
       self.addEventListener('install', function(event) {
         event.waitUntil(
-          caches.open('calcplus-github-v2').then(function(cache) {
+          caches.open('calcplus-github-v3').then(function(cache) {
             return cache.addAll([
               "/assets/CPquery.js",
               "/assets/logo.png"
