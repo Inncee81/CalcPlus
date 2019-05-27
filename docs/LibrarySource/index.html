@@ -39,7 +39,7 @@
       
       self.addEventListener('install', function(event) {
         event.waitUntil(
-          caches.open('calcplus-github-v2').then(function(cache) {
+          caches.open('calcplus-github-v3').then(function(cache) {
             return cache.addAll([
               "/assets/CPquery.js",
               "/assets/logo.png"
@@ -60,7 +60,19 @@
         if(response) {
           return response;
         }
-        return fetch(e.request);
+        return fetch(e.request).then(
+          function(response) {
+            if(!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+            var responseToCache = response.clone();
+            caches.open("calcplus-github-v3")
+              .then(function(cache) {
+                cache.put(e.request, responseToCache);
+              });
+            return response;
+          }
+        );
        }));
       });
     </script>
