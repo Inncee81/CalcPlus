@@ -62,8 +62,8 @@ loadScript("assets/CPquery.js", function(){
 });
 
 function load(wndw) {
-    offline(wndw);
     wndw.onload = function() {
         dark(wndw);
     };
+    offline(wndw);
 }
