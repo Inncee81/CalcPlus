@@ -34,7 +34,17 @@ loadScript("assets/CPquery.js", function(){
         if (isDark.me() == "On") {
             $(wndw).css.replace(0, 'body { color: white; background-color: black; }');
             $(wndw).css.append(0, 'a { color: rgb(0, 0, 255); }');
+        } else {
+            $(wndw).css.replace(0, 'body { color: black; background-color: white; }');
+            $(wndw).css.append(0, 'a { color: rbg(0, 0, 192); }');
         }
+        
+        
+        $(wndw).css.append(0, 'span.broken { color: red; }');
+        $(wndw).css.append(0, 'span.fix { color: rbg(205, 205, 0); }');
+        $(wndw).css.append(0, 'span.verify { color: orange; }');
+        $(wndw).css.append(0, 'span.working { color: green; }');
+        $(wndw).css.append(0, '.removeInput { color: black; background-color: red; border: none; }');
     }
 
     offline = function(wndw) {
