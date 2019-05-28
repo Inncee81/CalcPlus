@@ -76,10 +76,6 @@ loadScript("assets/CPquery.js", function(){
 });
 
 function load(wndw) {
-    wndw.onload = function() {
-        dark(wndw);
-        offline(wndw);
-    };
     var c = document.querySelector(".console");
     console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
     console.info = (...args) => args.forEach(e => {
@@ -103,5 +99,9 @@ function load(wndw) {
 
     wndw.onerror = (e, s, l, c) => {
         console.error(`${e} at: ${s} : ${l}:${c}`);
+    };
+    wndw.onload = function() {
+        dark(wndw);
+        offline(wndw);
     };
 }
