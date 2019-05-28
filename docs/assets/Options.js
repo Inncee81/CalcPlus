@@ -28,14 +28,14 @@ loadScript("assets/CPquery.js", function(){
 
     isDark = $("@isDark");
     isOffline = $("*isOffline");
-    alerted = $("@alerted");
+    alerted = $("*alerted");
 
     dark = function(wndw) {
         if (isDark.me() == "On") {
             $(wndw).css.replace(0, 'body { color: white; background-color: black; }');
             $(wndw).css.append(0, 'a { color: rgb(0, 0, 255); }');
             $(wndw).css.append(0, 'span.broken { color: red; }');
-            $(wndw).css.append(0, 'span.fix { color: rgb(205, 205, 0); }');
+            $(wndw).css.append(0, 'span.fix { color: yellow; }');
             $(wndw).css.append(0, 'span.verify { color: orange; }');
             $(wndw).css.append(0, 'span.working { color: green; }');
             $(wndw).css.append(0, '.removeInput { color: black; background-color: red; border: none; }');
@@ -43,7 +43,7 @@ loadScript("assets/CPquery.js", function(){
             $(wndw).css.replace(0, 'body { color: black; background-color: white; }');
             $(wndw).css.append(0, 'a { color: rgb(0, 0, 192); }');
             $(wndw).css.append(0, 'span.broken { color: red; }');
-            $(wndw).css.append(0, 'span.fix { color: rgb(205, 205, 0); }');
+            $(wndw).css.append(0, 'span.fix { color: rgb(235, 235, 0); }');
             $(wndw).css.append(0, 'span.verify { color: orange; }');
             $(wndw).css.append(0, 'span.working { color: green; }');
             $(wndw).css.append(0, '.removeInput { color: black; background-color: red; border: none; }');
@@ -54,13 +54,14 @@ loadScript("assets/CPquery.js", function(){
     offline = function(wndw) {
         console.log("Ran offline(wndw)");
         isOffline = $("*isOffline");
-        alerted = $("@alerted");
+        alerted = $("*alerted");
         //navigator.serviceWorker.getRegistration().then(function(registration) {
         //    if(!registration) isOffline.set("false");
         //});
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
                 wndw.addEventListener('load', () => {
+                    console.log("Registering workers...");
                     navigator.serviceWorker
                         .register("../sw.js")
                         .then(reg => console.info(`Service Worker: Registered on the scope ${reg}`))
