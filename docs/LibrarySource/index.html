@@ -5,8 +5,8 @@
     <meta name="description" content="Works with really large numbers">
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
-    <script src="https://virxec.github.io/CalcPlus/assets/CPquery.js"></script>
+    <link rel="icon" href="../assets/logo.png">
+    <script src="../assets/CPquery.js"></script>
     <title>CalcPlus Library Source Code</title>
     <style>
       body {
@@ -16,18 +16,15 @@
       a {
         color: rgb(0, 0, 192);
       }
-      embed {
-        overflow:visible;
-      }
     </style>
   </head>
   <body>
     <noscript>Please allow JavaScript to run on this page, or else some things won't work. Thank you!<br></noscript>
     <h1>CalcPlus Library Source Code</h1>
     <span id="antiDark"></span>
-    <a href="https://virxec.github.io/CalcPlus">Home</a>
+    <a href="../index.html">Home</a>
     <br>
-    <embed src="https://virxec.github.io/CalcPlus/assets/Library.js" width="100%" height="auto">
+    <embed src="../assets/Library.js" width="100%" height="8000px">
     <script>
       if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
         if ($("@isDark").me() == "On") {
@@ -36,45 +33,6 @@
       } else {
         $("@isDark").set("Off");
       }
-      
-      self.addEventListener('install', function(event) {
-        event.waitUntil(
-          caches.open('calcplus-github-v3').then(function(cache) {
-            return cache.addAll([
-              "/assets/CPquery.js",
-              "/assets/logo.png"
-            ]);
-          }));
-      });
-      
-      self.addEventListener('install', function(event) {
-        console.log('Installed LibrarySource.html', event);
-      });
-      
-      self.addEventListener('activate', function(event) {
-        console.log('Activated LibrarySource.html', event);
-      });
-      
-      self.addEventListener('fetch', function(e) {
-       e.respondWith(caches.match(e.request).then(function(response) {
-        if(response) {
-          return response;
-        }
-        return fetch(e.request).then(
-          function(response) {
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-            var responseToCache = response.clone();
-            caches.open("calcplus-github-v3")
-              .then(function(cache) {
-                cache.put(e.request, responseToCache);
-              });
-            return response;
-          }
-        );
-       }));
-      });
     </script>
   </body>
 </html>

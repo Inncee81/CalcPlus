@@ -1,26 +1,3 @@
-self.addEventListener('install', function(event) {
-	console.log('Installed Library.js', event);
-});
-self.addEventListener('activate', function(event) {
-	console.log('Activated Library.js', event);
-});
-self.addEventListener('fetch', function(e) {
-	e.respondWith(caches.match(e.request).then(function(response) {
-	if(response) return response;
-	return fetch(e.request).then(
-	  function(response) {
-	    if(!response || response.status !== 200 || response.type !== 'basic') return response;
-	    var responseToCache = response.clone();
-	    caches.open("calcplus-github-v3")
-	      .then(function(cache) {
-		cache.put(e.request, responseToCache);
-	      });
-	    return response;
-	  }
-	);
-	}));
-});
-
 function parseNums(num1, num2, mode) {
 	var neg = [0, false, false];
 

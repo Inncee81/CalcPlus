@@ -6,8 +6,9 @@
     <meta name="keywords" content="HTML,CSS,JavaScript,InfiniCalc,BigCalc,Big,Infitite,Calculator,Large,Number,Not,Small,Numbers,CalcPlus,Calc,Plus,Big Number Calculator,Big # Calc,GitHub">
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
-    <script src="https://virxec.github.io/CalcPlus/assets/CPquery.js"></script>
+    <link rel="icon" href="assets/logo.png">
+    <script src="assets/Options.js">dark(window);offline(window);</script>
+    
     <title>CalcPlus</title>
     <style>
       body {
@@ -38,13 +39,13 @@
     <p>That's the life style of a Library: Developed, new feature(s), broken, then fixed/developed.</p>
       
     <h3>Resources</h3>
-    <a href="https://virxec.github.io/CalcPlus/PreviewLibrary">Preview the library</a>
+    <a href="PreviewLibrary/index.html">Preview the library</a>
     <br>
-    <a href="https://virxec.github.io/CalcPlus/LibrarySource">View Library</a>
+    <a href="LibrarySource/index.html">View Library</a>
     <br>
-    <a href="https://virxec.github.io/CalcPlus/AboutLibrary">About the CalcPlus Library</a>
+    <a href="AboutLibrary/index.html">About the CalcPlus Library</a>
     <br>
-    <a href="https://virxec.github.io/CalcPlus/PageOptions">Page Options</a>
+    <a href="PageOptions/index.html">Page Options</a>
     
     <h3>Want to help out this project?</h3>
     <a href="https://github.com/VirxEC/CalcPlus/projects/1">To do page</a>
@@ -54,25 +55,5 @@
     <a href="https://github.com/VirxEC/CalcPlus/issues/new?assignees=VirxEC&labels=enhancement&template=feature_request.md&title=%5BFEATURE+REQUEST%5D">Suggest a feature</a>
     <br>
     <a href="https://github.com/VirxEC/CalcPlus/compare">Submit a pull request</a>
-    
-    <script>
-      if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
-        if ($("@isDark").me() == "On") {
-          $(window).css.replace(0, 'body { color: white; background-color: black; }');
-          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
-        }
-      } else {
-        $("@isDark").set("Off");
-      }
-      
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceworker
-            .register("/sw.js")
-            .then(reg => console.log('Service Worker: Registered'))
-            .catch(err => console.log(`Service Worker failed: ${err}`));
-        });
-      }
-    </script>
   </body>
 </html>

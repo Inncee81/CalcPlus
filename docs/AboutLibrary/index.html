@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://virxec.github.io/CalcPlus/assets/logo.png">
-    <script src="https://virxec.github.io/CalcPlus/assets/CPquery.js"></script>
+    <link rel="icon" href="../assets/logo.png">
+    <script src="../assets/CPquery.js"></script>
     <title>About CalcPlus Library</title>
     <style>
       body {
@@ -21,13 +21,13 @@
   <body>
     <noscript>Please allow JavaScript to run on this page, or else some things won't work. Thank you!<br></noscript>
     <h1>About CalcPlus Library</h1>
-    <a href="https://virxec.github.io/CalcPlus">Home</a>
+    <a href="../index.html">Home</a>
     
     <h2>About</h2>
     <p>This is a library that let&#39;s numbers be calculated up to:</p>
     <p>64 bit OS: 2^64-1 digits <strong><em>long</em></strong>.</p>
     <p>32 bit OS: 2^32-1 digits <strong><em>long</em></strong>.</p>
-    <p>Want to see this library in action? Just go <a href="https://virxec.github.io/CalcPlus/PreviewLibrary.html">here</a>!</p>
+    <p>Want to see this library in action? Just go <a href="../PreviewLibrary/index.html">here</a>!</p>
     
     <h2>Advantages of using this library</h2>
     <p>Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.)</p>
@@ -48,42 +48,6 @@
       } else {
         $("@isDark").set("Off");
       }
-      
-      self.addEventListener('install', function(event) {
-        event.waitUntil(
-          caches.open('calcplus-github-v3').then(function(cache) {
-            return cache.addAll([
-              "/assets/CPquery.js",
-              "/assets/logo.png"
-            ]);
-          }));
-      });
-      self.addEventListener('install', function(event) {
-        console.log('Installed AboutLibrary.html', event);
-      });
-      self.addEventListener('activate', function(event) {
-        console.log('Activated AboutLibrary.html', event);
-      });
-      self.addEventListener('fetch', function(e) {
-       e.respondWith(caches.match(e.request).then(function(response) {
-        if(response) {
-          return response;
-        }
-        return fetch(e.request).then(
-          function(response) {
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-            var responseToCache = response.clone();
-            caches.open("calcplus-github-v3")
-              .then(function(cache) {
-                cache.put(e.request, responseToCache);
-              });
-            return response;
-          }
-        );
-       }));
-      });
     </script>
   </body>
 </html>
