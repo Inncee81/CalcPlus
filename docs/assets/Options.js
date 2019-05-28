@@ -23,31 +23,26 @@ loadScript("assets/CPquery.js", function(){
     var alerted = $("@alerted");
 
     if (!(isDark.me() == "Off" || isDark.me() == "On")) isDark.set("Off");
-
-    function update() {
-        isDark = $("@isDark");
-        isOffline = $("*isOffline");
-        alerted = $("@alerted");
-    }
-
-    dark = function(wndw) {
-        update();
-        if (isDark.me() == "On") {
-            $(wndw).css.replace(0, 'body { color: white; background-color: black; }');
-            $(wndw).css.append(0, 'a { color: rgb(0, 0, 255); }');
-        }
-    }
-
     if (!(isOffline.me() == "Off" || isOffline.me() == "On")) isOffline.set("Off");
     if (!(alerted.me() == "Off" || alerted.me() == "On")) alerted.set("Off");
 
-    offline = function(wndw) {
-        update();
+    isDark = $("@isDark");
+    isOffline = $("*isOffline");
+    alerted = $("@alerted");
+
+    //dark = function(wndw) {
+        if (isDark.me() == "On") {
+            $(window).css.replace(0, 'body { color: white; background-color: black; }');
+            $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
+        }
+    //}
+
+    //offline = function(wndw) {
         isOffline = $("*isOffline");
         alerted = $("@alerted");
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
-                wndw.addEventListener('load', () => {
+                window.addEventListener('load', () => {
                     navigator.serviceWorker
                         .register("../sw.js")
                         .then(reg => console.info(`Service Worker: Registered on the scope ${reg}`))
@@ -60,12 +55,12 @@ loadScript("assets/CPquery.js", function(){
         } else {
             console.log("Not re-registering Service Workers as it's already been done.");
         }
-    }
+    //}
 });
-
+/*
 function load(wndw) {
     wndw.onload = function() {
         dark(wndw);
         offline(wndw);
     };
-}
+}*/
