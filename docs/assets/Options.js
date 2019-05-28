@@ -30,19 +30,22 @@ loadScript("assets/CPquery.js", function(){
     isOffline = $("*isOffline");
     alerted = $("@alerted");
 
-    //dark = function(wndw) {
+    dark = function(wndw) {
         if (isDark.me() == "On") {
-            $(window).css.replace(0, 'body { color: white; background-color: black; }');
-            $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
+            $(wndw).css.replace(0, 'body { color: white; background-color: black; }');
+            $(wndw).css.append(0, 'a { color: rgb(0, 0, 255); }');
         }
-    //}
+    }
 
-    //offline = function(wndw) {
+    offline = function(wndw) {
         isOffline = $("*isOffline");
         alerted = $("@alerted");
+        navigator.serviceWorker.getRegistration().then(function(registration) {
+            if(!registration) isOffline.set("false");
+        });
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
+                wndw.addEventListener('load', () => {
                     navigator.serviceWorker
                         .register("../sw.js")
                         .then(reg => console.info(`Service Worker: Registered on the scope ${reg}`))
@@ -55,12 +58,12 @@ loadScript("assets/CPquery.js", function(){
         } else {
             console.log("Not re-registering Service Workers as it's already been done.");
         }
-    //}
+    }
 });
-/*
+
 function load(wndw) {
     wndw.onload = function() {
         dark(wndw);
         offline(wndw);
     };
-}*/
+}
