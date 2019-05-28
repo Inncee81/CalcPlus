@@ -39,7 +39,6 @@ loadScript("assets/CPquery.js", function(){
             $(wndw).css.append(0, 'a { color: rbg(0, 0, 192); }');
         }
         
-        
         $(wndw).css.append(0, 'span.broken { color: red; }');
         $(wndw).css.append(0, 'span.fix { color: rbg(205, 205, 0); }');
         $(wndw).css.append(0, 'span.verify { color: orange; }');
