@@ -40,9 +40,9 @@ loadScript("assets/CPquery.js", function(){
     offline = function(wndw) {
         isOffline = $("*isOffline");
         alerted = $("@alerted");
-        navigator.serviceWorker.getRegistration().then(function(registration) {
-            if(!registration) isOffline.set("false");
-        });
+        //navigator.serviceWorker.getRegistration().then(function(registration) {
+        //    if(!registration) isOffline.set("false");
+        //});
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
                 wndw.addEventListener('load', () => {
