@@ -21,12 +21,10 @@
       span.fix { color: white; }
       span.verify { color: white; }
       span.working { color: white; }
-      #admin { display: none; }
     </style>
   </head>
   <body>
     <noscript>Please allow JavaScript to run on this page, or else some things won't work. Thank you!<br></noscript>
-    <span class="console"></span>
     <h1>Welcome the CalcPlus Library</h1>
     <h2>Status of Library: <span class="fix">Fixing...</span></h2>
     <p>That's the life style of a Library: Developed, new feature(s), broken, then fixed/developed.</p>
@@ -39,8 +37,8 @@
     <a href="AboutLibrary/">About the CalcPlus Library</a>
     <br>
     <a href="PageOptions/">Page Options</a>
-    <br id="admin">
-    <a id="admin" href="https://docs.widgetbot.io/tutorial/">Discord link</a>
+    <br>
+    <a href="https://docs.widgetbot.io/tutorial/">Discord link</a>
     
     <h3>Want to help out this project?</h3>
     <a href="http://bit.ly/CPToDo">To do page</a>
@@ -50,9 +48,5 @@
     <a href="http://bit.ly/CPFeature">Suggest a feature</a>
     <br>
     <a href="https://github.com/VirxEC/CalcPlus/compare">Submit a pull request</a>
-    <script>
-      var password = prompt("Password?") == "discord";
-      if (password) document.getElementById("admin").style.display = "block";
-    </script>
   </body>
 </html>
