@@ -15,7 +15,7 @@ function loadScript(src, f) {
 }
 
 var index = sessionStorage.getItem("index") == "On";
-var script = index ? "assets/Options.js":"../assets/Options.js";
+var script = index ? "assets/CPquery.js":"../assets/CPquery.js";
 
 loadScript(script, function(){
     var isDark = $("@isDark");
