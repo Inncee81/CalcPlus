@@ -8,6 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/logo.png">
     <script src="assets/CPquery.js"></script>
+    <script src=""assests/Options.js></script>
+    <script>
+      var index = $("*index");
+      window.addEventListener("load", () => index.set("On"));
+      window.addEventListener("unload", () => index.set("Off"));
+    </script>
     <title>CalcPlus</title>
     <style>
       body { color: white; background-color: white; }
@@ -42,87 +48,5 @@
     <a href="http://bit.ly/CPFeature">Suggest a feature</a>
     <br>
     <a href="https://github.com/VirxEC/CalcPlus/compare">Submit a pull request</a>
-    <script>
-      var isDark = $("@isDark");
-      var isOffline = $("*isOffline");
-      var alerted = $("*alerted");
-
-      if (!(isDark.me() == "Off" || isDark.me() == "On")) isDark.set("Off");
-      if (!(isOffline.me() == "Off" || isOffline.me() == "On")) isOffline.set("Off");
-      if (!(alerted.me() == "Off" || alerted.me() == "On")) alerted.set("Off");
-
-      isDark = $("@isDark");
-      isOffline = $("*isOffline");
-      alerted = $("*alerted");
-
-      window.addEventListener("load", function(){
-          if (isDark.me() == "On") {
-              $(window).css.replaceWithAll(0, [
-                  'body { color: white; background-color: black; }',
-                  'button { color: white; background-color: gray; }',
-                  'a { color: rgb(0, 0, 255); }',
-                  'span.broken { color: red; }',
-                  'span.fix { color: yellow; }',
-                  'span.verify { color: orange; }',
-                  'span.working { color: green; }',
-                  '.removeInput { color: black; background-color: red; border: none; }'
-              ]);
-          } else {
-              $(window).css.replaceWithAll(0, [
-                  'body { color: black; background-color: white; }',
-                  'a { color: rgb(0, 0, 192); }',
-                  'span.broken { color: red; }',
-                  'span.fix { color: rgb(235, 235, 0); }',
-                  'span.verify { color: orange; }',
-                  'span.working { color: green; }',
-                  '.removeInput { color: black; background-color: red; border: none; }'
-              ]);
-          }
-
-          navigator.serviceWorker.getRegistration().then(function(registration) {
-              if(!registration) isOffline.set("Off");
-          });
-
-          isOffline = $("*isOffline");
-          alerted = $("*alerted");    
-          if (isOffline.me() == "Off") {
-              if ('serviceWorker' in navigator) {
-                  navigator.serviceWorker
-                      .register("sw.js")
-                      .then(reg => {
-                          console.info(`Service Worker: Registered on the scope ${reg}`);
-                          isOffline.set("On");
-                      })
-                      .catch(err => console.error(`Service Worker failed: ${err}`));
-              } else if (alerted.me() == "Off") {
-                  alert("Service Workers aren't supported by your browser.\nPlease switch to another browser like Chrome.\nIf you are, then please make sure your browser is updated.");
-                  alerted.set("On");
-              }
-          } else console.info("Service Workers already registered.");
-          
-          var c = document.querySelector(".console");
-          console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
-          console.info = (...args) => args.forEach(e => {
-              const s = document.createElement("span");
-                  s.textContent = "\n" + e;
-                  s.style.color = "blue";
-                  c.appendChild(s);
-          });
-          console.warn = (...args) => args.forEach(e => {
-              const s = document.createElement("span");
-                  s.textContent = "\n" + e;
-                  s.style.color = "rgb(205, 205, 0)";
-                  c.appendChild(s);
-          });
-          console.error = (...args) => args.forEach(e => {
-              const s = document.createElement("span");
-                  s.textContent = "\n" + e;
-                  s.style.color = "red";
-                  c.appendChild(s);
-          });
-              
-          window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
-      });
-    </script>
   </body>
 </html>
