@@ -9,9 +9,8 @@
     <link rel="icon" href="assets/logo.png">
     <script src="assets/CPquery.js"></script>
     <script>
-      var index = $("*index");
-      index.set("On");
-      window.addEventListener("beforeunload", () => {index.set("Off");});
+      $("*index").set("On");
+      window.addEventListener("beforeunload", () => {$("*index").set("Off");});
     </script>
     <script src="assets/Options.js"></script>
     <title>CalcPlus</title>
