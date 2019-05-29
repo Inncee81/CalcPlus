@@ -1,4 +1,8 @@
 function parseNums(num1, num2, mode) {
+	if (typeOf num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
+	if (typeOf num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
+	if (typeOf mode != "number" || mode > 4 || mode < 1) throw new TypeError("The mode must be a number from 1-4.");
+	
 	var neg = [0, false, false];
 
 	num1 = num1.toString().replace(",", "");
