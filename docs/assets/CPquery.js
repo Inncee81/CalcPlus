@@ -1,29 +1,26 @@
 function $(query) {
 	query = query.toString();
 
-	var select = function() {
-		return document.querySelector(query);
-	}
-
-	var create = function() {
-		return document.createElement(query);
-	}
+	var select = () => document.querySelector(query);
+	var create = () => document.createElement(query);
 
 	var css = {
 		append: function(index, item) {
-			var sheet = document.styleSheets[parseInt(index)];
+			var sheet = document.styleSheets[index];
 			sheet.insertRule(item, sheet.cssRules.length);
 		},
 		replace: function(index, item) {
-			var sheet = document.styleSheets[parseInt(index)];
-			for (var i=0; i<sheet.cssRules.length; i++) {
-				sheet.deleteRule(i);
-			}
+			var sheet = document.styleSheets[index];
+			for (var i=0; i<sheet.cssRules.length; i++) sheet.deleteRule(i);
 			sheet.insertRule(item, sheet.cssRules.length);
 		},
 		delete: function(index, index2) {
+			document.styleSheets[index].deleteRule(index2);
+		},
+		replaceWithAll: function(index, items) {
 			var sheet = document.styleSheets[index];
-			sheet.deleteRule(index2);
+			for (var i=0; i<sheet.cssRules.length; i++) sheet.deleteRule(i);
+			for (var i=0; i<items.length; i++) sheet.insertRule(items[i], sheet.cssRules.length);
 		}
 	};
 
@@ -49,43 +46,28 @@ function $(query) {
 				if (query.length == 2) {
 					query = query[1];
 					session = true;
-				} else {
-					element = document.getElementsByTagName(query);
-				}
+				} else element = document.getElementsByTagName(query);
 			}
 		}
 	}
 
 	var checked = function(value) {
-		if (value == undefined) {
-			return element.checked;
-		}
+		if (value == undefined) return element.checked;
 		element.checked = value;
 	}
 
-	var click = function(code) {
-		return element.addEventListener("click", code);
-	}
-
-	var val = function() {
-		return element.value;
-	}
+	var click = code => element.addEventListener("click", code);
+	var val = () => element.value;
 
 	var me = function() {
-		if (local) {
-			return localStorage.getItem(query);
-		} else if (session) {
-			return sessionStorage.getItem(query);
-		}
+		if (local) return localStorage.getItem(query);
+		else if (session) return sessionStorage.getItem(query);
 		return element;
 	}
 
 	var set = function(item) {
-		if (local) {
-			localStorage.setItem(query, item);
-		} else if (session) {
-			sessionStorage.setItem(query, item);
-		}
+		if (local) localStorage.setItem(query, item);
+		else if (session) sessionStorage.setItem(query, item);
 	}
 
 	var html = {
@@ -115,17 +97,9 @@ function $(query) {
 		val: val,
 		me: me,
 		set: set,
-		html: {
-			append: html.append,
-			replace: html.replace
-		},
-		text: {
-			append: text.append,
-			replace: text.replace
-		}
+		html: html,
+		text: text
 	}
 }
 
-function cpQuery(q) {
-	return $(q);
-}
+var cpQuery = q => $(q);

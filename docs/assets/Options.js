@@ -14,13 +14,10 @@ function loadScript(src, f) {
     head.appendChild(script);
 }
 
-var dark;
-var offline;
-
-loadScript("assets/CPquery.js", function(){
+loadScript("../assets/CPquery.js", function(){
     var isDark = $("@isDark");
     var isOffline = $("*isOffline");
-    var alerted = $("@alerted");
+    var alerted = $("*alerted");
 
     if (!(isDark.me() == "Off" || isDark.me() == "On")) isDark.set("Off");
     if (!(isOffline.me() == "Off" || isOffline.me() == "On")) isOffline.set("Off");
@@ -30,54 +27,73 @@ loadScript("assets/CPquery.js", function(){
     isOffline = $("*isOffline");
     alerted = $("*alerted");
 
-    dark = function(wndw) {
+    window.addEventListener("load", function(){
         if (isDark.me() == "On") {
-            $(wndw).css.replace(0, 'body { color: white; background-color: black; }');
-            $(wndw).css.append(0, 'a { color: rgb(0, 0, 255); }');
-            $(wndw).css.append(0, 'span.broken { color: red; }');
-            $(wndw).css.append(0, 'span.fix { color: yellow; }');
-            $(wndw).css.append(0, 'span.verify { color: orange; }');
-            $(wndw).css.append(0, 'span.working { color: green; }');
-            $(wndw).css.append(0, '.removeInput { color: black; background-color: red; border: none; }');
+            $(window).css.replaceWithAll(0, [
+                'body { color: white; background-color: black; }',
+                'button { color: white; background-color: rgb(50, 50, 50); border-color: rgb(60, 60, 60); }',
+                'a { color: rgb(0, 0, 255); }',
+                'span.broken { color: red; }',
+                'span.fix { color: yellow; }',
+                'span.verify { color: orange; }',
+                'span.working { color: green; }',
+                '.removeInput { color: black; background-color: red; border: none; }'
+            ]);
         } else {
-            $(wndw).css.replace(0, 'body { color: black; background-color: white; }');
-            $(wndw).css.append(0, 'a { color: rgb(0, 0, 192); }');
-            $(wndw).css.append(0, 'span.broken { color: red; }');
-            $(wndw).css.append(0, 'span.fix { color: rgb(235, 235, 0); }');
-            $(wndw).css.append(0, 'span.verify { color: orange; }');
-            $(wndw).css.append(0, 'span.working { color: green; }');
-            $(wndw).css.append(0, '.removeInput { color: black; background-color: red; border: none; }');
+            $(window).css.replaceWithAll(0, [
+                'body { color: black; background-color: white; }',
+                'button { color: black; background-color: rgb(200, 200, 200); border-color: rgb(210, 210, 210); }',
+                'a { color: rgb(0, 0, 192); }',
+                'span.broken { color: red; }',
+                'span.fix { color: rgb(235, 235, 0); }',
+                'span.verify { color: orange; }',
+                'span.working { color: green; }',
+                '.removeInput { color: black; background-color: red; border: none; }'
+            ]);
         }
-        
-    }
 
-    offline = function(wndw) {
-        console.log("Ran offline(wndw)");
+        navigator.serviceWorker.getRegistration().then(function(registration) {
+            if(!registration) isOffline.set("Off");
+        });
+
         isOffline = $("*isOffline");
-        alerted = $("*alerted");
-        //navigator.serviceWorker.getRegistration().then(function(registration) {
-        //    if(!registration) isOffline.set("false");
-        //});
+        alerted = $("*alerted");    
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
-                wndw.addEventListener('load', () => {
-                    console.log("Registering workers...");
-                    navigator.serviceWorker
-                        .register("../sw.js")
-                        .then(reg => console.info(`Service Worker: Registered on the scope ${reg}`))
-                        .catch(err => console.error(`Service Worker failed: ${err}`));
-                });
-            } else if (alerted.me() == "false") {
-                wndw.alert("Service Workers aren't supported by your browser.\nPlease switch to another browser like Chrome.\nIf you are, then please make sure your browser is updated.");
-                alerted.set("true");
+                navigator.serviceWorker
+                    .register("../sw.js")
+                    .then(reg => {
+                        console.info(`Service Worker: Registered on the scope ${reg}`);
+                        isOffline.set("On");
+                    })
+                    .catch(err => console.error(`Service Worker failed: ${err}`));
+            } else if (alerted.me() == "Off") {
+                alert("Service Workers aren't supported by your browser.\nPlease switch to another browser like Chrome.\nIf you are, then please make sure your browser is updated.");
+                alerted.set("On");
             }
-        }
-    }
+        } else console.info("Service Workers already registered.");
+        
+        var c = document.querySelector(".console");
+        console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
+        console.info = (...args) => args.forEach(e => {
+            const s = document.createElement("span");
+                s.textContent = "\n" + e;
+                s.style.color = "blue";
+                c.appendChild(s);
+        });
+        console.warn = (...args) => args.forEach(e => {
+            const s = document.createElement("span");
+                s.textContent = "\n" + e;
+                s.style.color = "rgb(205, 205, 0)";
+                c.appendChild(s);
+        });
+        console.error = (...args) => args.forEach(e => {
+            const s = document.createElement("span");
+                s.textContent = "\n" + e;
+                s.style.color = "red";
+                c.appendChild(s);
+        });
+            
+        window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
+    });
 });
-
-function load(wndw) {
-    wndw.onload = function() {
-        dark(wndw);
-        offline(wndw);
-    };
-}

@@ -3,17 +3,21 @@ const cacheAssets = [
     'assets/CPquery.js',
     'assets/Library.js',
     'assets/logo.png',
-    'assets/Options',
+    'assets/Options.js',
     'index.html',
     'PreviewLibrary/index.html',
     'AboutLibrary/index.html',
     'LibrarySource/index.html',
     'PageOptions/index.html',
+    '/',
+    'PreviewLibrary/',
+    'AboutLibrary/',
+    'LibrarySource/',
+    'PageOptions/',
 ];
 
 self.addEventListener('install', e => {
     console.info('Service Worker: Installed');
-
     e.waitUntil(
         caches
             .open(cacheName)
@@ -40,7 +44,6 @@ self.addEventListener('activate', e => {
         })
     );
 });
-
 
 self.addEventListener('fetch', e => {
     console.info('Service Worker: Fetching');

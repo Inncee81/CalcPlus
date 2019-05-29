@@ -7,73 +7,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
     <script src="../assets/CPquery.js"></script>
+    <script src="../assets/Options.js"></script>
     <title>CalcPlus Page Options</title>
     <style>
       body {
-        color: black;
+        color: white;
         background-color: white;
       }
-      a {
-        color: rgb(0, 0, 192);
-      }
+      a { color: white; }
+      button { color: white; }
     </style>
   </head>
   <body>
     <noscript>Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <span class="console"></span>
     <h1>Page Options</h1>
-    <h2><a href="../index.html">Home</a></h2>
-    <h3>Dark Mode <button id="darkMode" onclick="toggleDarkMode()">Off</button></h3>
+    <h2><a href="../">Home</a></h2>
+    <h3>Dark Mode <button id="darkMode">Off</button></h3>
     
     <script>
-      var c = document.querySelector(".console");
-      console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
-      console.info = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
-        s.textContent = "\n" + e;
-        s.style.color = "blue";
-        c.appendChild(s);
-      });
-      console.warn = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
-        s.textContent = "\n" + e;
-        s.style.color = "yellow";
-        c.appendChild(s);
-      });
-      console.error = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
-        s.textContent = "\n" + e;
-        s.style.color = "red";
-        c.appendChild(s);
-      });
-        
-      window.onerror = (e, s, l, c) => {
-        console.error(`Error: ${e} at: ${s} : ${l} : ${c}`);
-      };
+      var darkB = $("#darkMode");
+      var isDark = $("@isDark");
       
-      if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
-        if ($("@isDark").me() == "On") {
-          $(window).css.replace(0, 'body { color: white; background-color: black; }');
-          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
-          $("#darkMode").text.replace("On");
-        }
-      } else {
-        $("@isDark").set("Off");
+      if (isDark.me() == "On") {
+        darkB.text.replace("On");
       }
-      
-      function toggleDarkMode() {
-        if ($("@isDark").me() == "Off") {
-          $(window).css.replace(0, 'body { color: white; background-color: black; }');
-          $(window).css.append(0, 'a { color: rgb(0, 0, 192); }');
-          $("@isDark").set("On");
-          $("#darkMode").text.replace($("@isDark").me());
-        } else if ($("@isDark").me() == "On") {
-          $(window).css.replace(0, 'body { color: black; background-color: white; }');
-          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
-          $("@isDark").set("Off");
-          $("#darkMode").text.replace($("@isDark").me());
+
+      darkB.click(function(){
+        if (isDark.me() == "Off") {
+          isDark.set("On");
+          location.reload();
+        } else if (isDark.me() == "On") {
+          isDark.set("Off");
+          location.reload();
         }
-      }
+      });
     </script>
   </body>
 </html>

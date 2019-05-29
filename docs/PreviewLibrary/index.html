@@ -8,15 +8,15 @@
     <link rel="icon" href="../assets/logo.png">
     <script src="../assets/Library.js"></script>
     <script src="../assets/CPquery.js"></script>
+    <script src="../assets/Options.js"></script>
     <title>Preview the CalcPlus Library</title>
     <style>
       body {
         color: white;
         background-color: white;
       }
-      a {
-        color: white;
-      }
+      a { color: white; }
+      button { color: white; }
       .removeInput {
           color: white;
           background: white;
@@ -27,7 +27,7 @@
   <body>
     <noscript>Library couldn't be loaded! Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <span class="console"></span>
-    <a href="../index.html">Home</a>
+    <a href="../">Home</a>
     <form>
       <input type="radio" id="add" name="math-type" label="Addition Algorithm" checked="checked"> Addition
       <br>
@@ -197,42 +197,6 @@
         });
       } catch(err) {
         console.error(err);
-      }
-    </script>
-    
-    <script>
-      var c = document.querySelector(".console");
-      console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
-      console.info = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
-        s.textContent = "\n" + e;
-        s.style.color = "blue";
-        c.appendChild(s);
-      });
-      console.warn = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
-        s.textContent = "\n" + e;
-        s.style.color = "rgb(205, 205, 0)";
-        c.appendChild(s);
-      });
-      console.error = (...args) => args.forEach(e => {
-        const s = document.createElement("span");
-        s.textContent = "\n" + e;
-        s.style.color = "red";
-        c.appendChild(s);
-      });
-        
-      window.onerror = (e, s, l, c) => {
-        console.error(`${e} at: ${s} : ${l}:${c}`);
-      };
-      
-      if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
-        if ($("@isDark").me() == "On") {
-          $(window).css.replace(0, 'body { color: white; background-color: black; }');
-          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
-        }
-      } else {
-        $("@isDark").set("Off");
       }
     </script>
   </body>
