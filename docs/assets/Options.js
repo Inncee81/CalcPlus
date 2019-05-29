@@ -14,8 +14,8 @@ function loadScript(src, f) {
     head.appendChild(script);
 }
 
-var index = sessionStorage.getItem("index");
-var script = (index == "On") "assets/CPquery.js" ? "../assets/CPquery.js";
+var index = sessionStorage.getItem("index") == "On";
+var script = index ? "assets/Options.js":"../assets/Options.js";
 
 loadScript(script, function(){
     var isDark = $("@isDark");
@@ -57,7 +57,7 @@ loadScript(script, function(){
 
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
-                var sjws = (local == "On") "sw.js"?"../sw.js";
+                var sjws = index ? "sw.js":"../sw.js";
                 navigator.serviceWorker
                     .register(sjws)
                     .then(reg => {
