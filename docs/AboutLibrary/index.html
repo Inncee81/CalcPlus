@@ -6,28 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
     <script src="../assets/CPquery.js"></script>
+    <script src="../assets/Options.js"></script>
     <title>About CalcPlus Library</title>
     <style>
       body {
-        text-align: center;
-        color: black;
+        color: white;
         background-color: white;
+        text-align: center;
       }
-      a {
-        color: rgb(0, 0, 192);
-      }
+      a { color: rgb(0, 0, 192); }
     </style>
   </head>
   <body>
     <noscript>Please allow JavaScript to run on this page, or else some things won't work. Thank you!<br></noscript>
     <h1>About CalcPlus Library</h1>
-    <a href="../index.html">Home</a>
+    <a href="../">Home</a>
     
     <h2>About</h2>
     <p>This is a library that let&#39;s numbers be calculated up to:</p>
     <p>64 bit OS: 2^64-1 digits <strong><em>long</em></strong>.</p>
     <p>32 bit OS: 2^32-1 digits <strong><em>long</em></strong>.</p>
-    <p>Want to see this library in action? Just go <a href="../PreviewLibrary/index.html">here</a>!</p>
+    <p>Want to see this library in action? Just go <a href="../PreviewLibrary/">here</a>!</p>
     
     <h2>Advantages of using this library</h2>
     <p>Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.)</p>
@@ -39,15 +38,5 @@
     <h2>How do I install this library?</h2>
     <p>For JavaScript, simply link somewhere in your HTML <head> tag this text:</p>
     &lt;script src="https://virxec.github.io/CalcPlus/assets/Library.js"&gt;&lt;/script&gt;
-    <script>
-      if ($("@isDark").me() == "Off" || $("@isDark").me() == "On") {
-        if ($("@isDark").me() == "On") {
-          $(window).css.replace(0, 'body { color: white; background-color: black; }');
-          $(window).css.append(0, 'a { color: rgb(0, 0, 255); }');
-        }
-      } else {
-        $("@isDark").set("Off");
-      }
-    </script>
   </body>
 </html>
