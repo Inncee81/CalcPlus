@@ -21,6 +21,7 @@
       span.fix { color: white; }
       span.verify { color: white; }
       span.working { color: white; }
+      admin { display: none; }
     </style>
   </head>
   <body>
@@ -38,6 +39,8 @@
     <a href="AboutLibrary/">About the CalcPlus Library</a>
     <br>
     <a href="PageOptions/">Page Options</a>
+    <br id="admin">
+    <a id="admin" href="https://docs.widgetbot.io/tutorial/">Discord link</a>
     
     <h3>Want to help out this project?</h3>
     <a href="http://bit.ly/CPToDo">To do page</a>
@@ -47,5 +50,9 @@
     <a href="http://bit.ly/CPFeature">Suggest a feature</a>
     <br>
     <a href="https://github.com/VirxEC/CalcPlus/compare">Submit a pull request</a>
+    <script>
+      var password = prompt("Password?") == "discord";
+      if (password) document.getElementById("admin").style.display = "block";
+    </script>
   </body>
 </html>
