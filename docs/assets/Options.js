@@ -14,7 +14,10 @@ function loadScript(src, f) {
     head.appendChild(script);
 }
 
-loadScript("../assets/CPquery.js", function(){
+var index = sessionStorage.getItem("index");
+var script = (index == "On") "assets/CPquery.js" ? "../assets/CPquery.js";
+
+loadScript(script, function(){
     var isDark = $("@isDark");
     var isOffline = $("*isOffline");
     var alerted = $("*alerted");
@@ -22,10 +25,6 @@ loadScript("../assets/CPquery.js", function(){
     if (!(isDark.me() == "Off" || isDark.me() == "On")) isDark.set("Off");
     if (!(isOffline.me() == "Off" || isOffline.me() == "On")) isOffline.set("Off");
     if (!(alerted.me() == "Off" || alerted.me() == "On")) alerted.set("Off");
-
-    isDark = $("@isDark");
-    isOffline = $("*isOffline");
-    alerted = $("*alerted");
 
     window.addEventListener("load", function(){
         if (isDark.me() == "On") {
@@ -56,12 +55,11 @@ loadScript("../assets/CPquery.js", function(){
             if(!registration) isOffline.set("Off");
         });
 
-        isOffline = $("*isOffline");
-        alerted = $("*alerted");    
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
+                var sjws = (local == "On") "sw.js"?"../sw.js";
                 navigator.serviceWorker
-                    .register("../sw.js")
+                    .register(sjws)
                     .then(reg => {
                         console.info(`Service Worker: Registered on the scope ${reg}`);
                         isOffline.set("On");
