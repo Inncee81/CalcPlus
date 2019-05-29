@@ -11,7 +11,7 @@
     <script>
       var index = $("*index");
       index.set("On");
-      window.addEventListener("beforeunload", () => index.set("Off"));
+      window.addEventListener("beforeunload", () => {index.set("Off");});
     </script>
     <script src="assets/Options.js"></script>
     <title>CalcPlus</title>
