@@ -36,7 +36,10 @@ loadScript(script, function(){
                 'span.fix { color: yellow; }',
                 'span.verify { color: orange; }',
                 'span.working { color: green; }',
-                '.removeInput { color: black; background-color: red; border: none; }'
+                '.removeInput { color: black; background-color: red; border: none; }',
+                'nav a { background-color: rgb(30, 30, 30); color: white; text-decoration: none; outline: none; padding: 10px 20px; display: block; float: left; border-right: solid 1px rgb(75, 75, 75); border-top-left-radius: 5px; border-top-right-radius: 5px; width: 16.66%; text-align: center; box-sizing: border-box; }',
+                'nav a:link, nav a:visited { background-color: rgb(30, 30, 30); color: white; }',
+                'nav a:hover, nav a:active { background-color: rgb(60, 60, 60); color: rgb(215, 215, 215); }'
             ]);
         } else {
             $(window).css.replaceWithAll(0, [
@@ -47,7 +50,10 @@ loadScript(script, function(){
                 'span.fix { color: rgb(235, 235, 0); }',
                 'span.verify { color: orange; }',
                 'span.working { color: green; }',
-                '.removeInput { color: black; background-color: red; border: none; }'
+                '.removeInput { color: black; background-color: red; border: none; }',
+                'nav a { background-color: grey; color: white; text-decoration: none; outline: none; padding: 10px 20px; display: block; float: left; border-right: solid 1px silver; border-top-left-radius: 5px; border-top-right-radius: 5px; width: 16.66%; text-align: center; box-sizing: border-box; }',
+                'nav a:link, nav a:visited { background-color: grey; color: white; }',
+                'nav a:hover, nav a:active { background-color: silver; color: black; }'
             ]);
         }
 
@@ -72,24 +78,42 @@ loadScript(script, function(){
         } else console.info("Service Workers already registered.");
         
         var c = document.querySelector(".console");
-        console.log = (...args) => args.forEach(m => c.appendChild(document.createTextNode(`\n ${m}`)));
+        console.log = (...args) => args.forEach(m => {
+            try {
+                c.appendChild(document.createTextNode(`\n ${m}`));
+            } catch(err) {
+                console.log(m);
+            }
+        });
         console.info = (...args) => args.forEach(e => {
-            const s = document.createElement("span");
-                s.textContent = "\n" + e;
-                s.style.color = "blue";
-                c.appendChild(s);
+            try {
+                const s = document.createElement("span");
+                    s.textContent = "\n" + e;
+                    s.style.color = "blue";
+                    c.appendChild(s);
+            } catch(err) {
+                console.info(e);
+            }
         });
         console.warn = (...args) => args.forEach(e => {
-            const s = document.createElement("span");
-                s.textContent = "\n" + e;
-                s.style.color = "rgb(205, 205, 0)";
-                c.appendChild(s);
+            try {
+                const s = document.createElement("span");
+                    s.textContent = "\n" + e;
+                    s.style.color = "rgb(205, 205, 0)";
+                    c.appendChild(s);
+            } catch(err) {
+                console.warn(e);
+            }
         });
         console.error = (...args) => args.forEach(e => {
-            const s = document.createElement("span");
-                s.textContent = "\n" + e;
-                s.style.color = "red";
-                c.appendChild(s);
+            try {
+                const s = document.createElement("span");
+                    s.textContent = "\n" + e;
+                    s.style.color = "red";
+                    c.appendChild(s);
+            } catch(err) {
+                console.error(e);
+            }
         });
             
         window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);

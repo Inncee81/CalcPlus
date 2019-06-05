@@ -10,19 +10,26 @@
     <script src="../assets/Options.js"></script>
     <title>CalcPlus Page Options</title>
     <style>
-      body {
-        color: white;
-        background-color: white;
-      }
+      body { color: white; background-color: white; }
       a { color: white; }
       button { color: white; }
+      nav a { background-color: white; color: white; }
+      nav a:link, nav a:visited { background-color: white; color: white; }
+      nav a:hover, nav a:active { background-color: white; color: white; }
     </style>
   </head>
   <body>
+    <nav>
+      <a href="../">Home</a>
+      <a href="../PreviewLibrary/">Preview the library</a>
+      <a href="../LibrarySource/">Library Source</a>
+      <a href="../CPQuerySource/">View CPQuery Source</a>
+      <a href="../AboutLibrary/">About the CalcPlus Library</a>
+      <a href="../SiteDiscord/">Offical Discord</a>
+    </nav>
+    <br>
     <noscript>Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
-    <span class="console"></span>
     <h1>Page Options</h1>
-    <h2><a href="../">Home</a></h2>
     <h3>Dark Mode <button id="darkMode">Off</button></h3>
     
     <script>
