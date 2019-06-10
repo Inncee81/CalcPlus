@@ -5,15 +5,17 @@ const cacheAssets = [
     'assets/logo.png',
     'assets/Options.js',
     'index.html',
-    'PreviewLibrary/index.html',
     'AboutLibrary/index.html',
+    'CPQuerySource/index.html',
     'LibrarySource/index.html',
     'PageOptions/index.html',
+    'PreviewLibrary/index.html',
     '/',
-    'PreviewLibrary/',
     'AboutLibrary/',
+    'CPQuerySource/',
     'LibrarySource/',
     'PageOptions/',
+    'PreviewLibrary/'
 ];
 
 self.addEventListener('install', e => {
