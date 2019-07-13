@@ -192,12 +192,8 @@
             }
           }
           final.display = true;
-        } else {
-          console.error("ran nothing");
-        }
-        if (final.display) {
-          $("#output").text.replace("Answer: "+final.num);
-        }
+        } else console.error("Ran nothing");
+        if (final.display) $("#output").text.replace(`Answer: ${final.num}`);
       };
       $("#addInput").click(function(){
         inputBoxes++;

@@ -39,8 +39,8 @@ function parseNums(num1, num2, mode) {
 		}
 		return this;
 	};
-	decimal1 = num1.remove(".").length-num1.length;
-	decimal2 = num2.remove(".").length-num2.length;
+	decimal1 = num1.remove(".").length - num1.length;
+	decimal2 = num2.remove(".").length - num2.length;
 
 	if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
 	else if (mode == 2) decimal = decimal1 + decimal2;
@@ -80,6 +80,18 @@ function parseNums(num1, num2, mode) {
 		}
 	}
 
+	maxChar = Math.max(num1.length, num2.length);
+
+	if (num1.length != num1.length) {
+		if (maxChar == num1.length) {
+			times = num1.length - num2.length;
+			for (var i = 0; i < times; i++) num2.unshift("0");
+		} else {
+			times = num2.length - num1.length;
+			for (var i = 0; i < times; i++) num1.unshift("0");
+		}
+	}
+
 	return {
 		num1: {
 			num: num1,
@@ -100,9 +112,7 @@ function parseNums(num1, num2, mode) {
 function add(num1, num2) {
 	var parsedNums = parseNums(num1, num2, 4);
 	num1 = parsedNums.num1.num;
-	var num1D = parsedNums.num1.decimals;
 	num2 = parsedNums.num2.num;
-	var num2D = parsedNums.num2.decimals;
 	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 	var maxChar = parsedNums.maxChar;
 	var decimals = parsedNums.decimals;
