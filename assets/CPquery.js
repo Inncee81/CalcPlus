@@ -70,6 +70,8 @@ function $(query) {
 		else if (session) sessionStorage.setItem(query, item);
 	}
 
+	var remove = () => {element.remove()};
+
 	var html = {
 		append: function(item) {
 			element.innerHTML += item;
@@ -98,7 +100,8 @@ function $(query) {
 		me: me,
 		set: set,
 		html: html,
-		text: text
+		text: text,
+		remove: remove
 	}
 }
 

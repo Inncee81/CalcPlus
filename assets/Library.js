@@ -1,7 +1,7 @@
 function parseNums(num1, num2, mode) {
-	if (typeOf num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
-	if (typeOf num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
-	if (typeOf mode != "number" || mode > 4 || mode < 1) throw new TypeError("The mode must be a number from 1-4.");
+	if (typeof num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
+	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
+	if (typeof mode != "number" || mode > 4 || mode < 1) throw new TypeError("The mode must be a number from 1-4.");
 	
 	var neg = [0, false, false];
 
@@ -39,8 +39,8 @@ function parseNums(num1, num2, mode) {
 		}
 		return this;
 	};
-	decimal1 = num1.remove(".").length;
-	decimal2 = num2.remove(".").length;
+	decimal1 = num1.remove(".").length-num1.length;
+	decimal2 = num2.remove(".").length-num2.length;
 
 	if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
 	else if (mode == 2) decimal = decimal1 + decimal2;

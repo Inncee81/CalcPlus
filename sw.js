@@ -15,7 +15,8 @@ const cacheAssets = [
     'CPQuerySource/',
     'LibrarySource/',
     'PageOptions/',
-    'PreviewLibrary/'
+    'PreviewLibrary/',
+    'LICENSE'
 ];
 
 self.addEventListener('install', e => {

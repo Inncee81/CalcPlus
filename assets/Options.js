@@ -85,16 +85,6 @@ loadScript(script, function(){
                 console.log(m);
             }
         });
-        console.info = (...args) => args.forEach(e => {
-            try {
-                const s = document.createElement("span");
-                    s.textContent = "\n" + e;
-                    s.style.color = "blue";
-                    c.appendChild(s);
-            } catch(err) {
-                console.info(e);
-            }
-        });
         console.warn = (...args) => args.forEach(e => {
             try {
                 const s = document.createElement("span");
