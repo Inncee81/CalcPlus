@@ -29,7 +29,7 @@ loadScript(script, function(){
     window.addEventListener("load", function(){
         if (isDark.me() == "On") {
             $(window).css.replaceWithAll(0, [
-                'body { color: white; background-color: black; }',
+                'body { color: white; background-color: black; margin: 0; }',
                 'button { color: white; background-color: rgb(50, 50, 50); border-color: rgb(60, 60, 60); }',
                 'a { color: rgb(0, 0, 255); }',
                 'span.broken { color: red; }',
@@ -37,13 +37,13 @@ loadScript(script, function(){
                 'span.verify { color: orange; }',
                 'span.working { color: green; }',
                 '.removeInput { color: black; background-color: red; border: none; }',
-                'nav a { background-color: rgb(30, 30, 30); color: white; text-decoration: none; outline: none; padding: 10px 20px; display: block; float: left; border-right: solid 1px rgb(75, 75, 75); border-top-left-radius: 5px; border-top-right-radius: 5px; width: 16.66%; text-align: center; box-sizing: border-box; }',
+                'nav a { background-color: rgb(30, 30, 30); color: white; text-decoration: none; outline: none; padding: 10px 20px; display: block; float: left; border-right: solid 1px rgb(75, 75, 75); border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; width: 16.666%; text-align: center; box-sizing: border-box; }',
                 'nav a:link, nav a:visited { background-color: rgb(30, 30, 30); color: white; }',
                 'nav a:hover, nav a:active { background-color: rgb(60, 60, 60); color: rgb(215, 215, 215); }'
             ]);
         } else {
             $(window).css.replaceWithAll(0, [
-                'body { color: black; background-color: white; }',
+                'body { color: black; background-color: white; margin: 0; }',
                 'button { color: black; background-color: rgb(200, 200, 200); border-color: rgb(210, 210, 210); }',
                 'a { color: rgb(0, 0, 192); }',
                 'span.broken { color: red; }',
@@ -51,7 +51,7 @@ loadScript(script, function(){
                 'span.verify { color: orange; }',
                 'span.working { color: green; }',
                 '.removeInput { color: black; background-color: red; border: none; }',
-                'nav a { background-color: grey; color: white; text-decoration: none; outline: none; padding: 10px 20px; display: block; float: left; border-right: solid 1px silver; border-top-left-radius: 5px; border-top-right-radius: 5px; width: 16.66%; text-align: center; box-sizing: border-box; }',
+                'nav a { background-color: grey; color: white; text-decoration: none; outline: none; padding: 10px 20px; display: block; float: left; border-right: solid 1px silver; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; width: 16.666%; text-align: center; box-sizing: border-box; }',
                 'nav a:link, nav a:visited { background-color: grey; color: white; }',
                 'nav a:hover, nav a:active { background-color: silver; color: black; }'
             ]);

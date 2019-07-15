@@ -143,7 +143,7 @@ function add(num1, num2) {
 	}
 
 	final = final.reverse();
-	while (final[final.length-1] == '0' && final.length > 1) delete final[final.length-1];
+	while (final[final.length] == '0' && final.length > 1) delete final[final.length-1];
 
 	if (decimals > 0) final.splice(decimals-1, 0, ".");
 
