@@ -4,7 +4,7 @@ function parseNums(num1, num2, mode) {
 	if (typeof mode != "number" || mode > 4 || mode < 1) throw new TypeError("The mode must be a number from 1-4.");
 	
 	var neg = [0, false, false];
-
+	
 	num1 = num1.split("-");
 	num2 = num2.split("-");
 
@@ -21,9 +21,7 @@ function parseNums(num1, num2, mode) {
 
 	if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) isNeg = true;
 
-	var decimal = 0;
-	var decimal1 = 0;
-	var decimal2 = 0;
+	var decimal, decimal1, decimal2;
 
 	num1 = num1.split('');
 	num2 = num2.split('');
@@ -37,12 +35,16 @@ function parseNums(num1, num2, mode) {
 		return this;
 	};
 
-	num1 = num1.remove(",");
-	num2 = num2.remove(",");
-	decimal1 = num1.remove(".").length - num1.length;
-	decimal2 = num2.remove(".").length - num2.length;
+	num1.remove(",");
+	num2.remove(",");
+	var num1pos = num1.indexOf(".");
+	var num2pos = num2.indexOf(".");
+	decimal1 = num1.remove(".").length - num1pos;
+	decimal2 = num2.remove(".").length - num2pos;
 
-	if (mode == 4 || mode == 1) decimal = Math.max(decimal1, decimal2);
+	var maxDecimal = Math.max(decimal1, decimal2);
+
+	if (mode == 4 || mode == 1) decimal = maxDecimal;
 	else if (mode == 2) decimal = decimal1 + decimal2;
 	else if (mode == 3) decimal = decimal2;
 
@@ -108,6 +110,7 @@ function add(num1, num2) {
 	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 	var maxChar = parsedNums.maxChar;
 	var decimals = parsedNums.decimals;
+	console.info("decimals: "+decimals);
 
 	if (neg[1] || neg[2]) {
 		if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
@@ -122,14 +125,7 @@ function add(num1, num2) {
 	for (var i=maxChar-1; i>=0;i--) {
 		var finali = maxChar-i-1;
 		if(time != i+1) carry = "0";
-
-		console.info("i: "+i);
-		console.info("finali: "+finali);
-		console.info("num1[i]: "+num1[i]);
-		console.info("num2[i]: "+num2[i]);
-		console.info("carry: "+carry);
 		final[finali] = (parseInt(num1[i]) + parseInt(num2[i]) + parseInt(carry)).toString();
-		console.info("final[finali]: "+final[finali]);
 
 		if(parseInt(final[finali]) > 9) {
 			var temp = final[finali].split('');
@@ -143,7 +139,7 @@ function add(num1, num2) {
 	final = final.reverse();
 	while (final[final.length] == '0' && final.length > 1) delete final[final.length-1];
 
-	if (decimals > 0) final.splice(decimals-1, 0, ".");
+	if (decimals > 0) final.splice(final.length-decimals, 0, ".");
 
 	if(neg[0]) return "-"+final.join('');
 	return final.join('');
