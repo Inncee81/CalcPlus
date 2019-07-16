@@ -5,8 +5,6 @@ function parseNums(num1, num2, mode) {
 	
 	var neg = [0, false, false];
 
-	num1 = num1.toString().replace(",", "");
-	num2 = num2.toString().replace(",", "");
 	num1 = num1.split("-");
 	num2 = num2.split("-");
 
@@ -29,7 +27,6 @@ function parseNums(num1, num2, mode) {
 
 	num1 = num1.split('');
 	num2 = num2.split('');
-	var maxChar = Math.max(num1.length, num2.length);
 
 	Array.prototype.remove = function() {
 		var what, a = arguments, L = a.length, ax;
@@ -39,6 +36,9 @@ function parseNums(num1, num2, mode) {
 		}
 		return this;
 	};
+
+	num1 = num1.remove(",");
+	num2 = num2.remove(",");
 	decimal1 = num1.remove(".").length - num1.length;
 	decimal2 = num2.remove(".").length - num2.length;
 
@@ -46,6 +46,7 @@ function parseNums(num1, num2, mode) {
 	else if (mode == 2) decimal = decimal1 + decimal2;
 	else if (mode == 3) decimal = decimal2;
 
+	var maxChar = Math.max(num1.length, num2.length);
 	if (mode != 3 && mode != 4) {
 		if (num2.length == maxChar && num1.length != maxChar) {
 			if (mode != 3) {
@@ -55,14 +56,6 @@ function parseNums(num1, num2, mode) {
 			}
 			isNeg = true;
 		}
-	}
-
-	if(maxChar-decimal1 > num1.length) {
-		for(var i=num1.length;i<maxChar-decimal1-1;i++) num1.unshift("0");
-		for(var i=num1.legnth;i<decimal1;i++) num1[num1.length] = "0";
-	} else if (maxChar > num2.length) {
-		for(var i=num2.length;i<maxChar-decimal2-1;i++) num2.unshift("0");
-		for(var i=num2.legnth;i<decimal2;i++) num2[num2.length] = "0";
 	}
 
 	if (!isNeg && mode != 4) {
@@ -81,8 +74,7 @@ function parseNums(num1, num2, mode) {
 	}
 
 	maxChar = Math.max(num1.length, num2.length);
-
-	if (num1.length != num1.length) {
+	if (num1.length != num2.length) {
 		if (maxChar == num1.length) {
 			times = num1.length - num2.length;
 			for (var i = 0; i < times; i++) num2.unshift("0");
@@ -131,7 +123,13 @@ function add(num1, num2) {
 		var finali = maxChar-i-1;
 		if(time != i+1) carry = "0";
 
+		console.info("i: "+i);
+		console.info("finali: "+finali);
+		console.info("num1[i]: "+num1[i]);
+		console.info("num2[i]: "+num2[i]);
+		console.info("carry: "+carry);
 		final[finali] = (parseInt(num1[i]) + parseInt(num2[i]) + parseInt(carry)).toString();
+		console.info("final[finali]: "+final[finali]);
 
 		if(parseInt(final[finali]) > 9) {
 			var temp = final[finali].split('');
