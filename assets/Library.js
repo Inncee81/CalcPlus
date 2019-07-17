@@ -246,31 +246,7 @@ function multi(num1, num2) {
 	var maxChar = parsedNums.maxChar;
 	var decimals = parsedNums.decimals;
 
-	var final = "0";
-	maxChar = [maxChar, num1.length, num2.length];
-
-	for (var round = 0; round < num2.length; round++) {
-		var tempFinal = "";
-		var carry = 0;
-		for (var i = 0; i < num1.length; i++) {
-			var temp = parseInt(num1[i])*parseInt(num2[round])+carry;
-			carry = 0;
-
-			while (temp > 9) {
-				carry += 1;
-				temp -= 10;
-			}
-			tempFinal = temp.toString()+tempFinal;
-		}
-		final = add(final, tempFinal);
-	}
-
-	final = final.split("");
-
-	if (decimals > 0) final.splice(decimals-1, 0, ".");
-
-	if (neg[0]) return "-"+final.reverse().join("");
-	return final.reverse().join("");
+	// Rewrite Needed
 }
 function expo(num1, num2) {
 	if (num2.split("-").length == 2) return div("1", multi(num1, num2));
@@ -286,36 +262,5 @@ function div(num1, num2, maxDecimal) {
 	var maxChar = parsedNums.maxChar;
 	var decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
 
-	while (num2[num2.length-1] == '0' && num2.length > 1) delete num2[num2.length-1];
-	while (num1[num1.length-1] == '0' && num1.length > 1) delete num2[num1.length-1];
-
-	maxDecimal = maxDecimal.split("");
-	if (decimal.length != 1 && decimal[0] != "-") {
-		maxDecimal = maxDecimal.join("");
-		for (var i = 0; isLessThan(decimal[1], decimal[2]); i++) {
-			num1[num1.length] = "0";
-			decimals[0] -= 1;
-		}
-	}
-
-	var final = "";
-	var carry = "0";
-	for (var i = 0; i < num1.length; i++) {
-		if (isLessThanEqual(decimals[0], maxDecimal)) {
-			var tempFinal = roundDown((parseInt(num1)/parseInt(carry+num2[i])).toString());
-			carry = (parseInt(num1)%parseInt(carry+num2[i])).toString();
-			if (carry != 0 && i+1 == num1.length) {
-				num1[num1.length] = "0";
-				decimals += 1;
-			}
-		}
-	}
-
-	final = final.split("");
-
-	if (decimals > 0) final.splice(decimals-1, 0, ".")
-	final = final.reverse().join("");
-
-	if (neg[0]) return "-"+final;
-	return final;
+	//Re-think needed
 }
