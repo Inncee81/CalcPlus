@@ -54,7 +54,7 @@ function parseNums(num1, num2, mode) {
 	else if (mode == 3) decimal = decimal2;
 
 	var maxChar = Math.max(num1.length, num2.length);
-	if (mode != 3 && mode != 4) {
+	if (mode == 2) {
 		if (num2.length == maxChar && num1.length != maxChar) {
 			if (mode != 3) {
 				var temp = [false, num1, num2];
@@ -62,21 +62,6 @@ function parseNums(num1, num2, mode) {
 				num2 = temp[1];
 			}
 			isNeg = true;
-		}
-	}
-
-	if (!isNeg && mode != 4) {
-		for (var i=num2.length-1; i>=0; i--) {
-			if (!isNeg) {
-				if (num2[i] > num1[i]) {
-					if (mode != 3) {
-						var temp = [false, num1, num2];
-						num1 = temp[2];
-						num2 = temp[1];
-					}
-					isNeg = true;
-				}
-			} else break;
 		}
 	}
 
@@ -100,6 +85,23 @@ function parseNums(num1, num2, mode) {
 		} else {
 			times = num2.length - num1.length;
 			for (var i = 0; i < times; i++) num1.unshift("0");
+		}
+	}
+
+	if (!isNeg && mode != 4) {
+		var skip = false;
+		for (var i=0; i>num2.length; i++) {
+			if (!isNeg || skip) {
+				if (parseInt(num2[i]) > parseInt(num1[i])) {
+					if (!(mode == 3 || mode == 1)) {
+						var temp = [false, num1, num2];
+						num1 = temp[2];
+						num2 = temp[1];
+					}
+					isNeg = true;
+					skip = true;
+				} else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
+			} else skip = true;
 		}
 	}
 
@@ -173,7 +175,7 @@ function sub(num1, num2) {
 
 	if (neg[1] || neg[2]) {
 		if (neg[1] && neg[2]) {
-			var temp = [0, num1, num1];
+			var temp = [0, num1, num2];
 			num1 = temp[2];
 			num2 = temp[1];
 		} else if (neg[2]) return add(num1.join(''), num2.join(''));
