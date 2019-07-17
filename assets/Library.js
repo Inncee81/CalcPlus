@@ -112,7 +112,17 @@ function parseNums(num1, num2, mode) {
 		maxChar: maxChar,
 		decimals: decimal
 	};
-};
+}
+
+function formatNums(final,decimals,neg) {
+	final=final.reverse();
+	if(decimals > 0) final.splice(final.length-decimals,0,".");
+	while(final[final.length-1]=='0'&&final.length>1)final.splice(final.length-1,1);
+	while(final[0]=="0")final.splice(0,1);
+	if(final==""||final==".")return "0";
+	if(neg[0])return "-"+final.join('');
+	return final.join('');
+}
 
 function add(num1, num2) {
 	var parsedNums = parseNums(num1, num2, 4);
@@ -145,15 +155,7 @@ function add(num1, num2) {
 			if (i-1 < 0) final[final.length] = carry;
 		}
 	}
-
-	final = final.reverse();
-	while (final[final.length] == '0' && final.length > 1) delete final[final.length-1];
-
-	if (decimals > 0) final.splice(final.length-decimals, 0, ".");
-	if (final[0] == "0") final.splice(0, 1);
-
-	if(neg[0]) return "-"+final.join('');
-	return final.join('');
+	return formatNums(final, decimals, neg);
 }
 
 function sub(num1, num2) {
@@ -184,16 +186,9 @@ function sub(num1, num2) {
 
 		final[finali] = fans.toString();
 	}
-
-	final = final.reverse();
-	while (final[final.length] == '0' && final.length > 1) delete final[final.length-1];
-
-	if (decimals > 0) final.splice(final.length-decimals, 0, ".");
-	if (final[0] == "0") final.splice(0, 1);
-
-	if(neg[0]) return "-"+final.join('');
-	return final.join('');
+	return formatNums(final, decimals, neg);
 }
+
 function isLessThan(num1, num2) {
 	var num = sub(num1, num2).split("-");
 	if (num.length == 1) return false;
@@ -207,7 +202,7 @@ function isGreaterThan(num1, num2) {
 }
 function isLessThanEqual(num1, num2) {
 	var num = sub(num1, num2).split("-");
-	if (num1.length == 1 && num[0] != "0") return false;
+	if (num.length == 1) return false;
 	return true;
 }
 function isGreaterThanEqual(num1, num2) {
@@ -217,7 +212,7 @@ function isGreaterThanEqual(num1, num2) {
 }
 function round(num) {
 	num = num.split(".");
-	num[1] = num.split("");
+	num[1] = num[1].split("");
 	if (isGreaterThanEqual(num[1][0], "5")) return add(num[0], "1");
 	return num[0];
 }
