@@ -90,9 +90,7 @@ function parseNums(num1, num2, mode) {
 		var skip = false;
 		for (var i=0; i<num2.length && !skip && !isNeg; i++) {
 			if (parseInt(num2[i]) > parseInt(num1[i])) {
-				if (mode != 3 && mode != 1) {
-					num2 = [num1, num1 = num2][0];
-				}
+				if (mode != 3 && mode != 1) [num1,num2]=[num2,num1];
 				isNeg = true;
 				skip = true;
 			} else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
@@ -167,11 +165,11 @@ function sub(num1, num2) {
 	var decimals = parsedNums.decimals;
 
 	if (neg[1] || neg[2]) {
-		if (neg[1] && neg[2]) num2 = [num1, num1 = num2][0];
+		if (neg[1] && neg[2]) [num1,num2]=[num2,num1];
 		else if (neg[2]) return add(num1.join(''), num2.join(''));
 		else if (neg[1]) return "-"+add(num1.join(''), num2.join(''));
 	}
-	if (neg[0]) num2 = [num1, num1 = num2][0];
+	if (neg[0]) [num1,num2]=[num2,num1]
 
 	var final = [];
 
@@ -249,10 +247,10 @@ function multi(num1, num2) {
 	// Rewrite Needed
 }
 function expo(num1, num2) {
-	if (num2.split("-").length == 2) return div("1", multi(num1, num2));
-	var final = multi(num1, num1);
-	for (var i=3; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
-	return final;
+	//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
+	//Need to fix multi -> var final = multi(num1, num1);
+	//Need to fix multi -> for (var i=3; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
+	//return final;
 }
 function div(num1, num2, maxDecimal) {
 	var parsedNums = parseNums(num1, num2, 3);
