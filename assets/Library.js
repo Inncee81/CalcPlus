@@ -39,8 +39,10 @@ function parseNums(num1, num2, mode) {
 	num2.remove(",");
 	var num1pos = num1.indexOf(".");
 	var num2pos = num2.indexOf(".");
-	decimal1 = num1.remove(".").length - num1pos;
-	decimal2 = num2.remove(".").length - num2pos;
+	if (num1pos != -1) decimal1 = num1.remove(".").length - num1pos;
+	else decimal1 = 0;
+	if (num2pos != -1) decimal2 = num2.remove(".").length - num2pos;
+	else decimal2 = 0;
 
 	var maxDecimal = Math.max(decimal1, decimal2);
 
@@ -75,8 +77,20 @@ function parseNums(num1, num2, mode) {
 		}
 	}
 
+	if (decimal1 != decimal2) {
+		var times;
+		if (decimal1 == maxDecimal) {
+			times = decimal1 - decimal2;
+			for (var i=0;i<times;i++) num2.push("0");
+		} else {
+			times = decimal2 - decimal1;
+			for (var i=0;i<times;i++) num1.push("0");
+		}
+	}
+
 	maxChar = Math.max(num1.length, num2.length);
 	if (num1.length != num2.length) {
+		var times;
 		if (maxChar == num1.length) {
 			times = num1.length - num2.length;
 			for (var i = 0; i < times; i++) num2.unshift("0");
