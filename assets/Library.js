@@ -26,6 +26,9 @@ function parseNums(num1, num2, mode) {
 	num1 = num1.split('');
 	num2 = num2.split('');
 
+	if (num1[0] == "0") while(num1[0] == "0") num1.splice(0, 1);
+	if (num2[0] == "0") while(num2[0] == "0") num2.splice(0, 1);
+
 	Array.prototype.remove = function() {
 		var what, a = arguments, L = a.length, ax;
 		while (L && this.length) {
@@ -154,6 +157,7 @@ function add(num1, num2) {
 	while (final[final.length] == '0' && final.length > 1) delete final[final.length-1];
 
 	if (decimals > 0) final.splice(final.length-decimals, 0, ".");
+	if (final[0] == "0") final.splice(0, 1);
 
 	if(neg[0]) return "-"+final.join('');
 	return final.join('');
@@ -190,11 +194,11 @@ function sub(num1, num2) {
 		final[finali] = fans.toString();
 	}
 
-	while (final[final.length-1] == '0' && final.length > 1) delete final[final.length-1];
-
 	final = final.reverse();
+	while (final[final.length] == '0' && final.length > 1) delete final[final.length-1];
 
-	if (decimals > 0) final.splice(decimals-1, 0, ".");
+	if (decimals > 0) final.splice(final.length-decimals, 0, ".");
+	if (final[0] == "0") final.splice(0, 1);
 
 	if(neg[0]) return "-"+final.join('');
 	return final.join('');
