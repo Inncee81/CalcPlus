@@ -90,18 +90,16 @@ function parseNums(num1, num2, mode) {
 
 	if (!isNeg && mode != 4) {
 		var skip = false;
-		for (var i=0; i>num2.length; i++) {
-			if (!isNeg || skip) {
-				if (parseInt(num2[i]) > parseInt(num1[i])) {
-					if (!(mode == 3 || mode == 1)) {
-						var temp = [false, num1, num2];
-						num1 = temp[2];
-						num2 = temp[1];
-					}
-					isNeg = true;
-					skip = true;
-				} else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
-			} else skip = true;
+		for (var i=0; i<num2.length && !skip && !isNeg; i++) {
+			if (parseInt(num2[i]) > parseInt(num1[i])) {
+				if (mode != 3 && mode != 1) {
+					var temp = [false, num1, num2];
+					num1 = temp[2];
+					num2 = temp[1];
+				}
+				isNeg = true;
+				skip = true;
+			} else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
 		}
 	}
 
