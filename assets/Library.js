@@ -127,7 +127,6 @@ function add(num1, num2) {
 	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
 	var maxChar = parsedNums.maxChar;
 	var decimals = parsedNums.decimals;
-	console.info("decimals: "+decimals);
 
 	if (neg[1] || neg[2]) {
 		if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
