@@ -56,9 +56,7 @@ function parseNums(num1, num2, mode) {
 	var maxChar = Math.max(num1.length, num2.length);
 	if (mode == 2) {
 		if (num2.length == maxChar && num1.length != maxChar) {
-			if (mode != 3) {
-				num2 = [num1, num1 = num2][0];
-			}
+			if (mode != 3) num2 = [num1, num1 = num2][0];
 			isNeg = true;
 		}
 	}
@@ -90,7 +88,7 @@ function parseNums(num1, num2, mode) {
 		var skip = false;
 		for (var i=0; i<num2.length && !skip && !isNeg; i++) {
 			if (parseInt(num2[i]) > parseInt(num1[i])) {
-				if (mode != 3 && mode != 1) [num1,num2]=[num2,num1];
+				if (mode != 3 && mode != 1) num1=[num2,num2=num1][0];
 				isNeg = true;
 				skip = true;
 			} else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
@@ -124,13 +122,25 @@ function formatNums(final,decimals,neg) {
 	return final.join('');
 }
 
+function miniAdd() {
+	var final, a = arguments;
+	final = parseInt(a[0]) + parseInt(a[1]);
+	for (var i=2;i<a.length;i++) final += parseInt(a[i]);
+	return final.toString();
+}
+
+function miniSub() {
+	var final, a = arguments;
+	final = parseInt(a[0]) - parseInt(a[1]);
+	for (var i=2;i<a.length;i++) final -= parseInt(a[i]);
+	return final.toString();
+}
+
 function add(num1, num2) {
 	var parsedNums = parseNums(num1, num2, 4);
 	num1 = parsedNums.num1.num;
 	num2 = parsedNums.num2.num;
-	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
-	var maxChar = parsedNums.maxChar;
-	var decimals = parsedNums.decimals;
+	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
 
 	if (neg[1] || neg[2]) {
 		if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
@@ -138,21 +148,19 @@ function add(num1, num2) {
 		else if (neg[1]) return sub(num2.join(''), num1.join(''));
 	}
 
-	var time;
-	var final = [];
-	var carry = "0";
+	var time, final = [], carry = "0";
 
 	for (var i=maxChar-1; i>=0;i--) {
 		var finali = maxChar-i-1;
 		if(time != i+1) carry = "0";
-		final[finali] = (parseInt(num1[i]) + parseInt(num2[i]) + parseInt(carry)).toString();
+		final[finali] = miniAdd(num1[i], num[i], carry);
 
 		if(parseInt(final[finali]) > 9) {
 			var temp = final[finali].split('');
 			final[finali] = temp[1];
 			carry = temp[0];
 			time = i;
-			if (i-1 < 0) final[final.length] = carry;
+			if (i-1 < 0) final.push(carry);
 		}
 	}
 	return formatNums(final, decimals, neg);
@@ -167,17 +175,16 @@ function sub(num1, num2) {
 	var decimals = parsedNums.decimals;
 
 	if (neg[1] || neg[2]) {
-		if (neg[1] && neg[2]) [num1,num2]=[num2,num1];
+		if (neg[1] && neg[2]) num1=[num2,num2=num1][0];
 		else if (neg[2]) return add(num1.join(''), num2.join(''));
 		else if (neg[1]) return "-"+add(num1.join(''), num2.join(''));
 	}
-	if (neg[0]) [num1,num2]=[num2,num1]
+	if (neg[0]) num1=[num2,num2=num1][0];
 
 	var final = [];
 
 	for (var i=maxChar-1; i>=0;i--) {
-		var finali = maxChar-i-1;
-		var fans = parseInt(num1[i]) - parseInt(num2[i]);
+		var finali = maxChar-i-1, fans = miniSub(num1[i], num2[i]);
 
 		if (fans < 0) {
 			fans+=10;
@@ -235,9 +242,7 @@ function multi(num1, num2) {
 	var parsedNums = parseNums(num1, num2, 2);
 	num1 = parsedNums.num1.num;
 	num2 = parsedNums.num2.num;
-	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
-	var maxChar = parsedNums.maxChar;
-	var decimals = parsedNums.decimals;
+	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
 
 	// Rewrite Needed
 }
