@@ -16,8 +16,7 @@ Normally, you can only calculate numbers on a 64-bit OS as long as the final res
 With this library, you can calculate numbers as long as the final numbers is less than the above number long, not just that number.
 
 ## What coding languages does this library support?
-For now, it only support JavaScipt. I have plans to eventually port it to Python, then Java, and then C#.
-
+For now, it only support JavaScipt. I have plans to eventually port it to Python.
 ## How do I install this library?
 
 For JavaScript, simply link somewhere in your HTML <head> tag this text:
