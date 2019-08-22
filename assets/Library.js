@@ -153,7 +153,7 @@ function add(num1, num2) {
 	for (var i=maxChar-1; i>=0;i--) {
 		var finali = maxChar-i-1;
 		if(time != i+1) carry = "0";
-		final[finali] = miniAdd(num1[i], num[i], carry);
+		final[finali] = miniAdd(num1[i], num2[i], carry);
 
 		if(parseInt(final[finali]) > 9) {
 			var temp = final[finali].split('');
