@@ -136,64 +136,75 @@ function miniSub() {
 	return final.toString();
 }
 
-function add(num1, num2) {
-	var parsedNums = parseNums(num1, num2, 4);
-	num1 = parsedNums.num1.num;
-	num2 = parsedNums.num2.num;
-	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
+function add() {
+	var a = arguments;
+	if (a.length<2 && typeof a[0]!="object") throw new Error("Function add() must have at least 2 inputs unless the first input is an array");
+	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function add() was an array but there was more than 1 input");
 
-	if (neg[1] || neg[2]) {
-		if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
-		else if (neg[2]) return sub(num1.join(''), num2.join(''));
-		else if (neg[1]) return sub(num2.join(''), num1.join(''));
-	}
+	function tempadd(num1, num2) {
+		var parsedNums = parseNums(num1, num2, 4), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
+		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
+	
+		if (neg[1] || neg[2]) {
+			if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
+			else if (neg[2]) return sub(num1.join(''), num2.join(''));
+			else if (neg[1]) return sub(num2.join(''), num1.join(''));
+		}
 
-	var time, final = [], carry = "0";
+		var time, final = [], carry = "0";
+		for (var i=maxChar-1; i>=0;i--) {
+			var finali = maxChar-i-1;
+			if(time != i+1) carry = "0";
+			final[finali] = miniAdd(num1[i], num2[i], carry);
 
-	for (var i=maxChar-1; i>=0;i--) {
-		var finali = maxChar-i-1;
-		if(time != i+1) carry = "0";
-		final[finali] = miniAdd(num1[i], num2[i], carry);
+			if(parseInt(final[finali]) > 9) {
+				var temp = final[finali].split('');
+				final[finali] = temp[1], carry = temp[0], time = i;
+				if (i-1 < 0) final.push(carry);
+			}
 
-		if(parseInt(final[finali]) > 9) {
-			var temp = final[finali].split('');
-			final[finali] = temp[1];
-			carry = temp[0];
-			time = i;
-			if (i-1 < 0) final.push(carry);
+			return formatNums(final, decimals, neg);
 		}
 	}
-	return formatNums(final, decimals, neg);
+
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = tempadd(a[0], a[1]);
+	if (inputBoxes > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempadd(permfinal, a[i]);
+	return permfinal;
 }
 
-function sub(num1, num2) {
-	var parsedNums = parseNums(num1, num2, 1);
-	num1 = parsedNums.num1.num;
-	num2 = parsedNums.num2.num;
-	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
-	var maxChar = parsedNums.maxChar;
-	var decimals = parsedNums.decimals;
+function sub() {
+	var a = arguments;
+	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
+	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
 
-	if (neg[1] || neg[2]) {
-		if (neg[1] && neg[2]) num1=[num2,num2=num1][0];
-		else if (neg[2]) return add(num1.join(''), num2.join(''));
-		else if (neg[1]) return "-"+add(num1.join(''), num2.join(''));
-	}
-	if (neg[0]) num1=[num2,num2=num1][0];
+	function tempsub(num1, num2) {
+		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
+		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
 
-	var final = [];
-
-	for (var i=maxChar-1; i>=0;i--) {
-		var finali = maxChar-i-1, fans = miniSub(num1[i], num2[i]);
-
-		if (fans < 0) {
-			fans+=10;
-			num1[i-1]-=1;
+		if (neg[1] || neg[2]) {
+			if (neg[1] && neg[2]) num1=[num2,num2=num1][0];
+			else if (neg[2]) return add(num1.join(''), num2.join(''));
+			else if (neg[1]) return "-"+add(num1.join(''), num2.join(''));
 		}
+		if (neg[0]) num1=[num2,num2=num1][0];
 
-		final[finali] = fans.toString();
+		var final = [];
+		for (var i=maxChar-1; i>=0;i--) {
+			var finali = maxChar-i-1, fans = miniSub(num1[i], num2[i]);
+			if (fans < 0) {
+				fans+=10;
+				num1[i-1]-=1;
+			}
+			final[finali] = fans.toString();
+		}
+		return formatNums(final, decimals, neg);
 	}
-	return formatNums(final, decimals, neg);
+
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = tempsub(a[0], a[1]);
+	if (inputBoxes > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempsub(permfinal, a[i]);
+	return permfinal;
 }
 
 function isLessThan(num1, num2) {
