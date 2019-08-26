@@ -122,20 +122,6 @@ function formatNums(final,decimals,neg) {
 	return final.join('');
 }
 
-function miniAdd() {
-	var final, a = arguments;
-	final = parseInt(a[0]) + parseInt(a[1]);
-	for (var i=2;i<a.length;i++) final += parseInt(a[i]);
-	return final.toString();
-}
-
-function miniSub() {
-	var final, a = arguments;
-	final = parseInt(a[0]) - parseInt(a[1]);
-	for (var i=2;i<a.length;i++) final -= parseInt(a[i]);
-	return final.toString();
-}
-
 function add() {
 	var a = arguments;
 	if (a.length<2 && typeof a[0]!="object") throw new Error("Function add() must have at least 2 inputs unless the first input is an array");
@@ -155,7 +141,7 @@ function add() {
 		for (var i=maxChar-1; i>=0;i--) {
 			var finali = maxChar-i-1;
 			if(time != i+1) carry = "0";
-			final[finali] = miniAdd(num1[i], num2[i], carry);
+			final[finali] = (parseInt(num1[i])+parseInt(num2[i])+parseInt(carry)).toString();
 
 			if(parseInt(final[finali]) > 9) {
 				var temp = final[finali].split('');
@@ -191,11 +177,8 @@ function sub() {
 
 		var final = [];
 		for (var i=maxChar-1; i>=0;i--) {
-			var finali = maxChar-i-1, fans = miniSub(num1[i], num2[i]);
-			if (fans < 0) {
-				fans+=10;
-				num1[i-1]-=1;
-			}
+			var finali = maxChar-i-1, fans = parseInt(num1[i])-parseInt(num2[i]);
+			if (fans < 0) fans+=10, num1[i-1]-=1;
 			final[finali] = fans.toString();
 		}
 		return formatNums(final, decimals, neg);
@@ -244,18 +227,11 @@ function roundUp(num) {
 }
 
 function multi(num1, num2) {
-	function addZeros(round) {
-		var zeros = "";
-		if (isGreaterThan(round, 0)) for (var i = 0; i < round; i++) zeros += "0";
-		return zeros;
-	}
-
 	var parsedNums = parseNums(num1, num2, 2);
-	num1 = parsedNums.num1.num;
-	num2 = parsedNums.num2.num;
 	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
+	num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
 
-	// Rewrite Needed
+	// Concept for v3 found
 }
 function expo(num1, num2) {
 	//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
@@ -265,11 +241,8 @@ function expo(num1, num2) {
 }
 function div(num1, num2, maxDecimal) {
 	var parsedNums = parseNums(num1, num2, 3);
+	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
 	num1 = parsedNums.num1.num;
 	num2 = parsedNums.num2.num;
-	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg];
-	var maxChar = parsedNums.maxChar;
-	var decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
-
-	//Re-think needed
+	// Concept for v3 found
 }

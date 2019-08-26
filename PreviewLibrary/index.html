@@ -37,11 +37,11 @@
       <br>
       <input type="radio" id="sub" name="math-type" label="Subtraction Algorithm"> Subtraction
       <br>
-      <input type="radio" id="multi" name="math-type" label="Multiplication Algorithm"> Multiplication (In development)
+      <input type="radio" id="multi" name="math-type" label="Multiplication Algorithm - Concept for v3 found"> Multiplication (Concept for v3 found)
       <br>
       <input type="radio" id="expo" name="math-type" label="Exponents Algorithm (No decimals)"> Exponents (No decimals) (Broken)
       <br>
-      <input type="radio" id="div" name="math-type" label="Division Algorithm - In development"> Division (In development)
+      <input type="radio" id="div" name="math-type" label="Division Algorithm - Concept for v3 found"> Division (Concept for v3 found)
       <br>
       <input type="radio" id="isLessThan" name="math-type" label="Is Less Than Algorithm"> Is Less Than
       <br>
@@ -74,9 +74,10 @@
       var inputBoxes = 2;
       var divChecked = false;
 
-      var getChecked = function(name) {
+      function getChecked(name) {
         return $(`#${name}`).checked();
-      };
+      }
+
       $("#div").click(function() {
         divChecked = true;
         $("#extraInputs").html.append('<span id="spanDivMax">Max decimal place: <input type="text" id="maxDecimal" label="Max number of decimals for division algorithm"/> <button class="removeInput" id="divMax" label="Delete max decimal field for division algorithm">X</button><br></span>');
@@ -90,112 +91,95 @@
         });
       });
 
-      var runCalc = function() {
-        var final = {
-          num: 0,
-          display: false
-        };
+      function runCalc() {
+        var final;
         if (getChecked("add")) {
           var inputs=[];
           for (var i=1;i<=inputBoxes;i++) inputs[i-1] = $(`#input${i.toString()}`).val();
-          final.num = add(inputs);
-          final.display = true;
+          final = add(inputs);
         } else if (getChecked("sub")) {
           var inputs=[];
           for (var i=1;i<=inputBoxes;i++) inputs[i-1] = $(`#input${i.toString()}`).val();
-          final.num = sub(inputs);
-          final.display = true;
+          final = sub(inputs);
         } else if (getChecked("multi")) {
-          final.num = multi($("#input1").val(), $("#input2").val());
+          final = multi($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var m=3; m<=inputBoxes; m++) {
-              final.num = multi(final.num, $(`#input${m.toString()}`).val());
+              final = multi(final, $(`#input${m.toString()}`).val());
             }
           }
-          final.display = true;
         } else if (getChecked("expo")) {
-          final.num = expo($("#input1").val(), $("#input2").val());
+          final = expo($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = expo(final.num, $(`#input${e.toString()}`).val());
+              final = expo(final, $(`#input${e.toString()}`).val());
             }
           }
-          final.display = true;
         } else if (getChecked("div")) {
           var maxDecimals = $("#divMax").val();
-          final.num = div($("#input1").val(), $("#input2").val(), maxDecimals);
+          final = div($("#input1").val(), $("#input2").val(), maxDecimals);
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = div(final.num, $(`#input${e.toString()}`).val(), maxDecimals);
+              final = div(final, $(`#input${e.toString()}`).val(), maxDecimals);
             }
           }
-          final.display = true;
         } else if (getChecked("isLessThan")) {
-          final.num = isLessThan($("#input1").val(), $("#input2").val());
+          final = isLessThan($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = isLessThan(final.num, $(`#input${e.toString()}`).val());
+              final = isLessThan(final, $(`#input${e.toString()}`).val());
             }
           }
-          final.display = true;
         } else if (getChecked("isGreaterThan")) {
-          final.num = isGreaterThan($("#input1").val(), $("#input2").val());
+          final = isGreaterThan($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = isGreaterThan(final.num, $(`#input${e.toString()}`).val());
+              final = isGreaterThan(final, $(`#input${e.toString()}`).val());
             }
           }
-          final.display = true;
         } else if (getChecked("isLessThanEqual")) {
-          final.num = isLessThanEqual($("#input1").val(), $("#input2").val());
+          final = isLessThanEqual($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = isLessThanEqual(final.num, $(`#input${e.toString()}`).val());
+              final = isLessThanEqual(final, $(`#input${e.toString()}`).val());
             }
           }
-          final.display = true;
         } else if (getChecked("isGreaterThanEqual")) {
-          final.num = isGreaterThanEqual($("#input1").val(), $("#input2").val());
+          final = isGreaterThanEqual($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = isGreaterThanEqual(final.num, $(`#input${e.toString()}`).val());
+              final = isGreaterThanEqual(final, $(`#input${e.toString()}`).val());
             }
           }
-          final.display = true;
         } else if (getChecked("round")) {
-          final.num = round($("#input1").val(), $("#input2").val());
+          final = round($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = round(final.num, $(`#input${e.toString()}`).val());
+              final = round(final, $(`#input${e.toString()}`).val());
             }
           }
-          final.display = true;
         } else if (getChecked("roundUp")) {
-          final.num = roundUp($("#input1").val(), $("#input2").val());
+          final = roundUp($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = roundUp(final.num, $(`#input${e.toString()}`).value);
+              final = roundUp(final, $(`#input${e.toString()}`).value);
             }
           }
-          final.display = true;
         } else if (getChecked("roundDown")) {
-          final.num = roundDown($("#input1").val(), $("#input2").val());
+          final = roundDown($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
             for (var e=3; e<=inputBoxes; e++) {
-              final.num = roundDown(final.num, $(`#input${e.toString()}`).val());
+              final = roundDown(final, $(`#input${e.toString()}`).val());
             }
           }
-          final.display = true;
         } else console.error("Ran nothing");
-        if (final.display) $("#output").text.replace(`Answer: ${final.num}`);
-      };
+        if (final != undefined) $("#output").text.replace(`Answer: ${final}`);
+      }
       $("#addInput").click(function(){
         inputBoxes++;
         $("#extraInputs").html.append(`<span id="id${inputBoxes}">Number: <input type="text" id="input${inputBoxes}" label="Number input field #'+inputBoxes+'"/> <button class="removeInput" id="'+inputBoxes+'" onclick="this.parentNode.remove();inputBoxes-=1;" label="Delete input field #'+inputBoxes+'">X</button><br></span>`);
       });
-      $("#calc").click(function(){
-        runCalc();
-      });
+      $("#calc").click(function(){runCalc();});
     </script>
   </body>
 </html>
