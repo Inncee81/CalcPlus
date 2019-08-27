@@ -190,10 +190,21 @@ function sub() {
 	return permfinal;
 }
 
-function isLessThan(num1, num2) {
-	var num = sub(num1, num2).split("-");
-	if (num.length == 1) return false;
-	return true;
+function isLessThan() {
+	var a = arguments;
+	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
+	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
+
+	function templessthan(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 1) return false;
+		return true;
+	}
+	
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = templessthan(a[0], a[1]);
+	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = templessthan(permfinal, a[i]);
+	return permfinal;
 }
 
 function isGreaterThan(num1, num2) {
