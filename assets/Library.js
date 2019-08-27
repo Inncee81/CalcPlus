@@ -207,15 +207,37 @@ function isLessThan() {
 	return permfinal;
 }
 
-function isGreaterThan(num1, num2) {
-	var num = sub(num1, num2).split("-");
-	if (num.length == 2 || num[0] == "0") return false;
-	return true;
+function isGreaterThan() {
+	var a = arguments;
+	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
+	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
+
+	function tempgreaterthan(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 2 || num[0] == "0") return false;
+		return true;
+	}
+	
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = tempgreaterthan(a[0], a[1]);
+	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempgreaterthan(permfinal, a[i]);
+	return permfinal;
 }
 function isLessThanEqual(num1, num2) {
-	var num = sub(num1, num2).split("-");
-	if (num.length == 1) return false;
-	return true;
+	var a = arguments;
+	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
+	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
+
+	function templessthanequal(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 1) return false;
+		return true;
+	}
+	
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = templessthanequal(a[0], a[1]);
+	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = templessthanequal(permfinal, a[i]);
+	return permfinal;
 }
 function isGreaterThanEqual(num1, num2) {
 	var num = sub(num1, num2).split("-");
