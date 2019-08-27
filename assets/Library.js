@@ -155,7 +155,7 @@ function add() {
 
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempadd(a[0], a[1]);
-	if (inputBoxes > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempadd(permfinal, a[i]);
+	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempadd(permfinal, a[i]);
 	return permfinal;
 }
 
@@ -186,7 +186,7 @@ function sub() {
 
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempsub(a[0], a[1]);
-	if (inputBoxes > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempsub(permfinal, a[i]);
+	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempsub(permfinal, a[i]);
 	return permfinal;
 }
 
