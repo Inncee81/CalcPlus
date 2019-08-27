@@ -3,8 +3,7 @@ function parseNums(num1, num2, mode) {
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
 	if (typeof mode != "number" || mode > 4 || mode < 1) throw new TypeError("The mode must be a number from 1-4.");
 	
-	var neg = [0, false, false];
-	
+	var neg = [false, false, false];
 	num1 = num1.split("-");
 	num2 = num2.split("-");
 
@@ -17,18 +16,12 @@ function parseNums(num1, num2, mode) {
 		neg[2] = true;
 	} else num2 = num2.toString();
 
-	var isNeg = false;
-
-	if (((neg[1]||neg[2]) && (neg[1]!=neg[2])) === true) isNeg = true;
-
+	if ((neg[1]||neg[2]) && (neg[1]!=neg[2])) neg[0] = true;
 	var decimal, decimal1, decimal2;
-
-	num1 = num1.split('');
-	num2 = num2.split('');
+	num1 = num1.split(''), num2 = num2.split('');
 
 	if (num1[0] == "0") while(num1[0] == "0") num1.splice(0, 1);
 	if (num2[0] == "0") while(num2[0] == "0") num2.splice(0, 1);
-
 	Array.prototype.remove = function() {
 		var what, a = arguments, L = a.length, ax;
 		while (L && this.length) {
@@ -40,26 +33,16 @@ function parseNums(num1, num2, mode) {
 
 	num1.remove(",");
 	num2.remove(",");
-	var num1pos = num1.indexOf(".");
-	var num2pos = num2.indexOf(".");
+	var num1pos = num1.indexOf("."), num2pos = num2.indexOf(".");
 	if (num1pos != -1) decimal1 = num1.remove(".").length - num1pos;
 	else decimal1 = 0;
 	if (num2pos != -1) decimal2 = num2.remove(".").length - num2pos;
 	else decimal2 = 0;
 
 	var maxDecimal = Math.max(decimal1, decimal2);
-
 	if (mode == 4 || mode == 1) decimal = maxDecimal;
 	else if (mode == 2) decimal = decimal1 + decimal2;
-	else if (mode == 3) decimal = decimal2;
-
-	var maxChar = Math.max(num1.length, num2.length);
-	if (mode == 2) {
-		if (num2.length == maxChar && num1.length != maxChar) {
-			if (mode != 3) num2 = [num1, num1 = num2][0];
-			isNeg = true;
-		}
-	}
+	else if (mode == 3) decimal = decimal2; 
 
 	if (decimal1 != decimal2) {
 		var times;
@@ -84,17 +67,14 @@ function parseNums(num1, num2, mode) {
 		}
 	}
 
-	if (!isNeg && mode != 4) {
-		var skip = false;
-		for (var i=0; i<num2.length && !skip && !isNeg; i++) {
-			if (parseInt(num2[i]) > parseInt(num1[i])) {
-				if (mode != 3 && mode != 1) num1=[num2,num2=num1][0];
-				isNeg = true;
-				skip = true;
-			} else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
-		}
+	if (mode==2 && neg[1] && neg[2]) neg[0] == false;
+	var skip = false;
+	for (var i=0; i<num2.length && !skip && !neg[0] && mode != 4 && mode != 2; i++) {
+		if (parseInt(num2[i]) > parseInt(num1[i])) neg[0] = true, skip = true;
+		else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
 	}
 
+	num1 = num1.join(''), num2 = num2.join('');
 	return {
 		num1: {
 			num: num1,
@@ -106,7 +86,7 @@ function parseNums(num1, num2, mode) {
 			isNeg: neg[2],
 			decimals: decimal2
 		},
-		isNeg: isNeg,
+		isNeg: neg[0],
 		maxChar: maxChar,
 		decimals: decimal
 	};
@@ -122,15 +102,18 @@ function formatNums(final,decimals,neg) {
 	return final.join('');
 }
 
+function checkA(a) {
+	if (a.length<2 && typeof a[0]!="object") throw new Error("Function must have at least 2 inputs unless the first input is an array");
+	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function was an array but there was more than 1 input");
+}
+
 function add() {
 	var a = arguments;
-	if (a.length<2 && typeof a[0]!="object") throw new Error("Function add() must have at least 2 inputs unless the first input is an array");
-	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function add() was an array but there was more than 1 input");
-
+	checkA(a);
 	function tempadd(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 4), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
 		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
-	
+
 		if (neg[1] || neg[2]) {
 			if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
 			else if (neg[2]) return sub(num1.join(''), num2.join(''));
@@ -152,18 +135,15 @@ function add() {
 			return formatNums(final, decimals, neg);
 		}
 	}
-
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempadd(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempadd(permfinal, a[i]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempadd(permfinal, a[i]);
 	return permfinal;
 }
 
 function sub() {
 	var a = arguments;
-	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
-	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
-
+	checkA(a);
 	function tempsub(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
 		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
@@ -183,66 +163,64 @@ function sub() {
 		}
 		return formatNums(final, decimals, neg);
 	}
-
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempsub(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempsub(permfinal, a[i]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempsub(permfinal, a[i]);
 	return permfinal;
 }
 
 function isLessThan() {
 	var a = arguments;
-	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
-	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
-
+	checkA(a);
 	function templessthan(num1, num2) {
 		var num = sub(num1, num2).split("-");
 		if (num.length == 1) return false;
 		return true;
 	}
-	
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = templessthan(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = templessthan(permfinal, a[i]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = templessthan(permfinal, a[i]);
 	return permfinal;
 }
 
 function isGreaterThan() {
 	var a = arguments;
-	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
-	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
-
+	checkA(a);
 	function tempgreaterthan(num1, num2) {
 		var num = sub(num1, num2).split("-");
 		if (num.length == 2 || num[0] == "0") return false;
 		return true;
 	}
-	
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempgreaterthan(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = tempgreaterthan(permfinal, a[i]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempgreaterthan(permfinal, a[i]);
 	return permfinal;
 }
-function isLessThanEqual(num1, num2) {
+function isLessThanEqual() {
 	var a = arguments;
-	if (a.length<2 && typeof a[0]!="object") throw new Error("Function sub() must have at least 2 inputs unless the first input is an array");
-	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function sub() was an array but there was more than 1 input");
-
+	checkA(a);
 	function templessthanequal(num1, num2) {
 		var num = sub(num1, num2).split("-");
 		if (num.length == 1) return false;
 		return true;
 	}
-	
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = templessthanequal(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<inputBoxes; i++) permfinal = templessthanequal(permfinal, a[i]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = templessthanequal(permfinal, a[i]);
 	return permfinal;
 }
-function isGreaterThanEqual(num1, num2) {
-	var num = sub(num1, num2).split("-");
-	if (num.length == 2) return false;
-	return true;
+function isGreaterThanEqual() {
+	var a = arguments;
+	checkA(a);
+	function tempisgreaterthanequal(num1, num2) {
+		var num = sub(num1, num2).split("-");
+		if (num.length == 2) return false;
+		return true;
+	}
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = tempisgreaterthanequal(a[0], a[1]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempisgreaterthanequal(permfinal, a[i]);
+	return permfinal;
 }
 function round(num) {
 	num = num.split(".");
@@ -259,12 +237,23 @@ function roundUp(num) {
 	return add(num[0], "1");
 }
 
-function multi(num1, num2) {
-	var parsedNums = parseNums(num1, num2, 2);
-	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
-	num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
-
-	// Concept for v3 found
+function multi() {
+	var a = arguments;
+	checkA(a);
+	function tempmulti(num1, num2) {
+		var parsedNums = parseNums(num1, num2, 2), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], final = "0", num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, decimals=parsedNums.decimals, numArray = [];
+		for (var i = "0"; isLessThan(i, num2); i=add(i, "1")) numArray.push(num1);
+		final = (numArray.length > 1) ? add(numArray):(numArray.length==0) ? "0":numArray[0];
+		
+		final = final.split('');
+		if(decimals > 0) final.splice(final.length-decimals,0,".");
+		if(final==""||final==".")return "0";
+		return (neg[0])?"-"+final:final;
+	}
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = tempmulti(a[0], a[1]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempmulti(permfinal, a[i]);
+	return permfinal;
 }
 function expo(num1, num2) {
 	//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
@@ -272,10 +261,21 @@ function expo(num1, num2) {
 	//Need to fix multi -> for (var i=3; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
 	//return final;
 }
-function div(num1, num2, maxDecimal) {
-	var parsedNums = parseNums(num1, num2, 3);
-	var neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
-	num1 = parsedNums.num1.num;
-	num2 = parsedNums.num2.num;
-	// Concept for v3 found
+function div() {
+	var a = arguments, maxDecimal;
+	//change to include maxDecimal
+	if (a.length<3 && typeof a[0]!="object") throw new Error("Function must have at least 3 inputs unless the first input is an array");
+	else if (a.length>2 && typeof a[0]=="object") throw new Error("The first input of the function was an array but there was more than 2 inputs");
+
+	function tempdiv(num1, num2, maxDecimal) {
+		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
+		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
+		// Concept for v3 found
+	}
+	
+	//change to include maxDecimal
+	if (typeof a[0] == "object")  maxDecimal = a[1], a = a[0];
+	var permfinal = tempdiv(a[0], a[1], a[2]);
+	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempdiv(permfinal, a[i], a[2]);
+	return permfinal;
 }
