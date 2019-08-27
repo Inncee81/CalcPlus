@@ -124,12 +124,9 @@
             }
           }
         } else if (getChecked("isLessThan")) {
-          final = isLessThan($("#input1").val(), $("#input2").val());
-          if (inputBoxes > 2) {
-            for (var e=3; e<=inputBoxes; e++) {
-              final = isLessThan(final, $(`#input${e.toString()}`).val());
-            }
-          }
+          var inputs=[];
+          for (var i=1;i<=inputBoxes;i++) inputs[i-1] = $(`#input${i.toString()}`).val();
+          final = isLessThan(inputs);
         } else if (getChecked("isGreaterThan")) {
           final = isGreaterThan($("#input1").val(), $("#input2").val());
           if (inputBoxes > 2) {
