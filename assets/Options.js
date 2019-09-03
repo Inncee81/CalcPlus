@@ -1,30 +1,22 @@
-function loadScript(src, f) {
-    var head = document.getElementsByTagName("head")[0];
-    var script = document.createElement("script");
-    script.src = src;
-    var done = false;
-    script.onload = script.onreadystatechange = function() { 
-        if (!done && (!this.readyState || this.readyState == "loaded" || this.readyState == "complete")) {
-            done = true;
-            if (typeof f == 'function') f();
-            script.onload = script.onreadystatechange = null;
-            head.removeChild(script);
-        }
-    };
+function loadScript(url, callback) {
+    var head = document.head, script = document.createElement('script'), script.type = 'text/javascript', script.src = url, script.onload = script.onreadystatechange = callback;
     head.appendChild(script);
 }
-
-var index = sessionStorage.getItem("index") == "On";
-var script = index ? "assets/CPquery.js":"../assets/CPquery.js";
-
+var beta = localStorage.getItem("beta") == "On", script;
+if (beta) script = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
+else script = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
 loadScript(script, function(){
-    var isDark = $("@isDark");
-    var isOffline = $("*isOffline");
-    var alerted = $("*alerted");
+    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
 
-    if (!(isDark.me() == "Off" || isDark.me() == "On")) isDark.set("Off");
-    if (!(isOffline.me() == "Off" || isOffline.me() == "On")) isOffline.set("Off");
-    if (!(alerted.me() == "Off" || alerted.me() == "On")) alerted.set("Off");
+    function isUndefined(setting) {
+        return !(setting.me() == "Off" || setting.me() == "On");
+    }
+    if (isUndefined(isDark)) isDark.set("Off");
+    if (isUndefined(isOffline)) isOffline.set("Off");
+    if (isUndefined(alerted)) alerted.set("Off");
+    if (isUndefined(console)) console.set("Off");
+    if (isUndefined(savei)) console.set("Off");
+    if (isUndefined(beta)) beta.set("Off");
 
     window.addEventListener("load", function(){
         if (isDark.me() == "On") {
@@ -63,7 +55,9 @@ loadScript(script, function(){
 
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
-                var sjws = index ? "sw.js":"../sw.js";
+                var sjws;
+                if (beta.me() == "On") sjws = index ? "sw.js":"../sw.js";
+                else sjws = index ? "sw.min.js":"../sw.min.js";
                 navigator.serviceWorker
                     .register(sjws)
                     .then(reg => {
@@ -72,40 +66,42 @@ loadScript(script, function(){
                     })
                     .catch(err => console.error(`Service Worker failed: ${err}`));
             } else if (alerted.me() == "Off") {
-                alert("Service Workers aren't supported by your browser.\nPlease switch to another browser like Chrome.\nIf you are, then please make sure your browser is updated.");
+                alert("Service Workers aren't supported by your browser.\nSwitch to another browser like Chrome, or update your browser.");
                 alerted.set("On");
             }
         } else console.info("Service Workers already registered.");
         
-        var c = document.querySelector(".console");
-        console.log = (...args) => args.forEach(m => {
-            try {
-                c.appendChild(document.createTextNode(`\n ${m}`));
-            } catch(err) {
-                console.log(m);
-            }
-        });
-        console.warn = (...args) => args.forEach(e => {
-            try {
-                const s = document.createElement("span");
-                    s.textContent = "\n" + e;
-                    s.style.color = "rgb(205, 205, 0)";
-                    c.appendChild(s);
-            } catch(err) {
-                console.warn(e);
-            }
-        });
-        console.error = (...args) => args.forEach(e => {
-            try {
-                const s = document.createElement("span");
-                    s.textContent = "\n" + e;
-                    s.style.color = "red";
-                    c.appendChild(s);
-            } catch(err) {
-                console.error(e);
-            }
-        });
-            
-        window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
+        if (console.me() == "On") {
+            var c = document.querySelector(".console");
+            console.log = (...args) => args.forEach(m => {
+                try {
+                    c.appendChild(document.createTextNode(`\n ${m}`));
+                } catch(err) {
+                    console.log(m);
+                }
+            });
+            console.warn = (...args) => args.forEach(e => {
+                try {
+                    const s = document.createElement("span");
+                        s.textContent = "\n" + e;
+                        s.style.color = "rgb(205, 205, 0)";
+                        c.appendChild(s);
+                } catch(err) {
+                    console.warn(e);
+                }
+            });
+            console.error = (...args) => args.forEach(e => {
+                try {
+                    const s = document.createElement("span");
+                        s.textContent = "\n" + e;
+                        s.style.color = "red";
+                        c.appendChild(s);
+                } catch(err) {
+                    console.error(e);
+                }
+            });
+
+            window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
+        }
     });
 });
