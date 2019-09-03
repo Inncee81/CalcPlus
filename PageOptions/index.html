@@ -30,25 +30,27 @@
     <br>
     <noscript>Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <h1>Page Options</h1>
-    <h3>Dark Mode <button id="darkMode">Off</button></h3>
+    <h3>Dark Mode <button id="dark">Off</button></h3>
+    <h3>On-Screen Console <button id="console">Off</button></h3>
+    <h3>Save Inputs <button id="saveI">Off</button></h3>
+    <!-- Mobile setting - auto-activate - will always load minified sources - won't reload as often -->
     
     <script>
-      var darkB = $("#darkMode");
-      var isDark = $("@isDark");
-      
-      if (isDark.me() == "On") {
-        darkB.text.replace("On");
+      function defineButton(settings) {
+        if (settings[1].me() == "On") settings[0].text.replace("On");
+        settings[0].click(function(){
+          if (settings[1].me() == "Off") {
+            settings[1].set("On");
+            location.reload();
+          } else if (settings[1].me() == "On") {
+            settings[1].set("Off");
+            location.reload();
+          }
+        });
       }
-
-      darkB.click(function(){
-        if (isDark.me() == "Off") {
-          isDark.set("On");
-          location.reload();
-        } else if (isDark.me() == "On") {
-          isDark.set("Off");
-          location.reload();
-        }
-      });
+      defineButton([$("#dark"),$("@isDark")]);
+      defineButton([$("#console"),$("@isConsole")]);
+      defineButton([$("#saveI"),$("@isSaveI")]);
     </script>
   </body>
 </html>
