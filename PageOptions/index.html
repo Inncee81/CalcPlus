@@ -33,6 +33,7 @@
     <h3>Dark Mode <button id="dark">Off</button></h3>
     <h3>On-Screen Console <button id="console">Off</button></h3>
     <h3>Save Inputs <button id="saveI">Off</button></h3>
+    <h3>Beta <button id="beta">Off</button> (Please note that pages will take longer to load, and will use up more data.)</h3>
     <!-- Mobile setting - auto-activate - will always load minified sources - won't reload as often -->
     
     <script>
@@ -51,6 +52,7 @@
       defineButton([$("#dark"),$("@isDark")]);
       defineButton([$("#console"),$("@isConsole")]);
       defineButton([$("#saveI"),$("@isSaveI")]);
+      defineButton([$("#beta"),$("@isBeta")]);
     </script>
   </body>
 </html>
