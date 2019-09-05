@@ -38,19 +38,21 @@
     <h3>On-Screen Console <button id="console">Off</button></h3>
     <h3>Save Inputs <button id="saveI">Off</button></h3>
     <h3>Beta <button id="beta">Off</button> (Please note that pages will take longer to load, and will use up more data.)</h3>
-    <!-- Mobile setting - auto-activate - will always load minified sources - won't reload as often -->
+    <!-- Mobile setting - auto-activate - will always load minified sources -->
     
     <script>
       function defineButton(id) {
-        var store = $("@is"+id.charAt(0).toUpperCase()+id.substr(1)), id = $("#"+id);
+        var isDark = id=="dark", store = $("@is"+id.charAt(0).toUpperCase()+id.substr(1)), id = $("#"+id);
         if (store.me() == "On") id.text.replace("On");
         id.click(function(){
           if (store.me() == "Off") {
             store.set("On");
-            location.reload();
+            if (isDark) return location.reload();
+            reloadOptions();
           } else if (store.me() == "On") {
             store.set("Off");
-            location.reload();
+            if (isDark) return location.reload();
+            reloadOptions();
           }
         });
       }
