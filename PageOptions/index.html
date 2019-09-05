@@ -6,13 +6,13 @@
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
-    <script src="../assets/Options.min.js"></script>
     <script>
       function loadScript(url, callback) {
         var head = document.head, script = document.createElement('script'), script.type = 'text/javascript', script.src = url, script.onload = script.onreadystatechange = callback;
         head.appendChild(script);
       }
       script = (localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js";
+      loadScript(url, function f(){});
     </script>
     <title>CalcPlus Page Options</title>
     <style>
@@ -33,7 +33,7 @@
       <a href="../AboutLibrary/">About Library</a>
       <a href="../SiteDiscord/">Offical Discord</a>
     </nav>
-    <p id="#console"></p>
+    <p class="console"></p>
     <br>
     <noscript>Please allow JavaScript to run on this page, or else most things won't work. Thank you!<br></noscript>
     <h1>Page Options</h1>
@@ -44,22 +44,23 @@
     <!-- Mobile setting - auto-activate - will always load minified sources - won't reload as often -->
     
     <script>
-      function defineButton(settings) {
-        if (settings[1].me() == "On") settings[0].text.replace("On");
-        settings[0].click(function(){
-          if (settings[1].me() == "Off") {
-            settings[1].set("On");
+      function defineButton(id) {
+        var store = $("@is"+id.charAt(0).toUpperCase()+id.substr(1)), id = $("#"+id);
+        if (store.me() == "On") id.text.replace("On");
+        id.click(function(){
+          if (store.me() == "Off") {
+            store.set("On");
             location.reload();
-          } else if (settings[1].me() == "On") {
-            settings[1].set("Off");
+          } else if (store.me() == "On") {
+            store.set("Off");
             location.reload();
           }
         });
       }
-      defineButton([$("#dark"),$("@isDark")]);
-      defineButton([$("#console"),$("@isConsole")]);
-      defineButton([$("#saveI"),$("@isSaveI")]);
-      defineButton([$("#beta"),$("@isBeta")]);
+      defineButton("dark");
+      defineButton("console");
+      defineButton("saveI");
+      defineButton("beta");
     </script>
   </body>
 </html>
