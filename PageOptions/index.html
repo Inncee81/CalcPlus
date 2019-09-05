@@ -9,7 +9,7 @@
     <script>
       var script = document.createElement('script');
       script.setAttribute('src',(localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js");
-      script.head.appendChild(script);
+      document.head.appendChild(script);
     </script>
     <title>CalcPlus Page Options</title>
     <style>
