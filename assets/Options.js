@@ -1,11 +1,10 @@
-function loadScript(url, callback) {
-    var head = document.head, script = document.createElement('script'), script.type = 'text/javascript', script.src = url, script.onload = script.onreadystatechange = callback;
-    head.appendChild(script);
-}
-var beta = localStorage.getItem("beta") == "On", script;
-if (beta) script = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
-else script = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
-loadScript(script, function(){
+var url;
+if (localStorage.getItem("beta") == "On") url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
+else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
+
+var script = document.createElement('script');
+script.setAttribute('src',url);
+script.onload = script.onreadystatechange = function(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
 
     function isUndefined(setting) {
@@ -104,4 +103,5 @@ loadScript(script, function(){
             window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
         }
     });
-});
+};
+script.head.appendChild(script);
