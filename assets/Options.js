@@ -4,7 +4,7 @@ else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min
 
 var script = document.createElement('script');
 script.setAttribute('src',url);
-script.onload = script.onreadystatechange = function(){
+function main(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), Console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
 
     function isUndefined(setting) {
@@ -104,4 +104,5 @@ script.onload = script.onreadystatechange = function(){
         }
     });
 };
+script.onload = script.onreadystatechange = main();
 document.head.appendChild(script);
