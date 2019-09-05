@@ -12,9 +12,7 @@
         document.head.appendChild(script);
       }
       load((localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js");
-      if (localStorage.getItem("beta") == "On") url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
-      else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
-      load(url);
+      load((localStorage.getItem("beta") == "On") ? "../assets/CPquery.js":"../assets/CPquery_1-0-0.min.js");
     </script>
     <title>CalcPlus Page Options</title>
     <style>
