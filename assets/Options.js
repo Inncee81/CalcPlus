@@ -1,10 +1,8 @@
-var url;
+var url,script = document.createElement('script');
 if (localStorage.getItem("beta") == "On") url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
 else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
-
-var script = document.createElement('script');
 script.setAttribute('src',url);
-function main(){
+function reloadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), Console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
 
     function isUndefined(setting) {
@@ -104,5 +102,5 @@ function main(){
         }
     });
 };
-script.onload = script.onreadystatechange = main();
+script.onload = script.onreadystatechange = reloadOptions();
 document.head.appendChild(script);
