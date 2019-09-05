@@ -5,7 +5,7 @@ else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min
 var script = document.createElement('script');
 script.setAttribute('src',url);
 script.onload = script.onreadystatechange = function(){
-    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
+    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), Console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
 
     function isUndefined(setting) {
         return !(setting.me() == "Off" || setting.me() == "On");
@@ -13,8 +13,8 @@ script.onload = script.onreadystatechange = function(){
     if (isUndefined(isDark)) isDark.set("Off");
     if (isUndefined(isOffline)) isOffline.set("Off");
     if (isUndefined(alerted)) alerted.set("Off");
-    if (isUndefined(console)) console.set("Off");
-    if (isUndefined(savei)) console.set("Off");
+    if (isUndefined(Console)) Console.set("Off");
+    if (isUndefined(savei)) savei.set("Off");
     if (isUndefined(beta)) beta.set("Off");
 
     window.addEventListener("load", function(){
