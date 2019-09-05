@@ -104,4 +104,4 @@ script.onload = script.onreadystatechange = function(){
         }
     });
 };
-script.head.appendChild(script);
+document.head.appendChild(script);
