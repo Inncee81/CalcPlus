@@ -67,40 +67,39 @@ function reloadOptions(){
                 alerted.set("On");
             }
         } else console.info("Service Workers already registered.");
-        
-        if (console.me() == "On") {
-            var c = document.querySelector(".console");
-            console.log = (...args) => args.forEach(m => {
-                try {
-                    c.appendChild(document.createTextNode(`\n ${m}`));
-                } catch(err) {
-                    console.log(m);
-                }
-            });
-            console.warn = (...args) => args.forEach(e => {
-                try {
-                    const s = document.createElement("span");
-                        s.textContent = "\n" + e;
-                        s.style.color = "rgb(205, 205, 0)";
-                        c.appendChild(s);
-                } catch(err) {
-                    console.warn(e);
-                }
-            });
-            console.error = (...args) => args.forEach(e => {
-                try {
-                    const s = document.createElement("span");
-                        s.textContent = "\n" + e;
-                        s.style.color = "red";
-                        c.appendChild(s);
-                } catch(err) {
-                    console.error(e);
-                }
-            });
-
-            window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
-        }
     });
+    if (console.me() == "On") {
+        var c = document.querySelector(".console");
+        console.log = (...args) => args.forEach(m => {
+            try {
+                c.appendChild(document.createTextNode(`\n ${m}`));
+            } catch(e) {
+                console.log(e);
+            }
+        });
+        console.warn = (...args) => args.forEach(e => {
+            try {
+                const s = document.createElement("span");
+                    s.textContent = "\n" + e;
+                    s.style.color = "rgb(205, 205, 0)";
+                    c.appendChild(s);
+            } catch(e) {
+                console.warn(e);
+            }
+        });
+        console.error = (...args) => args.forEach(e => {
+            try {
+                const s = document.createElement("span");
+                    s.textContent = "\n" + e;
+                    s.style.color = "red";
+                    c.appendChild(s);
+            } catch(e) {
+                console.error(e);
+            }
+        });
+
+        window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
+    }
 };
 script.onload = script.onreadystatechange = reloadOptions();
 document.head.appendChild(script);
