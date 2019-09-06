@@ -1,5 +1,4 @@
-/*jshint esversion: 6 */
-function loadOptions(){
+export function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
     function isUndefined(setting) {
         return !(setting.me() == "Off" || setting.me() == "On");
@@ -97,7 +96,7 @@ function loadOptions(){
         window.onerror=(e,s,l,c)=>console.error(`${e} at: ${s} : ${l}:${c}`);
     }
 }
-function optionsInit(document) {
+export function optionsInit(document) {
     var url,script = document.createElement('script');
     if (localStorage.getItem("beta") == "On") url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
     else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
