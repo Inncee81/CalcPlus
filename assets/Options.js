@@ -1,5 +1,5 @@
 export function loadOptions(){
-    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
+    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
     function isUndefined(setting) {
         return !(setting.me() == "Off" || setting.me() == "On");
     }
@@ -8,7 +8,6 @@ export function loadOptions(){
     if (isUndefined(alerted)) alerted.set("Off");
     if (isUndefined(isConsole)) isConsole.set("Off");
     if (isUndefined(savei)) savei.set("Off");
-    if (isUndefined(beta)) beta.set("Off");
 
     window.addEventListener("load", function(){
         if (isDark.me() == "On") {
