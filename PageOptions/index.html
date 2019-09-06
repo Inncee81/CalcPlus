@@ -7,11 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
     <script>
-      var beta=localStorage.getItem("beta") == "On", url=beta ? "../assets/Options.js":"../assets/Options"/*+".min"*/+".js", script = document.createElement('script');
-      script.setAttribute('src',url);
-      script.setAttribute('id','option');
-      document.head.appendChild(script);
-      document.getElementById("option").addEventListener("load", optionsInit(document));
+      var options = require("../assets/Options.js");
+      options.optionsInit(document);
     </script>
     <title>CalcPlus Page Options</title>
     <style>
@@ -39,7 +36,6 @@
     <h3>Dark Mode <button id="dark">Off</button></h3>
     <h3>On-Screen Console <button id="console">Off</button></h3>
     <h3>Save Inputs <button id="saveI">Off</button></h3>
-    <h3>Beta <button id="beta">Off</button> (Please note that pages will take longer to load, and will use up more data.)</h3>
     <!-- Mobile setting - auto-activate - will always load minified sources -->
     
     <script>
@@ -61,7 +57,6 @@
       defineButton("dark");
       defineButton("console");
       defineButton("saveI");
-      defineButton("beta");
     </script>
   </body>
 </html>
