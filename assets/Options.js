@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
     function isUndefined(setting) {
@@ -68,8 +69,8 @@ function loadOptions(){
         console.log = (...args) => args.forEach(m => {
             try {
                 c.appendChild(document.createTextNode(`\n ${m}`));
-            } catch(e) {
-                console.log(e);
+            } catch(err) {
+                console.log(err);
             }
         });
         console.warn = (...args) => args.forEach(e => {
@@ -78,8 +79,8 @@ function loadOptions(){
                     s.textContent = "\n" + e;
                     s.style.color = "rgb(205, 205, 0)";
                     c.appendChild(s);
-            } catch(e) {
-                console.warn(e);
+            } catch(err) {
+                console.warn(err);
             }
         });
         console.error = (...args) => args.forEach(e => {
@@ -88,8 +89,8 @@ function loadOptions(){
                     s.textContent = "\n" + e;
                     s.style.color = "red";
                     c.appendChild(s);
-            } catch(e) {
-                console.error(e);
+            } catch(err) {
+                console.error(err);
             }
         });
 
