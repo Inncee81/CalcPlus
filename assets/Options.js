@@ -1,6 +1,7 @@
 function loadOptions(){
+    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), Console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
     function isUndefined(setting) {
-        return !(setting.me() == "Off" || setting.me() == "On");
+        return !(setting.me() == "Off" || $(setting.me() == "On");
     }
     if (isUndefined(isDark)) isDark.set("Off");
     if (isUndefined(isOffline)) isOffline.set("Off");
