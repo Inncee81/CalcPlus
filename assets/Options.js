@@ -1,12 +1,12 @@
 function loadOptions(){
-    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), Console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
+    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
     function isUndefined(setting) {
         return !(setting.me() == "Off" || $(setting.me() == "On");
     }
     if (isUndefined(isDark)) isDark.set("Off");
     if (isUndefined(isOffline)) isOffline.set("Off");
     if (isUndefined(alerted)) alerted.set("Off");
-    if (isUndefined(Console)) Console.set("Off");
+    if (isUndefined(isConsole)) isConsole.set("Off");
     if (isUndefined(savei)) savei.set("Off");
     if (isUndefined(beta)) beta.set("Off");
 
@@ -63,7 +63,7 @@ function loadOptions(){
             }
         } else console.info("Service Workers already registered.");
     });
-    if (console.me() == "On") {
+    if (isConsole.me() == "On") {
         var c = document.querySelector(".console");
         console.log = (...args) => args.forEach(m => {
             try {
