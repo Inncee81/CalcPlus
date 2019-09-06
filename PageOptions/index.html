@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
     <script>
-      var url1=(localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js"), url2=(localStorage.getItem("beta") == "On") ? "../assets/CPquery.js":"../assets/CPquery_1-0-0.min.js",script1 = document.createElement('script'), script1.setAttribute('src',url1), script2=docuemnt.createElement('script'),script2.setAttribute('src',url2);
-      document.head.appendChild(script1);
-      document.head.appendChild(script2);
+      var url=(localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js"),script = document.createElement('script');
+      script.setAttribute('src',url);
+      document.head.appendChild(script);
+      optionsInit(document);
     </script>
     <title>CalcPlus Page Options</title>
     <style>
@@ -48,11 +49,11 @@
           if (store.me() == "Off") {
             store.set("On");
             if (isDark) return location.reload();
-            reloadOptions();
+            loadOptions();
           } else if (store.me() == "On") {
             store.set("Off");
             if (isDark) return location.reload();
-            reloadOptions();
+            loadOptions();
           }
         });
       }
