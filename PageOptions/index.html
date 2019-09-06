@@ -7,10 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
     <script>
-      //var url=(localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js"), script = document.createElement('script');
-      var url="../assets/Options.js", script=document.createElement('script');
+      var beta=localStorage.getItem("beta") == "On", url=beta ? "../assets/Options.js":"../assets/Options.min.js"), script = document.createElement('script');
       script.setAttribute('src',url);
-      script.onload = script.onreadystatechange = optionsInit(document);
+      if (beta) script.onload = script.onreadystatechange = optionsInit(document);
       document.head.appendChild(script);
     </script>
     <title>CalcPlus Page Options</title>
