@@ -7,12 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
     <script>
-      function load(url) {
-        var script = document.createElement('script'), script.setAttribute('src',url);
-        document.head.appendChild(script);
-      }
-      load((localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js");
-      load((localStorage.getItem("beta") == "On") ? "../assets/CPquery.js":"../assets/CPquery_1-0-0.min.js");
+      var url1=(localStorage.getItem("beta") == "On") ? "../assets/Options.js":"../assets/Options.min.js"), url2=(localStorage.getItem("beta") == "On") ? "../assets/CPquery.js":"../assets/CPquery_1-0-0.min.js",script1 = document.createElement('script'), script1.setAttribute('src',url1), script2=docuemnt.createElement('script'),script2.setAttribute('src',url2);
+      document.head.appendChild(script1);
+      document.head.appendChild(script2);
     </script>
     <title>CalcPlus Page Options</title>
     <style>
