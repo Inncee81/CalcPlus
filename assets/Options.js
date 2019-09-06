@@ -1,10 +1,4 @@
-var url,script = document.createElement('script');
-if (localStorage.getItem("beta") == "On") url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
-else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
-script.setAttribute('src',url);
-function reloadOptions(){
-    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), Console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
-
+function loadOptions(){
     function isUndefined(setting) {
         return !(setting.me() == "Off" || setting.me() == "On");
     }
@@ -98,8 +92,15 @@ function reloadOptions(){
             }
         });
 
-        window.onerror = (e, s, l, c) => console.error(`${e} at: ${s} : ${l}:${c}`);
+        window.onerror=(e,s,l,c)=>console.error(`${e} at: ${s} : ${l}:${c}`);
     }
 };
-script.onload = script.onreadystatechange = reloadOptions();
-document.head.appendChild(script);
+function optionsInit(document) {
+    var url,script = document.createElement('script');
+    if (localStorage.getItem("beta") == "On") url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
+    else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
+    script.setAttribute('src',url);
+    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), Console = $("@isConsole"), savei = $("@isSaveI"), beta = $("@isBeta");
+    script.onload = script.onreadystatechange = loadOptions();
+    document.head.appendChild(script);
+}
