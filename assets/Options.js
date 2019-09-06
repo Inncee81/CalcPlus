@@ -47,7 +47,7 @@ function loadOptions(){
 
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
-                var sjws;
+                var sjws, index = $("*index") == "On";
                 if (beta.me() == "On") sjws = index ? "sw.js":"../sw.js";
                 else sjws = index ? "sw.min.js":"../sw.min.js";
                 navigator.serviceWorker
