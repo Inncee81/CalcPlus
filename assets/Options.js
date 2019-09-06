@@ -1,4 +1,3 @@
-exports.__esModule = true;
 export function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
     function isUndefined(setting) {
