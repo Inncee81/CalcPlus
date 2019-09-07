@@ -1,4 +1,8 @@
-export function loadOptions(){
+if (sessionStorage.getItem("index") == "On") import("assets/CPquery.js").then(($) =>{loadOptions($);});
+else import("../assets/CPquery.js").then(($)=>{loadOptions($);});
+export function loadOptions($){
+    console.log($.$);
+    $ = function (q) {return $.$(q);}
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
     function isUndefined(setting) {
         return !(setting.me() == "Off" || setting.me() == "On");
@@ -95,11 +99,4 @@ export function loadOptions(){
         window.onerror=(e,s,l,c)=>console.error(`${e} at: ${s} : ${l}:${c}`);
     }
 }
-export function optionsInit(document) {
-    var url,script = document.createElement('script');
-    if (localStorage.getItem("beta") == "On") url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery.js":"../assets/CPquery.js";
-    else url = (sessionStorage.getItem("index") == "On") ? "assets/CPquery_1-0-0.min.js":"../assets/CPquery_1-0-0.min.js";
-    script.setAttribute('src',url);
-    script.onload = script.onreadystatechange = loadOptions();
-    document.head.appendChild(script);
-}
+loadOptions();

@@ -1,4 +1,4 @@
-function $(query) {
+export function $(query) {
 	query = query.toString();
 
 	var select = () => document.querySelector(query);
@@ -105,4 +105,4 @@ function $(query) {
 	}
 }
 
-var cpQuery = q => $(q);
+export function cpQuery(q){return $(q)};
