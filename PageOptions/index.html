@@ -6,9 +6,7 @@
     <meta name="author" content="Virx">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/logo.png">
-    <script type="module">
-      import("../assets/Options.js");
-    </script>
+    <script src="../assets/Options.js"></script>
     <title>CalcPlus Page Options</title>
     <style>
       body { color: white; background-color: white; margin: 0; }
@@ -37,7 +35,7 @@
     <h3>Save Inputs <button id="saveI">Off</button></h3>
     <!-- Mobile setting - auto-activate - will always load minified sources -->
     
-    <script type="module">
+    <script>
       function defineButton(id) {
         var isDark = id=="dark", store = $("@is"+id.charAt(0).toUpperCase()+id.substr(1)), id = $("#"+id);
         if (store.me() == "On") id.text.replace("On");
