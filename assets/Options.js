@@ -1,5 +1,5 @@
 var url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
-document.write(`<script src="${url}">loadOptions()</script>`);
+document.write(`<script src="${url}"></script><script>loadOptions();</script>`);
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
     function isUndefined(setting) {
