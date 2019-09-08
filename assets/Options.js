@@ -1,8 +1,6 @@
-if (sessionStorage.getItem("index") == "On") import("assets/CPquery.js").then(($) =>{loadOptions($);});
-else import("../assets/CPquery.js").then(($)=>{loadOptions($);});
-export function loadOptions($){
-    console.log($.$);
-    $ = function (q) {return $.$(q);}
+var url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
+document.write(`<script src="${url}">loadOptions()</script>`);
+function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
     function isUndefined(setting) {
         return !(setting.me() == "Off" || setting.me() == "On");
@@ -99,4 +97,3 @@ export function loadOptions($){
         window.onerror=(e,s,l,c)=>console.error(`${e} at: ${s} : ${l}:${c}`);
     }
 }
-loadOptions();
