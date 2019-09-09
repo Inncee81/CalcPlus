@@ -1,6 +1,8 @@
-var url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
-document.write(`<script src="${url}"></script><script>loadOptions();</script>`);
-function loadOptions(){
+var script = document.createElement("script");
+script.src = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
+script.onload = script.onreadystatechange = loadOptions;
+document.head.appendChild(script);
+var loadOptions = function(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
     function isUndefined(setting) {
         return !(setting.me() == "Off" || setting.me() == "On");
