@@ -99,3 +99,5 @@ var loadOptions = function(){
         window.onerror=(e,s,l,c)=>console.error(`${e} at: ${s} : ${l}:${c}`);
     }
 }
+
+function $(q) {return cpQuery(q);}
