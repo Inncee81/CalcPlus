@@ -3,7 +3,7 @@ script.src = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../a
 script.onload = script.onreadystatechange = start;
 document.head.appendChild(script);
 function $(q){console.error("$ has not been defined in Options.js yet.");};
-var start = function() { $ = function(q){cpQuery(q);}; loadOptions(); };
+var start = function() { this.$(q) = function(){cpQuery(q);}; loadOptions(); };
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
