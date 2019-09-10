@@ -1,13 +1,11 @@
-function GetText(url, fkt) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = () => { if (this.readyState === 4 && this.status === 200) return this.responseText; };
+function GetText() {
+    var xhttp = new XMLHttpRequest(), url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
+    xhttp.onreadystatechange = () => { if (this.readyState == 4 && this.status == 200) return this.responseText; };
     xhttp.open("GET", url, false);
     xhttp.send();
-    if (typeof fkt === 'undefined') return xhttp.responseText;
-    else return fkt(xhttp.responseText);
+    return xhttp.responseText;
 }
-var url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js", src = GetText(url));
-eval(src);
+eval(GetText());
 loadOptions();
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
