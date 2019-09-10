@@ -1,11 +1,11 @@
 var script = document.createElement("script");
 script.src = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
-script.onload = script.onreadystatechange = loadOptions;
+script.onload = script.onreadystatechange = start;
 document.head.appendChild(script);
-var $, loadOptions = function(){
-    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
-    $ = q => {cpQuery(q);};
-    var isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
+var start = function() { $ = q => {cpQuery(q);}; loadOptions(); };
+function $(){console.error("$ has not been defined in Options.js yet.")};
+function loadOptions(){
+    var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
     if (isUndefined(isOffline)) isOffline.set("Off");
     if (isUndefined(alerted)) alerted.set("Off");
