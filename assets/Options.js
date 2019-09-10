@@ -8,6 +8,7 @@ function GetText(url, fkt) {
 }
 var url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js", src = GetText(url));
 eval(src);
+loadOptions();
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
