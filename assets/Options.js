@@ -1,9 +1,13 @@
-var script = window.document.createElement("script");
-script.src = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
-script.onload = script.onreadystatechange = start;
-//script.text = "loadOptions();";
-window.document.head.appendChild(script);
-var start = function() { loadOptions(); }
+function GetText(url, fkt) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = () => { if (this.readyState === 4 && this.status === 200) return this.responseText; };
+    xhttp.open("GET", url, false);
+    xhttp.send();
+    if (typeof fkt === 'undefined') return xhttp.responseText;
+    else return fkt(xhttp.responseText);
+}
+var url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js", src = GetText(url));
+eval(src);
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
@@ -44,7 +48,6 @@ function loadOptions(){
         }
 
         navigator.serviceWorker.getRegistration().then(function(registration) { if(!registration) isOffline.set("Off"); });
-
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
                 var sjws, index = $("*index") == "On";
