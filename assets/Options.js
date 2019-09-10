@@ -2,11 +2,10 @@ var script = document.createElement("script");
 script.src = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
 script.onload = script.onreadystatechange = loadOptions;
 document.head.appendChild(script);
-var loadOptions = function(){
+var $, loadOptions = function(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI");
-    function isUndefined(setting) {
-        return !(setting.me() == "Off" || setting.me() == "On");
-    }
+    $ = q => {cpQuery(q);};
+    var isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
     if (isUndefined(isOffline)) isOffline.set("Off");
     if (isUndefined(alerted)) alerted.set("Off");
@@ -44,9 +43,7 @@ var loadOptions = function(){
             ]);
         }
 
-        navigator.serviceWorker.getRegistration().then(function(registration) {
-            if(!registration) isOffline.set("Off");
-        });
+        navigator.serviceWorker.getRegistration().then(function(registration) { if(!registration) isOffline.set("Off"); });
 
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
@@ -56,19 +53,15 @@ var loadOptions = function(){
                 navigator.serviceWorker
                     .register(sjws)
                     .then(reg => {
-                        console.info(`Service Worker: Registered on the scope ${reg}`);
                         isOffline.set("On");
-                    })
-                    .catch(err => console.error(`Service Worker failed: ${err}`));
+                    });
             } else if (alerted.me() == "Off") {
                 alert("Service Workers aren't supported by your browser.\nSwitch to another browser like Chrome, or update your browser.");
                 alerted.set("On");
             }
-        } else console.info("Service Workers already registered.");
+        }
     });
     if (isConsole.me() == "On") {
         // place the code for the console here
     }
 }
-
-function $(q) {return cpQuery(q);}
