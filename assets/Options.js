@@ -1,8 +1,9 @@
 var script = window.document.createElement("script");
 script.src = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
-//script.onload = script.onreadystatechange = start;
-script.text = "loadOptions();";
+script.onload = script.onreadystatechange = start;
+//script.text = "loadOptions();";
 window.document.head.appendChild(script);
+var start = function() { loadOptions(); }
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
