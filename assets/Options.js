@@ -1,7 +1,7 @@
 var textReady = false;
 function GetText() {
     var xhttp = new XMLHttpRequest(), url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
-    xhttp.onreadystatechange = () => { if (this.readyState == 4 && this.status == 200) return this.responseText; };
+    xhttp.onreadystatechange = () => { if (this.readyState == 4 && this.status == 200) { setTimeout(function() {textReady = true;}, 5); return this.responseText; };
     xhttp.open("GET", url);
     xhttp.send();
     return xhttp.responseText;
