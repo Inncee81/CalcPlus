@@ -1,15 +1,16 @@
-var textReady = false;
 function GetText() {
     var xhttp = new XMLHttpRequest(), url = (sessionStorage.getItem("index") == "On")?"assets/CPquery.js":"../assets/CPquery.js";
-    xhttp.onreadystatechange = () => { if (this.readyState == 4 && this.status == 200) { setTimeout(function() {textReady = true;}, 5); return this.responseText; };
+    xhttp.onreadystatechange = () => {
+        if (this.readyState == 4 && this.status == 200) { 
+            eval(this.responseText);
+            loadOptions();
+            return this.responseText;
+        }
+    };
     xhttp.open("GET", url);
     xhttp.send();
     return xhttp.responseText;
 }
-eval(GetText());
-load:
-if (textReady) loadOptions();
-else continue load
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
