@@ -43,11 +43,17 @@
           if (store.me() == "Off") {
             store.set("On");
             if (isDark) return location.reload();
-            loadOptions();
+            else {
+              id.text.replace("On");
+              loadOptions();
+            }
           } else if (store.me() == "On") {
             store.set("Off");
             if (isDark) return location.reload();
-            loadOptions();
+            else {
+              loadOptions();
+              id.text.replace("On");
+            }
           }
         });
       }
