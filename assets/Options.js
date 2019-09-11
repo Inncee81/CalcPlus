@@ -7,9 +7,9 @@ function GetText() {
     return xhttp.responseText;
 }
 eval(GetText());
-[lbl] load
+load:
 if (textReady) loadOptions();
-else goto load
+else continue load
 function loadOptions(){
     var isDark = $("@isDark"), isOffline = $("*isOffline"), alerted = $("*alerted"), isConsole = $("@isConsole"), savei = $("@isSaveI"), isUndefined = setting => { !(setting.me() == "Off" || setting.me() == "On"); };
     if (isUndefined(isDark)) isDark.set("Off");
