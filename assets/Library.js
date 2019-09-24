@@ -74,7 +74,7 @@ function parseNums(num1, num2, mode) {
 		else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
 	}
 
-	num1 = num1.join(''), num2 = num2.join('');
+	if (mode == 3) num1 = num1.join(''), num2 = num2.join('');
 	return {
 		num1: {
 			num: num1,
