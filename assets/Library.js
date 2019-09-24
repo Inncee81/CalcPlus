@@ -137,7 +137,7 @@ function add() {
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempadd(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempadd(permfinal, a[i]);
+	for (var i=2; i<a.length; i++) permfinal = tempadd(permfinal, a[i]);
 	return permfinal;
 }
 
@@ -165,7 +165,7 @@ function sub() {
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempsub(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempsub(permfinal, a[i]);
+	for (var i=2; i<a.length; i++) permfinal = tempsub(permfinal, a[i]);
 	return permfinal;
 }
 
@@ -179,7 +179,7 @@ function isLessThan() {
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = templessthan(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = templessthan(permfinal, a[i]);
+	for (var i=2; i<a.length; i++) permfinal = templessthan(permfinal, a[i]);
 	return permfinal;
 }
 
@@ -193,7 +193,7 @@ function isGreaterThan() {
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempgreaterthan(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempgreaterthan(permfinal, a[i]);
+	for (var i=2; i<a.length; i++) permfinal = tempgreaterthan(permfinal, a[i]);
 	return permfinal;
 }
 function isLessThanEqual() {
@@ -206,7 +206,7 @@ function isLessThanEqual() {
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = templessthanequal(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = templessthanequal(permfinal, a[i]);
+	for (var i=2; i<a.length; i++) permfinal = templessthanequal(permfinal, a[i]);
 	return permfinal;
 }
 function isGreaterThanEqual() {
@@ -219,7 +219,7 @@ function isGreaterThanEqual() {
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempisgreaterthanequal(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempisgreaterthanequal(permfinal, a[i]);
+	for (var i=2; i<a.length; i++) permfinal = tempisgreaterthanequal(permfinal, a[i]);
 	return permfinal;
 }
 function round(num) {
@@ -252,7 +252,7 @@ function multi() {
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempmulti(a[0], a[1]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempmulti(permfinal, a[i]);
+	for (var i=2; i<a.length; i++) permfinal = tempmulti(permfinal, a[i]);
 	return permfinal;
 }
 function expo(num1, num2) {
@@ -263,19 +263,19 @@ function expo(num1, num2) {
 }
 function div() {
 	var a = arguments, maxDecimal;
-	//change to include maxDecimal
 	if (a.length<3 && typeof a[0]!="object") throw new Error("Function must have at least 3 inputs unless the first input is an array");
 	else if (a.length>2 && typeof a[0]=="object") throw new Error("The first input of the function was an array but there was more than 2 inputs");
-
-	function tempdiv(num1, num2, maxDecimal) {
+	
+	function tempdiv(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
 		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
 		// Concept for v3 found
 	}
 	
 	//change to include maxDecimal
-	if (typeof a[0] == "object")  maxDecimal = a[1], a = a[0];
-	var permfinal = tempdiv(a[0], a[1], a[2]);
-	if (a.length > 2) for (var i=2; i<a.length; i++) permfinal = tempdiv(permfinal, a[i], a[2]);
+	if (typeof a[0] == "object") maxDecimal = a[1], a = a[0];
+	else maxDecimal = a[2];
+	var permfinal = tempdiv(a[0], a[1], maxDecimal);
+	for (var i=2; i<a.length; i++) permfinal = tempdiv(permfinal, a[i], maxDecimal);
 	return permfinal;
 }
