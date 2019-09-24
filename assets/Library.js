@@ -254,7 +254,7 @@ function multi() {
 		final = (numArray.length > 1) ? add(numArray):(numArray.length==0) ? "0":numArray[0];
 		
 		final = final.split('');
-		if(decimals > 0) final.splice(final.length-decimals,0,".");
+		if(decimals > 0) final.splice(final.length-decimals,0,".").join('');
 		if(final==""||final==".")return "0";
 		return (neg[0])?"-"+final:final;
 	}
@@ -280,7 +280,6 @@ function div() {
 		// Concept for v3 found
 	}
 	
-	//change to include maxDecimal
 	if (typeof a[0] == "object") maxDecimal = a[1], a = a[0];
 	else maxDecimal = a[2];
 	var permfinal = tempdiv(a[0], a[1], maxDecimal);
