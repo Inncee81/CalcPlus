@@ -142,9 +142,8 @@ function add() {
 				final[finali] = temp[1], carry = temp[0], time = i;
 				if (i-1 < 0) final.push(carry);
 			}
-
-			return formatNums(final, decimals, neg);
 		}
+		return formatNums(final, decimals, neg);
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempadd(a[0], a[1]);
