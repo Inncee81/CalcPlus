@@ -106,10 +106,10 @@ function parseNums(num1, num2, mode) {
 }
 
 function formatNums(final,decimals,neg) {
-	final=final.reverse();
+	final=final.reverse().join('');
 	if(decimals > 0) final = removeEx0(final);
 	if(final=="")return "0";
-	if(neg[0])return "-"+final.join('');
+	if(neg[0])return "-"+final;
 	return final.join('');
 }
 
