@@ -1,4 +1,17 @@
+"use strict";
+function removeEx0(num) {
+	num=num.replace(/^[0]+/,'');
+	if (num.indexOf('.')>-1) num=num.replace(/[0]+$/,'');
+	return num.replace(/[.]$/,'');
+}
 function parseNums(num1, num2, mode) {
+	/*
+	 * Mode key:
+	 *  4 = Addition
+	 *  2 = Subtraction
+	 *  1 = Multiplication
+	 *  3 = Division
+	*/
 	if (typeof num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
 	if (typeof mode != "number" || mode > 4 || mode < 1) throw new TypeError("The mode must be a number from 1-4.");
@@ -20,8 +33,8 @@ function parseNums(num1, num2, mode) {
 	var decimal, decimal1, decimal2;
 	num1 = num1.split(''), num2 = num2.split('');
 
-	if (num1[0] == "0") while(num1[0] == "0") num1.splice(0, 1);
-	if (num2[0] == "0") while(num2[0] == "0") num2.splice(0, 1);
+	num1 = removeEx0(num1);
+	num2 = removeEx0(num2);
 	Array.prototype.remove = function() {
 		var what, a = arguments, L = a.length, ax;
 		while (L && this.length) {
@@ -55,7 +68,7 @@ function parseNums(num1, num2, mode) {
 		}
 	}
 
-	maxChar = Math.max(num1.length, num2.length);
+	var maxChar = Math.max(num1.length, num2.length);
 	if (num1.length != num2.length) {
 		var times;
 		if (maxChar == num1.length) {
@@ -94,10 +107,8 @@ function parseNums(num1, num2, mode) {
 
 function formatNums(final,decimals,neg) {
 	final=final.reverse();
-	if(decimals > 0) final.splice(final.length-decimals,0,".");
-	while(final[final.length-1]=='0'&&final.length>1)final.splice(final.length-1,1);
-	while(final[0]=="0")final.splice(0,1);
-	if(final==""||final==".")return "0";
+	if(decimals > 0) final = removeEx0(final);
+	if(final=="")return "0";
 	if(neg[0])return "-"+final.join('');
 	return final.join('');
 }
