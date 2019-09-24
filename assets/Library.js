@@ -110,7 +110,7 @@ function formatNums(final,decimals,neg) {
 	if(decimals > 0) final = removeEx0(final);
 	if(final=="")return "0";
 	if(neg[0])return "-"+final;
-	return final.join('');
+	return final;
 }
 
 function checkA(a) {
