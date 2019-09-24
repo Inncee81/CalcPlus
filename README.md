@@ -8,6 +8,13 @@ This is a library that let's numbers be calculated up to:
   
   32 bit OS: 2<sup>32</sup>-1 digits <i><b>long</b></i>, or 10<sup>2<sup>64</sup></sup>-1.
 
+Please note that in order to get a value that's remotely close to this you need a decent quantity of RAM. A system with 16 gigabytes of RAM should be more than enough, but haven't tested the full extent, yet. My findings so far:
+<pre>  4 gigabytes: NO
+  20 gigbytes: ?</pre>
+
+If you tested the system on your own PC with a different amount of RAM, please tell me your findings.
+The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. 
+
 Want to see this library in action? Just go [here](https://virxec.github.io/CalcPlus/PreviewLibrary)!
 
 ## Advantages of using this library
