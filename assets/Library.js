@@ -8,8 +8,8 @@ function parseNums(num1, num2, mode) {
 	/*
 	 * Mode key:
 	 *  4 = Addition
-	 *  2 = Subtraction
-	 *  1 = Multiplication
+	 *  1 = Subtraction
+	 *  2 = Multiplication
 	 *  3 = Division
 	*/
 	if (typeof num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
@@ -85,7 +85,7 @@ function parseNums(num1, num2, mode) {
 		else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
 	}
 
-	if (mode == 3 || mode == 1) num1 = num1.join(''), num2 = num2.join('');
+	if (mode == 3 || mode == 2) num1 = num1.join(''), num2 = num2.join('');
 	return {
 		num1: {
 			num: num1,
