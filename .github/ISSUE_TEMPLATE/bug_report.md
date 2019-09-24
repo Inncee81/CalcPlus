@@ -23,12 +23,9 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
- - Browser [e.g. chrome, safari]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - Browser [e.g. chrome, safari]
+**Platform (please complete the following information):**
+ - Device: [ex. PC, iMac, iPhone]
+ - Browser: [ex. Chrome, Internet Explorer]
 
 **Additional context**
 Add any other context about the problem here.
