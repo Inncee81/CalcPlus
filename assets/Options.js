@@ -19,7 +19,7 @@ function loadOptions(){
     if (isUndefined(isConsole)) isConsole.set("Off");
     if (isUndefined(savei)) savei.set("Off");
 
-    window.addEventListener("load", function(){
+    window.addEventListener("load", ()=>{
         if (isDark.me() == "On") {
             $(window).css.replaceWithAll(0, [
                 'body { color: white; background-color: black; margin: 0; }',
@@ -50,17 +50,13 @@ function loadOptions(){
             ]);
         }
 
-        navigator.serviceWorker.getRegistration().then(function(registration) { if(!registration) isOffline.set("Off"); });
+        navigator.serviceWorker.getRegistration().then(registration =>{ if(!registration) isOffline.set("Off"); });
         if (isOffline.me() == "Off") {
             if ('serviceWorker' in navigator) {
                 var sjws, index = $("*index") == "On";
                 if (beta.me() == "On") sjws = index ? "sw.js":"../sw.js";
                 else sjws = index ? "sw.min.js":"../sw.min.js";
-                navigator.serviceWorker
-                    .register(sjws)
-                    .then(reg => {
-                        isOffline.set("On");
-                    });
+                navigator.serviceWorker.register(sjws).then(reg => { isOffline.set("On"); });
             } else if (alerted.me() == "Off") {
                 alert("Service Workers aren't supported by your browser.\nSwitch to another browser like Chrome, or update your browser.");
                 alerted.set("On");
@@ -72,9 +68,7 @@ function loadOptions(){
         console.log = (...args) => args.forEach(m => {
             try {
                 c.appendChild(document.createTextNode(`\n ${m}`));
-          } catch(err) {
-                console.log(err);
-          }
+            } catch(err) {}
         });
         console.warn = (...args) => args.forEach(e => {
             try {
@@ -82,9 +76,7 @@ function loadOptions(){
                     s.textContent = "\n" + e;
                     s.style.color = "rgb(205, 205, 0)";
                     c.appendChild(s);
-            } catch(err) {
-                console.warn(err);
-            }
+            } catch(err) {}
         });
         console.error = (...args) => args.forEach(e => {
             try {
@@ -92,9 +84,7 @@ function loadOptions(){
                     s.textContent = "\n" + e;
                     s.style.color = "red";
                     c.appendChild(s);
-            } catch(err) {
-                console.error(err);
-            }
+            } catch(err) {}
         });
 
         window.onerror=(e,s,l,c)=>console.error(`${e} at: ${s} : ${l}:${c}`);
