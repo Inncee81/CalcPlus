@@ -33,8 +33,6 @@ function parseNums(num1, num2, mode) {
 	var decimal, decimal1, decimal2;
 	num1 = num1.split(''), num2 = num2.split('');
 
-	num1 = removeEx0(num1.join('')).split('');
-	num2 = removeEx0(num2.join('')).split('');
 	Array.prototype.remove = function() {
 		var what, a = arguments, L = a.length, ax;
 		while (L && this.length) {
