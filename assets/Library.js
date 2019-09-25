@@ -253,8 +253,7 @@ function multi() {
 		for (var i = "0"; isLessThan(i, num2); i=add(i, "1")) numArray.push(num1);
 		final = (numArray.length > 1) ? add(numArray):(numArray.length==0) ? "0":numArray[0];
 		
-		final = final.split('');
-		if(decimals > 0) final.splice(final.length-decimals,0,".").join('');
+		if(decimals > 0) final = final.split('').splice(final.length-decimals,0,".").join('');
 		if(final==""||final==".")return "0";
 		return (neg[0])?"-"+final:final;
 	}
