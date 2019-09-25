@@ -264,9 +264,9 @@ function multi() {
 }
 function expo(num1, num2) {
 	//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
-	//Need to fix multi -> var final = multi(num1, num1);
-	//Need to fix multi -> for (var i=3; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
-	//return final;
+	var final = multi(num1, num1);
+	for (var i=3; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
+	return final;
 }
 function div() {
 	var a = arguments, maxDecimal;
