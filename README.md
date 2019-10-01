@@ -28,4 +28,4 @@ For JavaScript, simply link somewhere in your HTML <head> tag this text:
 
 ## What's the larget number this library can understand, written out?
 
-Once I have exponents working it should be here!
+Please wait for the max number to be calculated
