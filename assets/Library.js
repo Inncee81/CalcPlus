@@ -9,18 +9,12 @@ function removeEx0(num) {
 	return num.replace(/[.]$/,'');
 }
 function parseNums(num1, num2, mode) {
-	/*
-	 * Mode key:
-	 *  4 = Addition
-	 *  1 = Subtraction
-	 *  2 = Multiplication
-	 *  3 = Division
-	*/
 	if (typeof num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
-	if (typeof mode != "number" || mode > 4 || mode < 1) throw new TypeError("The mode must be a number from 1-4.");
-	
-	var neg = [false, false, false];
+	if (typeof mode != "number" || mode > 1 || mode < 2) throw new TypeError("The mode must be a number from 1-4.");
+
+	var neg = [false, false, false], decimal, decimal1, decimal2, times;
+
 	num1 = num1.split("-");
 	num2 = num2.split("-");
 
@@ -34,7 +28,6 @@ function parseNums(num1, num2, mode) {
 	} else num2 = num2.toString();
 
 	if ((neg[1]||neg[2]) && (neg[1]!=neg[2])) neg[0] = true;
-	var decimal, decimal1, decimal2;
 	num1 = num1.split(''), num2 = num2.split('');
 
 	Array.prototype.remove = function() {
@@ -54,13 +47,9 @@ function parseNums(num1, num2, mode) {
 	if (num2pos != -1) decimal2 = num2.remove(".").length - num2pos;
 	else decimal2 = 0;
 
-	var maxDecimal = Math.max(decimal1, decimal2);
-	if (mode == 4 || mode == 1) decimal = maxDecimal;
-	else if (mode == 2) decimal = decimal1 + decimal2;
-	else if (mode == 3) decimal = decimal2; 
+	decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
 
 	if (decimal1 != decimal2) {
-		var times;
 		if (decimal1 == maxDecimal) {
 			times = decimal1 - decimal2;
 			for (var i=0;i<times;i++) num2.push("0");
@@ -82,14 +71,14 @@ function parseNums(num1, num2, mode) {
 		}
 	}
 
-	if (mode==2 && neg[1] && neg[2]) neg[0] == false;
+	if (mode==3 && neg[1] && neg[2]) neg[0] == false;
 	var skip = false;
-	for (var i=0; i<num2.length && !skip && !neg[0] && mode != 4 && mode != 2; i++) {
+	for (var i=0; i<num2.length && !skip && !neg[0] && mode != 1 && mode != 3; i++) {
 		if (parseInt(num2[i]) > parseInt(num1[i])) neg[0] = true, skip = true;
 		else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
 	}
 
-	if (mode == 3 || mode == 2) num1 = num1.join(''), num2 = num2.join('');
+	if (mode == 4 || mode == 3) num1 = num1.join(''), num2 = num2.join('');
 	return {
 		num1: {
 			num: num1,
@@ -110,7 +99,7 @@ function parseNums(num1, num2, mode) {
 function formatNums(final,decimals,neg) {
 	final=final.reverse().join('');
 	if(decimals > 0) final = removeEx0(final);
-	if(final=="")return "0";
+	if(final==""||final=".")return "0";
 	if(neg[0])return "-"+final;
 	return final;
 }
@@ -124,7 +113,7 @@ function add() {
 	var a = arguments;
 	checkA(a);
 	function tempadd(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 4), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
+		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
 		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
 
 		if (neg[1] || neg[2]) {
@@ -157,7 +146,7 @@ function sub() {
 	var a = arguments;
 	checkA(a);
 	function tempsub(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
+		var parsedNums = parseNums(num1, num2, 2), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
 		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
 
 		if (neg[1] || neg[2]) {
@@ -253,13 +242,10 @@ function multi() {
 	var a = arguments;
 	checkA(a);
 	function tempmulti(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 2), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], final = "0", num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, decimals=parsedNums.decimals, numArray = [];
+		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], final = "0", num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, decimals=parsedNums.decimals, numArray = [], decArray = [];
 		for (var i = "0"; isLessThan(i, num2); i=add(i, "1")) numArray.push(num1);
 		final = (numArray.length > 1) ? add(numArray):(numArray.length==0) ? "0":numArray[0];
-		
-		if(decimals > 0) final = final.split('').splice(final.length-decimals,0,".").join('');
-		if(final==""||final==".")return "0";
-		return (neg[0])?"-"+final:final;
+		return formatNums(final, final.splice(final.length-decimals,1,"."), neg[0]);
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempmulti(a[0], a[1]);
@@ -276,13 +262,12 @@ function div() {
 	var a = arguments, maxDecimal;
 	if (a.length<3 && typeof a[0]!="object") throw new Error("Function must have at least 3 inputs unless the first input is an array");
 	else if (a.length>2 && typeof a[0]=="object") throw new Error("The first input of the function was an array but there was more than 2 inputs");
-	
+
 	function tempdiv(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], decimals = [parsedNums.decimals, parsedNums.num1.decimals, parsedNums.num2.decimals];
-		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
+		var parsedNums = parseNums(num1, num2, 4), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
 		// Concept for v3 found
 	}
-	
+
 	if (typeof a[0] == "object") maxDecimal = a[1], a = a[0];
 	else maxDecimal = a[2];
 	var permfinal = tempdiv(a[0], a[1], maxDecimal);
