@@ -1,7 +1,4 @@
-/* Copyright 2019 VirxEC
-	Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0*/
+// Copyright 2019 VirxEC - Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 "use strict";
 function removeEx0(num) {
 	num=num.replace(/^[0]+/,'');
@@ -13,11 +10,8 @@ function parseNums(num1, num2, mode) {
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
 	if (typeof mode != "number" || mode > 1 || mode < 2) throw new TypeError("The mode must be a number from 1-4.");
 
-	var neg = [false, false, false], decimal, decimal1, decimal2, times;
-
-	num1 = num1.split("-");
-	num2 = num2.split("-");
-
+	var neg = [false, false, false], decimal, decimal1, decimal2, skip = false;
+	num1 = num1.split("-"), num2 = num2.split("-");
 	if (num1.length == 2) {
 		num1 = num1[1];
 		neg[1] = true;
@@ -42,37 +36,20 @@ function parseNums(num1, num2, mode) {
 	num1.remove(",");
 	num2.remove(",");
 	var num1pos = num1.indexOf("."), num2pos = num2.indexOf(".");
-	if (num1pos != -1) decimal1 = num1.remove(".").length - num1pos;
-	else decimal1 = 0;
-	if (num2pos != -1) decimal2 = num2.remove(".").length - num2pos;
-	else decimal2 = 0;
-
-	decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
+	decimal = num1pos!=-1 ? num1.remove(".").length-num1pos:0, decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0,decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
 
 	if (decimal1 != decimal2) {
-		if (decimal1 == maxDecimal) {
-			times = decimal1 - decimal2;
-			for (var i=0;i<times;i++) num2.push("0");
-		} else {
-			times = decimal2 - decimal1;
-			for (var i=0;i<times;i++) num1.push("0");
-		}
+		if (decimal1 == maxDecimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
+		else for (var i=0;i<decimal2-decimal1;i++) num1.push("0");
 	}
 
 	var maxChar = Math.max(num1.length, num2.length);
 	if (num1.length != num2.length) {
-		var times;
-		if (maxChar == num1.length) {
-			times = num1.length - num2.length;
-			for (var i = 0; i < times; i++) num2.unshift("0");
-		} else {
-			times = num2.length - num1.length;
-			for (var i = 0; i < times; i++) num1.unshift("0");
-		}
+		if (maxChar == num1.length) for (var i=0; i<num1.length-num2.length; i++) num2.unshift("0");
+		else for (var i=0; i<num2.length-num1.length; i++) num1.unshift("0");
 	}
 
-	if (mode==3 && neg[1] && neg[2]) neg[0] == false;
-	var skip = false;
+	neg[0] = mode==3 && neg[1] && neg[2] ? false:neg[0];
 	for (var i=0; i<num2.length && !skip && !neg[0] && mode != 1 && mode != 3; i++) {
 		if (parseInt(num2[i]) > parseInt(num1[i])) neg[0] = true, skip = true;
 		else if (parseInt(num1[i]) > parseInt(num2[i])) skip = true;
