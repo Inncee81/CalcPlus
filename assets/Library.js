@@ -212,11 +212,19 @@ function multi() {
 	for (var i=2; i<a.length; i++) permfinal = tempmulti(permfinal, a[i]);
 	return permfinal;
 }
-function expo(num1, num2) {
-	//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
-	var final = multi(num1, num1);
-	for (var i=2; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
-	return final;
+function expo() {
+	var a = arguments;
+	checkA(a);
+	function tempexpo(num1, num2) {
+		//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
+		var final = multi(num1, num1);
+		for (var i=2; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
+		return final;
+	}
+	if (typeof a[0] == "object") a = a[0];
+	var permfinal = tempexpo(a[0], a[1]);
+	for (var i=2; i<a.length; i++) permfinal = tempexpo(permfinal, a[i]);
+	return permfinal;
 }
 function div() {
 	var a = arguments, maxDecimal;
