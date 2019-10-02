@@ -1,5 +1,4 @@
 // Copyright 2019 VirxEC - Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-"use strict"; // for debugging only
 function parseNums(num1, num2, mode) {
 	if (typeof num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
@@ -83,7 +82,6 @@ function add() {
 	checkA(a);
 	function tempadd(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals, num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, time, final = [], carry = "0";
-
 		if (neg[1] || neg[2]) {
 			if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
 			else if (neg[2]) return sub(num1.join(''), num2.join(''));
