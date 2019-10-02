@@ -72,7 +72,7 @@
     <script>
       var inputBoxes = 2, divChecked = false;
       function getChecked(name) { return $(`#${name}`).checked(); }
-      $(document).on("change", "#div", function() {
+     document.getElementById("div").addEventListener("change", function() {
         function removeMaxDiv() {
           if (!getChecked("div")) {
               $("#spanDivMax").remove();
