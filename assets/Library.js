@@ -215,7 +215,7 @@ function multi() {
 function expo(num1, num2) {
 	//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
 	var final = multi(num1, num1);
-	for (var i=3; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
+	for (var i=2; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
 	return final;
 }
 function div() {
