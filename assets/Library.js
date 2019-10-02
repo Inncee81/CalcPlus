@@ -1,10 +1,5 @@
 // Copyright 2019 VirxEC - Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 "use strict"; // for debugging only
-function removeEx0(num) {
-	num=num.replace(/^[0]+/,'');
-	if (num.indexOf('.')>-1) num=num.replace(/[0]+$/,'');
-	return num.replace(/[.]$/,'');
-}
 function parseNums(num1, num2, mode) {
 	if (typeof num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
@@ -42,11 +37,11 @@ function parseNums(num1, num2, mode) {
 		if (decimal1 == decimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
 		else for (var i=0;i<decimal2-decimal1;i++) num1.push("0");
 	}
-
 	var maxChar = Math.max(num1.length, num2.length);
 	if (num1.length != num2.length) {
-		if (maxChar == num1.length) for (var i=0; i<num1.length-num2.length; i++) num2.unshift("0");
-		else for (var i=0; i<num2.length-num1.length; i++) num1.unshift("0");
+    var numl = [num1.length, num2.length];
+		if (maxChar == numl[0]) for (var i=0; i<numl[0]-numl[1]; i++) num2.unshift("0");
+		else for (var i=0; i<numl[1]-numl[0]; i++) num1.unshift("0");
 	}
 
 	neg[0] = mode==3 && neg[1] && neg[2] ? false:neg[0];
@@ -74,7 +69,6 @@ function parseNums(num1, num2, mode) {
 }
 function formatNums(final,decimals,neg) {
 	if (typeof final=="object")final=final.reverse().join('');
-	if(decimals > 0) final = removeEx0(final);
 	if(final==""||final==".")return "0";
 	if(neg[0])return "-"+final;
 	return final;
@@ -88,8 +82,7 @@ function add() {
 	var a = arguments;
 	checkA(a);
 	function tempadd(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
-		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
+		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals, num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, time, final = [], carry = "0";
 
 		if (neg[1] || neg[2]) {
 			if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
@@ -97,7 +90,6 @@ function add() {
 			else if (neg[1]) return sub(num2.join(''), num1.join(''));
 		}
 
-		var time, final = [], carry = "0";
 		for (var i=maxChar-1; i>=0;i--) {
 			var finali = maxChar-i-1;
 			if(time != i+1) carry = "0";
@@ -121,7 +113,7 @@ function sub() {
 	checkA(a);
 	function tempsub(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 2), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
-		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num;
+		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, final = [];
 
 		if (neg[1] || neg[2]) {
 			if (neg[1] && neg[2]) num1=[num2,num2=num1][0];
@@ -130,7 +122,6 @@ function sub() {
 		}
 		if (neg[0]) num1=[num2,num2=num1][0];
 
-		var final = [];
 		for (var i=maxChar-1; i>=0;i--) {
 			var finali = maxChar-i-1, fans = parseInt(num1[i])-parseInt(num2[i]);
 			if (fans < 0) fans+=10, num1[i-1]-=1;
