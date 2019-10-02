@@ -70,7 +70,8 @@
     <p id="output">Press "Calculate..."</p>
     
     <script>
-      var inputBoxes = 2, divChecked = false, getChecked = name => return $(`#${name}`).checked();
+      var inputBoxes = 2, divChecked = false;
+      function getChecked(name) { return $(`#${name}`).checked(); }
       $("#div").change(function() {
         function removeMaxDiv() {
           if (!getChecked("div")) {
