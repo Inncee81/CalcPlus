@@ -72,7 +72,6 @@ function parseNums(num1, num2, mode) {
 		decimals: decimal
 	};
 }
-
 function formatNums(final,decimals,neg) {
 	final=final.reverse().join('');
 	if(decimals > 0) final = removeEx0(final);
@@ -80,7 +79,6 @@ function formatNums(final,decimals,neg) {
 	if(neg[0])return "-"+final;
 	return final;
 }
-
 function checkA(a) {
 	if (a.length<2 && typeof a[0]!="object") throw new Error("Function must have at least 2 inputs unless the first input is an array");
 	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function was an array but there was more than 1 input");
@@ -118,7 +116,6 @@ function add() {
 	for (var i=2; i<a.length; i++) permfinal = tempadd(permfinal, a[i]);
 	return permfinal;
 }
-
 function sub() {
 	var a = arguments;
 	checkA(a);
@@ -146,7 +143,6 @@ function sub() {
 	for (var i=2; i<a.length; i++) permfinal = tempsub(permfinal, a[i]);
 	return permfinal;
 }
-
 function isLessThan() {
 	var a = arguments;
 	checkA(a);
@@ -160,7 +156,6 @@ function isLessThan() {
 	for (var i=2; i<a.length; i++) permfinal = templessthan(permfinal, a[i]);
 	return permfinal;
 }
-
 function isGreaterThan() {
 	var a = arguments;
 	checkA(a);
@@ -214,7 +209,6 @@ function roundUp(num) {
 	num = num.split(".");
 	return add(num[0], "1");
 }
-
 function multi() {
 	var a = arguments;
 	checkA(a);
