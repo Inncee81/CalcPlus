@@ -76,7 +76,7 @@ function parseNums(num1, num2, mode) {
 function formatNums(final,decimals,neg) {
 	final=final.reverse().join('');
 	if(decimals > 0) final = removeEx0(final);
-	if(final==""||final=".")return "0";
+	if(final==""||final==".")return "0";
 	if(neg[0])return "-"+final;
 	return final;
 }
