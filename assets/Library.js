@@ -1,5 +1,5 @@
 // Copyright 2019 VirxEC - Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-"use strict";
+"use strict"; // for debugging only
 function removeEx0(num) {
 	num=num.replace(/^[0]+/,'');
 	if (num.indexOf('.')>-1) num=num.replace(/[0]+$/,'');
@@ -8,7 +8,7 @@ function removeEx0(num) {
 function parseNums(num1, num2, mode) {
 	if (typeof num1 != "string") throw new TypeError("The first number wasn't a string. It has to be a string.");
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
-	if (typeof mode != "number" || mode > 1 || mode < 2) throw new TypeError("The mode must be a number from 1-4.");
+	if (typeof mode != "number" || [1,2,3,4].indexOf(mode)==-1) throw new TypeError("The mode must be a number from 1-4.");
 
 	var neg = [false, false, false], decimal, decimal1, decimal2, skip = false;
 	num1 = num1.split("-"), num2 = num2.split("-");
@@ -39,7 +39,7 @@ function parseNums(num1, num2, mode) {
 	decimal = num1pos!=-1 ? num1.remove(".").length-num1pos:0, decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0,decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
 
 	if (decimal1 != decimal2) {
-		if (decimal1 == maxDecimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
+		if (decimal1 == decimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
 		else for (var i=0;i<decimal2-decimal1;i++) num1.push("0");
 	}
 
@@ -73,7 +73,7 @@ function parseNums(num1, num2, mode) {
 	};
 }
 function formatNums(final,decimals,neg) {
-	final=final.reverse().join('');
+	if (typeof final=="object")final=final.reverse().join('');
 	if(decimals > 0) final = removeEx0(final);
 	if(final==""||final==".")return "0";
 	if(neg[0])return "-"+final;
@@ -216,7 +216,7 @@ function multi() {
 		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], final = "0", num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, decimals=parsedNums.decimals, numArray = [], decArray = [];
 		for (var i = "0"; isLessThan(i, num2); i=add(i, "1")) numArray.push(num1);
 		final = (numArray.length > 1) ? add(numArray):(numArray.length==0) ? "0":numArray[0];
-		return formatNums(final, final.splice(final.length-decimals,1,"."), neg[0]);
+		return formatNums(final, final.split('').splice(final.length-decimals,1,"."), neg[0]);
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempmulti(a[0], a[1]);
