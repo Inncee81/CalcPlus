@@ -31,7 +31,7 @@ function parseNums(num1, num2, mode) {
 	num2.remove(",");
 	var num1pos = num1.indexOf("."), num2pos = num2.indexOf(".");
 	decimal1 = num1pos!=-1 ? num1.remove(".").length-num1pos:0, decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0,decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
-
+  
 	if (decimal1 != decimal2 && [1,2].indexOf(mode)>-1) {
 		if (decimal1 == decimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
 		else for (var i=0;i<decimal2-decimal1;i++) num1.push("0");
@@ -94,9 +94,9 @@ function add() {
 	function tempadd(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 1), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals, num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, time, final = [], carry = "0";
 		if (neg[1] || neg[2]) {
-			if (neg[1] && neg[2]) return sub("-"+num1.join(''), num2.join(''));
-			else if (neg[2]) return sub(num1.join(''), num2.join(''));
-			else if (neg[1]) return sub(num2.join(''), num1.join(''));
+			if (neg[1] && neg[2]) return formatNums(sub("-"+num1.join(''), num2.join('')), decimals, [false]);
+			else if (neg[2]) return formatNums(sub(num1.join(''), num2.join('')), decimals, [false]);
+			else if (neg[1]) return formatNums(sub(num2.join(''), num1.join('')), decimals, [false]);
 		}
 		for (var i=maxChar-1; i>=0;i--) {
 			var finali = maxChar-i-1;
@@ -120,7 +120,6 @@ function sub() {
 	checkA(a);
 	function tempsub(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 2), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals, num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, final = [];
-
 		if (neg[1] || neg[2]) {
 			if (neg[1] && neg[2]) num1=[num2,num2=num1][0];
 			else if (neg[2]) return add(num1.join(''), num2.join(''));
