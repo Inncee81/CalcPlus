@@ -4,7 +4,7 @@ function parseNums(num1, num2, mode) {
 	if (typeof num2 != "string") throw new TypeError("The second number wasn't a string. It has to be a string.");
 	if (typeof mode != "number" || [1,2,3,4].indexOf(mode)==-1) throw new TypeError("The mode must be a number from 1-4.");
 
-	var neg = [false, false, false], decimal, decimal1, decimal2, skip = false;
+	var neg = [false, false, false], decimal = 0, decimal1 = 0, decimal2 = 0, skip = false;
 	num1 = num1.split("-"), num2 = num2.split("-");
 	if (num1.length == 2) {
 		num1 = num1[1];
@@ -31,7 +31,8 @@ function parseNums(num1, num2, mode) {
 	num2.remove(",");
 	var num1pos = num1.indexOf("."), num2pos = num2.indexOf(".");
 	decimal1 = num1pos!=-1 ? num1.remove(".").length-num1pos:0, decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0,decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
-
+  console.log(num1pos, num2pos, decimal1, decimal2, decimal)
+  
 	if (decimal1 != decimal2 && [1,2].indexOf(mode)>-1) {
 		if (decimal1 == decimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
 		else for (var i=0;i<decimal2-decimal1;i++) num1.push("0");
@@ -88,7 +89,6 @@ function checkA(a) {
 	if (a.length<2 && typeof a[0]!="object") throw new Error("Function must have at least 2 inputs unless the first input is an array");
 	else if (a.length>1 && typeof a[0]=="object") throw new Error("The first input of the function was an array but there was more than 1 input");
 }
-
 function add() {
 	var a = arguments;
 	checkA(a);
@@ -99,12 +99,10 @@ function add() {
 			else if (neg[2]) return sub(num1.join(''), num2.join(''));
 			else if (neg[1]) return sub(num2.join(''), num1.join(''));
 		}
-
 		for (var i=maxChar-1; i>=0;i--) {
 			var finali = maxChar-i-1;
 			if(time != i+1) carry = "0";
 			final[finali] = (parseInt(num1[i])+parseInt(num2[i])+parseInt(carry)).toString();
-
 			if(parseInt(final[finali]) > 9) {
 				var temp = final[finali].split('');
 				final[finali] = temp[1], carry = temp[0], time = i;
@@ -122,8 +120,7 @@ function sub() {
 	var a = arguments;
 	checkA(a);
 	function tempsub(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 2), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals;
-		num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, final = [];
+		var parsedNums = parseNums(num1, num2, 2), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], maxChar = parsedNums.maxChar, decimals = parsedNums.decimals, num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, final = [];
 
 		if (neg[1] || neg[2]) {
 			if (neg[1] && neg[2]) num1=[num2,num2=num1][0];
@@ -215,11 +212,9 @@ function multi() {
 	checkA(a);
 	function tempmulti(num1, num2) {
 		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, final = "", decimals=parsedNums.decimals, numArray = [], decArray = [];
-    console.log(num1, num2);
 		for (var i = "0"; isLessThan(i, num2); i=add(i, "1")) numArray.push(num1);
-		final = (numArray.length > 1) ? add(numArray):(numArray.length==0) ? "0":numArray[0];
-    console.log(final, decimals);
-		return formatNums(final, decimals, neg[0]);
+		final = numArray.length > 1 ? add(numArray):(numArray.length==0) ? "0":numArray[0];
+		return formatNums(final, decimals, neg);
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempmulti(a[0], a[1]);
@@ -230,10 +225,20 @@ function expo() {
 	var a = arguments;
 	checkA(a);
 	function tempexpo(num1, num2) {
-		//Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
-		var final = multi(num1, num1);
-		for (var i=2; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
-		return final;
+    var parsedNums = parseNums(num1, num2, 3), num2 = parsedNums.num2.num, decimals = parsedNums.decimals, decimal2 = parsedNums.num2.decimals, neg = [parsedNums.num1.isNeg, parsedNums.num2.isNeg];
+    if (neg[0]) num1 = "-"+num1;
+    if (neg[1]) num2 = "-"+num2;
+    console.log(num1, num2, decimal2);
+    if (decimal2>0) {
+      // root_of_decimal2*10(num1)**(num2*(10*decimal2))
+      alert("Decimal exponents aren't supported yet");
+      throw new TypeError("Decimal exponents aren't supported yet");
+    } else {
+      //Need to fix div -> if (num2.split("-").length == 2) return div("1", multi(num1, num2));
+      var final = multi(num1, num1);
+      for (var i=2; isLessThan(i.toString(), num2); i++) final = multi(final, num1);
+      return final;
+    }
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempexpo(a[0], a[1]);
