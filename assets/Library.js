@@ -31,8 +31,7 @@ function parseNums(num1, num2, mode) {
 	num2.remove(",");
 	var num1pos = num1.indexOf("."), num2pos = num2.indexOf(".");
 	decimal1 = num1pos!=-1 ? num1.remove(".").length-num1pos:0, decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0,decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
-  console.log(num1pos, num2pos, decimal1, decimal2, decimal)
-  
+
 	if (decimal1 != decimal2 && [1,2].indexOf(mode)>-1) {
 		if (decimal1 == decimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
 		else for (var i=0;i<decimal2-decimal1;i++) num1.push("0");
