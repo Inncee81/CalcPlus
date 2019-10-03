@@ -30,14 +30,14 @@ function parseNums(num1, num2, mode) {
 	num1.remove(",");
 	num2.remove(",");
 	var num1pos = num1.indexOf("."), num2pos = num2.indexOf(".");
-	decimal = num1pos!=-1 ? num1.remove(".").length-num1pos:0, decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0,decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
+	decimal1 = num1pos!=-1 ? num1.remove(".").length-num1pos:0, decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0,decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):decimal1+decimal2;
 
-	if (decimal1 != decimal2) {
+	if (decimal1 != decimal2 && [1,2].indexOf(mode)>-1) {
 		if (decimal1 == decimal) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
 		else for (var i=0;i<decimal2-decimal1;i++) num1.push("0");
 	}
 	var maxChar = Math.max(num1.length, num2.length);
-	if (num1.length != num2.length) {
+	if (num1.length != num2.length && [1,2].indexOf(mode)>-1) {
     var numl = [num1.length, num2.length];
 		if (maxChar == numl[0]) for (var i=0; i<numl[0]-numl[1]; i++) num2.unshift("0");
 		else for (var i=0; i<numl[1]-numl[0]; i++) num1.unshift("0");
@@ -67,9 +67,21 @@ function parseNums(num1, num2, mode) {
 	};
 }
 function formatNums(final,decimals,neg) {
-	if (typeof final=="object")final=final.reverse().join('');
-	if(final==""||final==".")return "0";
-	if(neg[0])return "-"+final;
+  if (typeof final == "string") {
+    if (decimals>0) {
+      final = final.split("");
+      final.splice(final.length-decimals, 0, ".");
+      final = final.join("");
+    }
+  } else if (typeof final == "object") {
+    if(decimals>0) {
+      final = final.reverse();
+      final.splice(final.length-decimals, 0, ".");
+      final = final.join("");
+    } else final = final.reverse().join("");
+  }
+	final = neg[0] ? "-"+final:final;
+	final = ["",".","-"].indexOf(final)>-1 ? "0":final;
 	return final;
 }
 function checkA(a) {
@@ -202,10 +214,12 @@ function multi() {
 	var a = arguments;
 	checkA(a);
 	function tempmulti(num1, num2) {
-		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], final = "0", num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, decimals=parsedNums.decimals, numArray = [], decArray = [];
+		var parsedNums = parseNums(num1, num2, 3), neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg], num1 = parsedNums.num1.num, num2 = parsedNums.num2.num, final = "", decimals=parsedNums.decimals, numArray = [], decArray = [];
+    console.log(num1, num2);
 		for (var i = "0"; isLessThan(i, num2); i=add(i, "1")) numArray.push(num1);
 		final = (numArray.length > 1) ? add(numArray):(numArray.length==0) ? "0":numArray[0];
-		return formatNums(final, final.split('').splice(final.length-decimals,1,"."), neg[0]);
+    console.log(final, decimals);
+		return formatNums(final, decimals, neg[0]);
 	}
 	if (typeof a[0] == "object") a = a[0];
 	var permfinal = tempmulti(a[0], a[1]);
