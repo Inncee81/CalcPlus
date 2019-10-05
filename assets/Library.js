@@ -3,23 +3,15 @@ function parseNums(num1, num2, mode) {
 	if (["string","object"].indexOf(typeof num1)==-1) throw new TypeError("The first number wasn't a string (or object). It has to be a string (or object).");
 	if (["string","object"].indexOf(typeof num2)==-1) throw new TypeError("The second number wasn't a string (or object). It has to be a string (or object). Note that an object input is ment to submit a pre-parsed number.");
 	if (typeof mode != "number" || [1,2,3,4].indexOf(mode)==-1) throw new TypeError("The mode must be a number from 1-4.");
-  var skip=false, stringMode1=true, stringMode2=true, neg=[false, false, false], decimal=0, decimal1=0, decimal2=0, num1pos, num2pos, maxChar, numl;
-  if (typeof num1 == "object") neg[1] = num1.isNeg, decimal1 = num1.decimals, num1 = num1.num, stringMode1 = false;
+  	var skip=false, stringMode1=true, stringMode2=true, neg=[false, false, false], decimal=0, decimal1=0, decimal2=0, num1pos, num2pos, maxChar, numl;
+ 	if (typeof num1 == "object") neg[1] = num1.isNeg, decimal1 = num1.decimals, num1 = num1.num, stringMode1 = false;
 	if (typeof num2 == "object") neg[2] = num2.isNeg, decimal2 = num2.decimals, num2 = num2.num, stringMode2 = false;
-  if (stringMode1) {
-    if (num1.length == 2) {
-      num1 = num1.split("-")[1], neg[1] = true;
-    } else num1 = num1.toString();
-  }
-  if (stringMode2) {
-    if (num2.length == 2) {
-      num2 = num2.split("-")[1], neg[2] = true;
-    } else num2 = num2.toString();
-  }
+ 	if (num1.split("-").length == 2 && stringMode1) num1 = num1.split("-")[1], neg[1] = true;
+ 	if (num2.split("-").length == 2 && stringMode2) num2 = num2.split("-")[1], neg[2] = true;
 
 	if (neg[1]!=neg[2] && mode != 1 && mode != 2) neg[0] = true;
 	if (stringMode1) num1 = num1.split('');
-  if (stringMode2) num2 = num2.split('');
+  	if (stringMode2) num2 = num2.split('');
 
 	Array.prototype.remove = function() {
 		var what, a = arguments, L = a.length, ax;
@@ -30,12 +22,12 @@ function parseNums(num1, num2, mode) {
 		return this;
 	};
 
-  if (stringMode1) num1 = num1.remove(",");
-  num1pos = num1.indexOf("."), decimal1 = num1pos!=-1 ? num1.remove(".").length-num1pos:0;
+  	if (stringMode1) num1 = num1.remove(",");
+  	num1pos = num1.indexOf("."), decimal1 = num1pos!=-1 ? num1.remove(".").length-num1pos:0;
 	if (stringMode2) num2 = num2.remove(",");
-  num2pos = num2.indexOf("."), decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0;
-  decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):mode==3 ? decimal1+decimal2:decimal1-decimal2;
-  if (decimal<0) decimal = 0;
+  	num2pos = num2.indexOf("."), decimal2 = num2pos!=-1 ? num2.remove(".").length-num2pos:0;
+  	decimal = mode == 1 || mode == 2 ? Math.max(decimal1, decimal2):mode==3 ? decimal1+decimal2:decimal1-decimal2;
+  	if (decimal<0) decimal = 0;
   
 	if (decimal1 != decimal2 && [1,2].indexOf(mode)>-1) {
 		if (decimal1 == decimal && stringMode2) for (var i=0;i<decimal1-decimal2;i++) num2.push("0");
@@ -43,7 +35,7 @@ function parseNums(num1, num2, mode) {
 	}
 	maxChar = Math.max(num1.length, num2.length);
 	if (num1.length != num2.length && [1,2].indexOf(mode)>-1) {
-    numl = [num1.length, num2.length];
+    		numl = [num1.length, num2.length];
 		if (maxChar == numl[0] && stringMode2) for (var i=0; i<numl[0]-numl[1]; i++) num2.unshift("0");
 		else if (maxChar != num1[0] && stringMode1) for (var i=0; i<numl[1]-numl[0]; i++) num1.unshift("0");
 	}
@@ -52,9 +44,9 @@ function parseNums(num1, num2, mode) {
 	for (var i=0; i<num2.length && (neg[1]||neg[2]) && !skip && mode != 3 && mode != 4; i++) if (+num2[i] > +num1[i]) neg[0] = true, skip = true;
 
 	if (mode == 4 || mode == 3) {
-    if (stringMode1) num1 = num1.join('');
-    if (stringMode2) num2 = num2.join('');
-  }
+    		if (stringMode1) num1 = num1.join('');
+    		if (stringMode2) num2 = num2.join('');
+  	}
 	return {
 		num1: {
 			num: num1,
