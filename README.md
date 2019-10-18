@@ -23,8 +23,8 @@ For now, it only support JavaScipt. I have plans to eventually port it to Python
 ## How do I install this library?
 
 JavaScript Library:<br>
-&#9;<a href="https://github.com/VirxEC/CalcPlus/releases/tag/v0.1-beta-js">Latest stable beta</a><br>
-&#9;<a href="https://virxec.github.io/CalcPlus/assets/Library.js" download="CalcPlus-BETA-UNSTABLE.js">Latest unstable beta</a>
+&#9;<a href="https://github.com/VirxEC/CalcPlus/releases">Latest stable beta</a><br>
+&#9;<a href="https://virxec.github.io/CalcPlus/assets/Library.js" download="Beta_UNSTALBLE-CalcPlus_Library.js">Latest unstable beta</a>
 
 ## What's the larget number this library can understand, written out?
 
