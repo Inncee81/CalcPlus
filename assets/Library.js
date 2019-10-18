@@ -320,8 +320,8 @@ function div() {
    neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
    num1 = parsedNums.num1,
    num2 = parsedNums.num2,
-   num, final;
-  num = sub(num1, num2), final = "1";
+   num = sub(num1, num2),
+   final = "1";
   while (isLessThanEqual(num2, num)) {
    num = sub(num, num2), final = add(final, {
     num: ["1"],
