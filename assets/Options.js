@@ -34,7 +34,7 @@ function loadOptions(){
 
     navigator.serviceWorker.getRegistration().then(registration =>{ if(!registration) isOffline.set("Off"); });
     if (isOffline.me() == "Off") {
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register($("*index") == "On" ? "sw.min.js":"../sw.min.js").then(() => { isOffline.set("On"); });
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register($("*index").me() == "On" ? "sw.min.js":"../sw.min.js").then(() => { isOffline.set("On"); });
         else if (alerted.me() == "Off") {
             alert("Service Workers aren't supported by your browser.\nSwitch to another browser like Chrome, or update your browser.");
             alerted.set("On");
