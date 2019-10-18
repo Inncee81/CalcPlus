@@ -40,7 +40,7 @@
       <br>
       <input type="radio" id="expo" name="math-type"> Exponents (No decimals after the first number for now)
       <br>
-      <input type="radio" id="div" name="math-type"> Division (Concept for v3 found)
+      <input type="radio" id="div" name="math-type"> Division (In development)
       <br>
       <input type="radio" id="isLessThan" name="math-type"> Is Less Than
       <br>
@@ -76,7 +76,7 @@
     </ul>
     <script>
       var inputBoxes = 2, divChecked = false, getChecked=name=>$("#"+name).checked();
-      document.getElementById("div").addEventListener("change", function() {
+      document.getElementById("div").addEventListener("change", ()=>{
         function removeMaxDiv() {
           if (!getChecked("div")) {
               $("#spanDivMax").remove();
