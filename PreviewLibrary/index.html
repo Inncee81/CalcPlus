@@ -75,7 +75,7 @@
       <li><a href="assets/Library.js" download="CalcPlus_BETA_Library.js">CalcPlus BETA Library (Latest)</a></li>
     </ul>
     <script>
-      var inputBoxes = 2, divChecked = false, getChecked=name=$("#"+name).checked();
+      var inputBoxes = 2, divChecked = false, getChecked=name=>$("#"+name).checked();
       document.getElementById("div").addEventListener("change", function() {
         function removeMaxDiv() {
           if (!getChecked("div")) {
