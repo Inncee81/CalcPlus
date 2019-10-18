@@ -30,6 +30,7 @@ function parseNums(num1pre, num2pre, mode) {
   if (num1[i] < num2[i]) neg[0] = true, skip = true;
   else skip = !(num2[i] == num1[i]);
  }
+ if (num2.length == maxChar && num2.length != maxChar) neg[0] = true;
  if (maxChar == num2.length && mode == 3) num1 = [num2, num2 = num1][0]
  if (decimal1 != decimal2 && [1, 2].indexOf(mode) > -1) {
   if (decimal1 == decimal)
@@ -131,18 +132,20 @@ function sub() {
    num2 = parsedNums.num2.num,
    final = [],
    finali, fans;
-  if (neg[0] && !neg[1] && !neg[2]) num1 = [num2, num2 = num1][0];
-  else if (neg[1] && neg[2]) num1 = [num2, num2 = num1][0];
-  else if (neg[2] && !neg[1]) return add(parsedNums.num1, {
-   num: num2,
-   isNeg: false,
-   decimals: decimal[2]
-  });
-  else if (neg[1] && !neg[2]) return "-" + add({
-   num: num1,
-   isNeg: false,
-   decimals: decimal[1]
-  }, parsedNums.num2);
+  if (neg.indexOf(true) > -1) {
+   if (neg[0] && !neg[1] && !neg[2]) num1 = [num2, num2 = num1][0];
+   else if (neg[1] && neg[2]) num1 = [num2, num2 = num1][0];
+   else if (neg[2] && !neg[1]) return add(parsedNums.num1, {
+    num: num2,
+    isNeg: false,
+    decimals: decimal[2]
+   });
+   else if (neg[1] && !neg[2]) return "-" + add({
+    num: num1,
+    isNeg: false,
+    decimals: decimal[1]
+   }, parsedNums.num2);
+  }
   for (var i = maxChar - 1; i >= 0; i--) {
    finali = maxChar - i - 1, fans = num1[i] - num2[i];
    if (fans < 0 && i != 0) {
@@ -315,9 +318,20 @@ function div() {
  function tempdiv(num1, num2) {
   var parsedNums = parseNums(num1, num2, 4),
    neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
-   num1 = parsedNums.num1.num,
-   num2 = parsedNums.num2.num;
-  // Concept for v3 found
+   num1 = parsedNums.num1,
+   num2 = parsedNums.num2,
+   num, final;
+  log(num1, num2);
+  num = sub(num1, num2), final = "1";
+  while (isLessThanEqual(num2, num)) {
+   num = sub(num, num2), final = add(final, {
+    num: ["1"],
+    isNeg: false,
+    decimals: 0
+   });
+   log(num)
+  }
+  return final;
  }
  var permfinal, maxDecimal, a = clone(arguments);
  if (Array.isArray(a[0])) maxDecimal = a[1], a = a[0];
