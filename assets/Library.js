@@ -321,7 +321,6 @@ function div() {
    num1 = parsedNums.num1,
    num2 = parsedNums.num2,
    num, final;
-  log(num1, num2);
   num = sub(num1, num2), final = "1";
   while (isLessThanEqual(num2, num)) {
    num = sub(num, num2), final = add(final, {
