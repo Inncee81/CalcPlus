@@ -32,15 +32,11 @@ function loadOptions(){
         ]);
     }
 
-    navigator.serviceWorker.getRegistration().then(registration =>{ if(!registration) isOffline.set("Off"); });
-    if (isOffline.me() == "Off") {
-        if ('serviceWorker' in navigator) navigator.serviceWorker.register($("*index").me() == "On" ? "sw.min.js":"../sw.min.js").then(() => { isOffline.set("On"); });
-        else if (alerted.me() == "Off") {
-            alert("Service Workers aren't supported by your browser.\nSwitch to another browser like Chrome, or update your browser.");
-            alerted.set("On");
-        }
-    }
-    if (isConsole.me() == "On") {
+    try { 
+		navigator.serviceWorker.getRegistration().then(registration => {if(!registration) isOffline.set("Off");});
+		if (isOffline.me() == "Off") if ('serviceWorker' in navigator) navigator.serviceWorker.register($("*index").me() == "On" ? "sw.min.js":"../sw.min.js").then(() => isOffline.set("On"));
+    } catch(e) {console.error(e);}
+	if (isConsole.me() == "On") {
         var c = document.querySelector(".console");
         console.log = (...args) => args.forEach(m => {
             try { c.appendChild(document.createTextNode(`\n ${m}`)); } catch(err) {}
@@ -65,4 +61,4 @@ function loadOptions(){
         window.onerror=(e,s,l,c)=>console.error(`${e} at: ${s} : ${l}:${c}`);
     }
 }
-window.addEventListener("load", ()=>loadOptions());
+window.addEventListener("load", loadOptions());

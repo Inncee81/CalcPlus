@@ -1,35 +1,35 @@
 /* Copyright 2019 Eric Michael Veilleux
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0*/
-function cpQuery(query) {
-	query = query.toString();
-
-	var select = () => document.querySelector(query);
-	var create = () => document.createElement(query);
-
-	var css = {
-		append: function(index, item) {
+function cpQuery(q) {
+	var select = () => document.querySelector(query), create = () => document.createElement(query);
+	function css() {
+		function append(index, item) {
 			var sheet = document.styleSheets[index];
 			sheet.insertRule(item, sheet.cssRules.length);
-		},
-		replace: function(index, item) {
+		}
+		function replace(index, item) {
 			var sheet = document.styleSheets[index];
 			for (var i=0; i<sheet.cssRules.length; i++) sheet.deleteRule(i);
 			sheet.insertRule(item, sheet.cssRules.length);
-		},
-		delete: function(index, index2) {
+		}
+		function remove(index, index2) {
 			document.styleSheets[index].deleteRule(index2);
-		},
-		replaceWithAll: function(index, items) {
+		}
+		function replaceWithAll(index, items) {
 			var sheet = document.styleSheets[index];
 			for (var i=0; i<sheet.cssRules.length; i++) sheet.deleteRule(i);
 			for (var i=0; i<items.length; i++) sheet.insertRule(items[i], sheet.cssRules.length);
 		}
-	};
+		return {
+			append: append,
+			replace: replace,
+			remove: remove,
+			replaceWithAll: replaceWithAll
+		}
+	}
 
-	var element;
-	var local = false;
-	var session = false;
+	var element, local = false, session = false;
 	query = query.split("#");
 	if (query.length == 2) {
 		query = query[1];
@@ -54,55 +54,80 @@ function cpQuery(query) {
 		}
 	}
 
-	var checked = function(value) {
+	function checked(value) {
 		if (value == undefined) return element.checked;
 		element.checked = value;
 	}
 
-	var click = code => element.addEventListener("click", code);
-	var val = () => element.value;
+	function click(code) {
+		element.addEventListener("click", code);
+	}
+	
+	function val() {
+		return element.value;
+	}
 
-	var me = function() {
+	function me() {
 		if (local) return localStorage.getItem(query);
 		else if (session) return sessionStorage.getItem(query);
 		return element;
 	}
 
-	var set = function(item) {
+	function set(item) {
 		if (local) localStorage.setItem(query, item);
 		else if (session) sessionStorage.setItem(query, item);
 	}
 
-	var remove = () => {element.remove()};
+	function remove() {
+		element.remove();
+	}
 
-	var html = {
-		append: function(item) {
+	function html() {
+		function append(item) {
 			element.innerHTML += item;
-		},
-		replace: function(item) {
+		}
+		
+		function replace(item) {
 			element.innerHTML = item;
 		}
-	};
+		return {
+			append: append,
+			replace: replace,
+		}
+	}
 
-	var text = {
-		append: function(item) {
+	function text() {
+		function append(item) {
 			element.textContent += item;
-		},
-		replace: function(item) {
+		}
+		
+		function replace(item) {
 			element.textContent = item;
 		}
-	};
+		return {
+			append: append,
+			replace: replace
+		}
+	}
 
 	return {
 		select: select,
 		create: create,
-		css: css,
+		css: {
+			append: css.append,
+			replace: css.replace,
+			remove: css.remove,
+			replaceWithAll: css.replaceWithAll
+		},
 		checked: checked,
 		click: click,
 		val: val,
 		me: me,
 		set: set,
-		html: html,
+		html: {
+			append: html.append,
+			replace: html.replace,
+		},
 		text: text,
 		remove: remove
 	}
