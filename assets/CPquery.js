@@ -9,26 +9,26 @@ function cpQuery(query) {
 	}
 	
 	function css() {
-		return document.styleSheets[query];
+		this.sheet = document.styleSheets[query];
 	}
 	
-	css.prototype.append = function(this, item) {
-		this.insertRule(item, sheet.cssRules.length);
+	css.prototype.append = function(item) {
+		this.sheet.insertRule(item, this.sheet.cssRules.length);
 	};
 	
-	css.prototype.remove = function(this, item)  {
-		this.deleteRule(item);
+	css.prototype.remove = function(item)  {
+		this.sheet.deleteRule(item);
 	};
 	
-	css.prototype.replaceWithAll = function(this) {
+	css.prototype.replaceWithAll = function() {
 		var items = arguments.shift();
-		for (var i=0; i<this.cssRules.length; i++) this.deleteRule(i);
-		for (var i=0; i<items.length; i++) this.insertRule(items[i], this.cssRules.length);
+		for (var i=0; i<this.cssRules.length; i++) this.sheet.deleteRule(i);
+		for (var i=0; i<items.length; i++) this.sheet.insertRule(items[i], this.sheet.cssRules.length);
 	};
 	
 	css.prototype.replace = function(item) {
-		for (var i=0; i<sheet.cssRules.length; i++) sheet.deleteRule(i);
-		sheet.insertRule(item, sheet.cssRules.length);
+		for (var i=0; i<this.sheet.cssRules.length; i++) this.sheet.deleteRule(i);
+		this.sheet.insertRule(item, this.sheet.cssRules.length);
 	};
 
 	if (typeof query == "string") {
