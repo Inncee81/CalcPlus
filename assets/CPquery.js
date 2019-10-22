@@ -21,9 +21,8 @@ function cpQuery(query) {
 	};
 	
 	css.prototype.replaceWithAll = function() {
-		var items = arguments.shift();
-		for (var i=0; i<this.cssRules.length; i++) this.sheet.deleteRule(i);
-		for (var i=0; i<items.length; i++) this.sheet.insertRule(items[i], this.sheet.cssRules.length);
+		for (var i=1; i<this.cssRules.length; i++) this.sheet.deleteRule(i);
+		for (var i=1; i<arguments.length; i++) this.sheet.insertRule(arguments[i], this.sheet.cssRules.length);
 	};
 	
 	css.prototype.replace = function(item) {
