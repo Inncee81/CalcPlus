@@ -86,32 +86,24 @@ function cpQuery(query) {
 		element.remove();
 	}
 
-	function html() {
-		function append(item) {
-			element.innerHTML += item;
-		}
-		
-		function replace(item) {
-			element.innerHTML = item;
-		}
-		return {
-			append: append,
-			replace: replace,
-		}
+	function html() {}
+	
+	html.prototype.append = function(item) {
+		element.innerHTML += item;
 	}
 
-	function text() {
-		function append(item) {
-			element.textContent += item;
-		}
-		
-		function replace(item) {
-			element.textContent = item;
-		}
-		return {
-			append: append,
-			replace: replace
-		}
+	html.prototype.replace = function(item) {
+		element.innerHTML = item;
+	}
+
+	function text() {}
+	
+	text.prototype.append = function(item) {
+		element.textContent += item;
+	}
+
+	text.prototype.replace = function(item) {
+		element.textContent = item;
 	}
 
 	return {
@@ -123,11 +115,8 @@ function cpQuery(query) {
 		val: val,
 		me: me,
 		set: set,
-		html: {
-			append: html.append,
-			replace: html.replace,
-		},
-		text: text,
+		html: new html(),
+		text: new text(),
 		remove: remove
 	}
 }
