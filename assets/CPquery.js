@@ -21,8 +21,8 @@ function cpQuery(query) {
 	};
 	
 	css.prototype.replaceWithAll = function() {
-		for (var i=1; i<this.cssRules.length; i++) this.sheet.deleteRule(i);
-		for (var i=1; i<arguments.length; i++) this.sheet.insertRule(arguments[i], this.sheet.cssRules.length);
+		for (var i=0; i<this.sheet.cssRules.length; i++) this.sheet.deleteRule(i);
+		for (var i=0; i<arguments.length; i++) this.sheet.insertRule(arguments[i], this.sheet.cssRules.length);
 	};
 	
 	css.prototype.replace = function(item) {
@@ -30,28 +30,31 @@ function cpQuery(query) {
 		this.sheet.insertRule(item, this.sheet.cssRules.length);
 	};
 
+	var element, local = false, session = false;
 	if (typeof query == "string") {
-		var element, local = false, session = false;
-		query = query.split("#");
-		if (query.length == 2) {
-			query = query[1];
-			element = document.getElementById(query);
-		} else {
-			query = query.toString().split(".");
+		if (["","body","document"].indexOf(query)>-1) element = document;
+		else {
+			query = query.split("#");
 			if (query.length == 2) {
 				query = query[1];
-				element = document.getElementsByClassName(query);
+				element = document.getElementById(query);
 			} else {
-				query = query.toString().split("@");
+				query = query.toString().split(".");
 				if (query.length == 2) {
 					query = query[1];
-					local = true;
+					element = document.getElementsByClassName(query);
 				} else {
-					query = query.toString().split("*");
+					query = query.toString().split("@");
 					if (query.length == 2) {
 						query = query[1];
-						session = true;
-					} else element = document.getElementsByTagName(query);
+						local = true;
+					} else {
+						query = query.toString().split("*");
+						if (query.length == 2) {
+							query = query[1];
+							session = true;
+						} else element = document.getElementsByTagName(query);
+					}
 				}
 			}
 		}
@@ -63,6 +66,7 @@ function cpQuery(query) {
 	}
 
 	function click(code) {
+		console.log(element);
 		element.addEventListener("click", code);
 	}
 	
@@ -79,10 +83,6 @@ function cpQuery(query) {
 	function set(item) {
 		if (local) localStorage.setItem(query, item);
 		else if (session) sessionStorage.setItem(query, item);
-	}
-
-	function remove() {
-		element.remove();
 	}
 
 	function html() {}
@@ -115,8 +115,7 @@ function cpQuery(query) {
 		me: me,
 		set: set,
 		html: new html(),
-		text: new text(),
-		remove: remove
+		text: new text()
 	}
 }
 
