@@ -1,5 +1,3 @@
-# About CalcPlus Library
-
 ## About
 
 This is a library that let's numbers be calculated up to:
@@ -10,7 +8,7 @@ This is a library that let's numbers be calculated up to:
 
 Please note that the JavaScript version of this Library is extremely RAM efficient. Only about 100 megabytes of free RAM is required for heavy tasks. The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. 
 
-Want to see this library in action? Just go [here](https://virxec.github.io/CalcPlus/PreviewLibrary)!
+Want to see this library in action? Just go [here](https://virxec.github.io/PreviewLibrary)!
 
 ## Advantages of using this library
 Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.)
@@ -24,7 +22,7 @@ For now, it only support JavaScipt. I have plans to eventually port it to Python
 
 JavaScript Library:<br>
 &#9;<a href="https://github.com/VirxEC/CalcPlus/releases">Latest stable beta</a><br>
-&#9;<a href="https://virxec.github.io/CalcPlus/assets/Library.js" download="Beta_UNSTALBLE-CalcPlus_Library.js">Latest unstable beta</a>
+&#9;<a href="https://virxec.github.io/assets/Library.js" download="Beta_UNSTALBLE-CalcPlus_Library.js">Latest unstable beta</a>
 
 ## What's the larget number this library can understand, written out?
 
