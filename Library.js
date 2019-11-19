@@ -298,36 +298,9 @@ function expo() {
  for (var i = 2; i < a.length; i++) permfinal = tempexpo(permfinal, a[i]);
  return permfinal;
 }
-
-function div() {
- function tempdiv(num1, num2) {
-  var parsedNums = parseNums(num1, num2, 4),
-   neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
-   num1 = parsedNums.num1,
-   num2 = parsedNums.num2,
-   num = sub(num1, num2),
-   final = "1";
-  while (isLessThanEqual(num2, num)) {
-   num = sub(num, num2), final = add(final, {
-    num: ["1"],
-    isNeg: false,
-    decimals: 0
-   });
-   log(num)
-  }
-  return final;
- }
- var permfinal, maxDecimal, a = clone(arguments);
- if (Array.isArray(a[0])) maxDecimal = a[1], a = a[0];
- else maxDecimal = a[2];
- permfinal = tempdiv(a[0], a[1], maxDecimal);
- for (var i = 2; i < a.length; i++) permfinal = tempdiv(permfinal, a[i], maxDecimal);
- return permfinal;
-}
 var a = add,
  s = sub,
  m = multi,
- d = div,
  e = expo,
  l = isLessThan,
  g = isGreaterThan,
