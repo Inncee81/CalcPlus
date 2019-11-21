@@ -23,8 +23,8 @@ For now, it only support JavaScript. I have plans to eventually port it to Pytho
 ## How do I install this library?
 
 JavaScript Library:<br>
-&#9;<a href="https://github.com/VirxEC/CalcPlus/releases">Latest stable beta</a><br>
-&#9;<a href="https://virxec.github.io/assets/Library.js" download="Beta_UNSTALBLE-CalcPlus_Library.js">Latest unstable beta</a>
+&#9;<a href="https://github.com/VirxEC/CalcPlus/releases">Latest beta</a><br>
+&#9;<a href="https://virxec.github.io/assets/Library.js" download="CalcPlus_Library_ALPHA.js">Latest alpha</a>
 
 ## What's the larget number this library can understand, written out?
 
