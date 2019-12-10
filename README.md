@@ -18,13 +18,13 @@ Normally, you can only calculate numbers on a 64-bit OS as long as the final res
 In most modern languages, when you go over the limit (we're using a 64-bit OS as an example) it just starts to lose it's precision. For example, to it, 18,446,744,073,709,551,621,573 is just 18,446,744,073,709,551,620,000. That's not the case with this library. The largest number this library can understand is written out at the bottom of this readme. Just remember what the normal limit is before you look at it.
 
 ## What coding languages does this library support?
-For now, it only support JavaScript. I have plans to eventually port it to Python 3.
+For now, it only supports JavaScript. I have plans to eventually port it to Python 3.
 
 ## How do I install this library?
 
 JavaScript Library:<br>
-&#9;<a href="https://github.com/VirxEC/CalcPlus/releases">Latest beta</a><br>
-&#9;<a href="https://virxec.github.io/assets/Library.js" download="CalcPlus_Library_ALPHA.js">Latest alpha</a>
+&#9;<a href="https://github.com/VirxEC/CalcPlus/releases">Download latest beta</a><br>
+&#9;<a href="https://virxec.github.io/assets/Library.js" download="CalcPlus_Library_ALPHA.js">Download latest alpha</a>
 
 ## What's the larget number this library can understand, written out?
 
