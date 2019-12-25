@@ -33,8 +33,8 @@ I can't put it here. It's WAY to big. If you want to get an idea of just how big
 ## Contact me!
   Visit meh [discord](http://invite.gg/virxec)
   
-  Email: virxgithub@gmail.com
+  Email: virx@virxcase.ga
   
   Or just leave a question in the issues tab, each will get about the same response time.
   
-  I'm in the EST timezone so check if I'm sleeping before raging that I'm not responding.
+  I'm in the EST timezone.
