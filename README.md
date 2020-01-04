@@ -4,9 +4,9 @@ This is a JavaScript Library that let's numbers be calculated up to:
 
   64 bit OS: 2<sup>64</sup>-1 digits <i><b>long</b></i>, or 10<sup>2<sup>64</sup></sup>-1.
   
-  32 bit OS: 2<sup>32</sup>-1 digits <i><b>long</b></i>, or 10<sup>2<sup>64</sup></sup>-1.
+  32 bit OS: 2<sup>32</sup>-1 digits <i><b>long</b></i>, or 10<sup>2<sup>32</sup></sup>-1.
 
-Please note that the JavaScript version of this Library is extremely RAM efficient. Only about 100 megabytes of free RAM is required for heavy tasks. The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. 
+Please note that the JavaScript version of this Library is extremely RAM efficient. Only about 100 megabytes of free RAM is required for the heaviest of tasks (measured by doing 10<sup>2<sup>64</sup></sup> and leaving it for 2 days). The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. This is a change from built-in systems in programming languages, which hog tons of RAM but are very CPU efficient.
 
 It is planned that once the JavaScript version is done, it will be ported to be a Python 3 Library.
 
