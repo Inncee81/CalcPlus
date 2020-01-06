@@ -28,7 +28,7 @@ JavaScript Library:<br>
 
 ## What's the larget number this library can understand, written out?
 
-I can't put it here. It's WAY to big. If you want to get an idea of just how big it is, go to the [one million digits of pi page](https://www.piday.org/million/) and try to get to the bottom. Then multiply the length of that page by trillions of trillions of times. That's why it can't be here. But it's also a really damn big number.
+I can't put it here. It's WAY to big. If you want to get an idea of just how big it is, go to the [one million digits of pi page](https://www.piday.org/million/) and try to get to the bottom. Then multiply the length of that page by trillions of trillions of times. That's why it can't be here, it's just a really damn big number.
 
 ## Contact me!
   Visit meh [discord](http://invite.gg/virxec)
