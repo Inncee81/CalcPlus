@@ -1,3 +1,10 @@
+## Navigation
+<a href="/PreviewLibrary/">Preview the CalcPlus Library</a><br>
+<a href="/LibrarySource/">CalcPlus Library Source Code</a><br>
+<a href="/CPQuerySource/">CPQuery Source Code</a><br>
+<a href="/CalcPlus/">About the CalcPlus Library</a><br>
+<a href="/Discord/">Join the Official Discord</a>
+
 ## About
 
 This is a JavaScript Library that let's numbers be calculated up to:
@@ -10,7 +17,7 @@ Please note that the JavaScript version of this Library is extremely RAM efficie
 
 It is planned that once the JavaScript version is done, it will be ported to be a Python 3 Library.
 
-Want to see this library in action? Just go [here](https://www.virxcase.ga/PreviewLibrary)!
+Want to see this library in action? Just go [here](https://www.virxcase.ga/PreviewLibrary/)!
 
 ## Advantages of using this library
 Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.) Or, if your language supports using more RAM to calculate huge numbers without losing precision, (like Python,) then the max number is 10<sup>custom_max_integer</sup>.
@@ -19,10 +26,12 @@ In most modern languages, when you go over the limit (we're using a 64-bit OS as
 
 ## How does CalcPlus work?
 In short, it does basic function like addition & subtraction like a human would - breaking it down, solving it column by column:
+<pre>
   302
 + 138
 -----
   420
+</pre>
 
 And from there, multiplication is just repeated addition, division is just repeated subtraction, exponents is just repeated multiplication, and that kind of thing. Of course, thing is very inefficient, so there are a number of opimizations to greatly speed up the process.
 
@@ -40,7 +49,7 @@ JavaScript Library:<br>
 I can't put it here. It's WAY to big. If you want to get an idea of just how big it is, go to the [one million digits of pi page](https://www.piday.org/million/) and try to get to the bottom. Then multiply the length of that page by trillions of trillions of times. That's why it can't be here, it's just a really damn big number.
 
 ## Contact me!
-  Visit meh [discord](http://invite.gg/virxec)
+  Visit meh [discord](https://www.virxcase.ga/Discord/)
   
   Email: virx@virxcase.ga
   
