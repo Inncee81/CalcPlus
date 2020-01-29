@@ -45,7 +45,7 @@ JavaScript Library:<br>
 &#9;<a href="https://www.virxcase.ga/assets/Library.js" download="CalcPlus_Library_ALPHA.js">Download latest alpha</a>
 
 NodeJS Library:
-`npm install calcplus`
+`npm install @virxec/calcplus@0.2.0`
 
 ## What's the larget number CalcPlus can understand, written out?
 
