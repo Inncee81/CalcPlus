@@ -41,11 +41,12 @@ For now, it only supports JavaScript. I have plans to eventually port it to Pyth
 ## Where do I get the CalcPlus library?
 
 JavaScript Library:<br>
-&#9;(OUTDATED, USE NODE)<a href="https://github.com/VirxEC/CalcPlus/releases">Download latest beta</a><br>
-&#9;<a href="https://www.virxcase.ga/assets/Library.js" download="CalcPlus_Library_ALPHA.js">Download latest alpha</a>
+&nbsp;&nbsp;<a href="https://github.com/VirxEC/CalcPlus/releases">Download latest beta</a><br>
+&nbsp;&nbsp;<a href="https://www.virxcase.ga/assets/Library.js" download="CalcPlus_Library_ALPHA.js">Download latest alpha</a><br>
+&nbsp;&nbsp;`<script src="https://www.virxcase.ga/assets/Library.js">/*Import latest alpha*/</script>`
 
-NodeJS Library:
-`npm install @virxec/calcplus@0.2.0`
+NodeJS Library:<br>
+&nbsp;&nbsp;`npm install @virxec/calcplus@0.2.0`
 
 ## What's the larget number CalcPlus can understand, written out?
 
