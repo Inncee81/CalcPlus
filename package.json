@@ -1,6 +1,6 @@
 {
   "name": "@virxec/calcplus",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision.",
   "main": "calcplus.js",
   "scripts": {
