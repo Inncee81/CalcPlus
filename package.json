@@ -1,0 +1,35 @@
+{
+  "name": "@virxec/calcplus",
+  "version": "0.1.2",
+  "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision.",
+  "main": "calcplus.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "library",
+    "precision",
+    "enchancement",
+    "calculator",
+    "efficient",
+    "calculate-numbers",
+    "instant",
+    "threshold",
+    "python",
+    "calcplus"
+  ],
+  "author": "Eric (VirxEC/Virx)",
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VirxEC/CalcPlus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VirxEC/CalcPlus/issues"
+  },
+  "homepage": "https://github.com/VirxEC/CalcPlus#readme"
+}
