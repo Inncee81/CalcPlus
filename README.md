@@ -46,7 +46,7 @@ JavaScript Library:<br>
 &nbsp;&nbsp;`<script src="https://www.virxcase.ga/assets/Library.js">/*Import latest alpha*/</script>`
 
 NodeJS Library:<br>
-&nbsp;&nbsp;`npm install @virxec/calcplus@0.2.0`
+&nbsp;&nbsp;`npm install @virxec/calcplus@0.2.1`
 
 ## What's the larget number CalcPlus can understand, written out?
 
