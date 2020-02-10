@@ -4,6 +4,7 @@
 <a href="/CPQuerySource/">CPQuery Source Code</a><br>
 <a href="/CalcPlus/">About the CalcPlus Library</a><br>
 <a href="/Discord/">Join the Official Discord</a>
+<a href="https://repl.it/github/VirxEC/CalcPlus">Test latest Node on Repl.it</a>
 
 ## About
 
