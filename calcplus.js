@@ -10,7 +10,8 @@
 var powermode = false, // Feel free to change this, or use togglePowerMode();
   checks = true, // Feel free to change this, or use toggleAntiCheck();
   maxNumber = Number.MAX_SAFE_INTEGER, // Feel free to change this, or use setMaxSafeInteger(maxSafeInteger);
-  minNumber = Number.MIN_SAFE_INTEGER; // Feel free to change this, but it doesn't do anything right now
+  minNumber = Number.MIN_SAFE_INTEGER, // Feel free to change this, but it doesn't do anything right now
+  maxDecimal = maxNumber; // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 console.varinfo = (v, x = Object.keys(v)[0]) => console.log(x,JSON.stringify(v[x])); // For debugging, this isn't exported
 
 const Define = class {
@@ -137,13 +138,15 @@ function parseNums(num1, num2, mode) {
       if (num[2][i] > num[1][i]) neg[0] = true;
     if (mode == 2 && num[2].length - decimal[2] == maxChar && num[1].length - decimal[1] != maxChar) neg[0] = true;
     if (maxChar == num[2].length && mode == 3) num[1] = [num[2], num[2] = num[1]][0];
+    
     if (decimal[1] != decimal[2] && [1, 2].includes(mode)) {
       if (decimal[1] == decimal[0])
         for (let i = 0; i < decimal[1] - decimal[2]; i++) num[2].push("0");
       else if (decimal[2] == decimal[0])
         for (let i = 0; i < decimal[2] - decimal[1]; i++) num[1].push("0");
     }
-    if (num[1].length != num[2].length && [1, 2].includes(mode)) {
+
+    if (num[1].length != num[2].length && [1, 2, 4].includes(mode)) {
       while (num[1].length - num[2].length > 0) num[2].unshift("0");
       while (num[2].length - num[1].length > 0) num[1].unshift("0");
     }
@@ -152,7 +155,7 @@ function parseNums(num1, num2, mode) {
       if (num[1][i] < num[2][i]) neg[0] = true;
   }
   if ([3, 4].includes(mode) && neg[1] && neg[2]) neg[0] = false;
-  if (mode == 3) neg[1] = false, neg[2] = false;
+  if ([3, 4].includes(mode)) neg[1] = false, neg[2] = false;
   for (let i = 0; mode == 4 && i < num[2].length; i++) {
     num[1].push("0");
     decimal[0]++;
@@ -186,23 +189,29 @@ function formatNums(final, decimals, neg, array = true, reverse = true) {
 }
 
 function toggleAntiCheck() {
-  if (checks) console.info("Enabled Anti-Check. This disables all input checks to save computer resources.", "To disable checks forever, change the second variable on the line 8 to 'false' in the program file. It will bypass these messages.", "Anti-Check may have unintended concequences.");
+  if (checks) console.info("Enabled Anti-Check. This disables all input checks to save computer resources.", "To disable checks forever, change the variable on the line 11 to 'false' in the program file. It will bypass these messages.", "Anti-Check may have unintended concequences.");
   else console.info("Disabled Anti-Check.", "For large tasks, noticably more computer resources may be needed.");
   checks = !checks;
 }
 
 function togglePowerMode() {
   if (!powermode) console.info("Disabled power mode. Recommended for debugging only.");
-  else console.info(`Enabled power mode. This will make it so the library will only activate if the sum/difference is over maxNumber (${maxNumber}).`, "To enable power mode forever, change the first variable on line 7 to true.");
+  else console.info(`Enabled power mode. This will make it so the library will only activate if the sum/difference is over maxNumber (${maxNumber}).`, "To enable power mode forever, change the first variable on line 10 to true.");
   powermode = !powermode;
 }
 
-function setMaxSafeInteger(number) {
+function setMaxSafeInteger(maxSafeInteger) {
   if (powermode) {
-    if (number == "default") maxNumber = Number.MAX_SAFE_INTEGER, minNumber = Number.MIN_SAFE_INTEGER;
-    else maxNumber = number, minNumber = number * -1;
-    console.info(`To set the max safe number back to the default value of ${maxNumber}, do setMaxSafeInteger('default');`, "To change the value forever, change the variable on line 9.");
+    if (maxSafeInteger == "default") maxNumber = Number.MAX_SAFE_INTEGER, minNumber = Number.MIN_SAFE_INTEGER;
+    else maxNumber = maxSafeInteger, minNumber = maxSafeInteger * -1;
+    console.info(`To set the max safe number back to the default value of ${Number.MAX_SAFE_INTEGER}, do setMaxSafeInteger('default');`, "To change the value forever, change the variable on lines 12 (maximum) & 13 (minimum).");
   } else console.warn("You must turn on Power Mode before you can set the max safe number.");
+}
+
+function setMaxDecimalLength(maxDecimalLength) {
+  if (maxDecimalLength == "default") maxDecimal = maxNumber;
+  else maxDecimal = maxDecimalLength;
+  console.info(`To set the max decimal length back to the default value of ${maxNumber}, do setMaxDecimalLength('default');`, "To change teh value forever, change the variable on line 14.");
 }
 
 function shouldRun(num1, num2) {
@@ -464,8 +473,58 @@ function multi() {
   return permfinal;
 }
 
+function div() {
+  let tempdiv = function(num1, num2, maxD, i, getDec) {
+    if (!powermode || (powermode && shouldRun(num1, num2))) {
+      if (checks) checkNumberString([num1, num2]);
+      let parsedNums = parseNums(num1, num2, 4),
+        neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
+        num = [parsedNums.num1, parsedNums.num2],
+        decimals = {...parsedNums}.decimals,
+        final = "0";
+      if (num[0] == "0") return "0";
+      if (isLessThanEqual(num[1], num[0])) while (isLessThanEqual(num[1], num[0])) num[0] = sub(num[0], num[1]), final = add(final, predefone);
+      else final = "0";
+      if (maxD > decimals && !isLessThanEqual(num[1], num[0]) && num[0] != "0" && sub(num[0], num[1]) != "0") {
+        if (num[0] != "0") num[0] = num[0]+"0";
+        if (num[1].num[0] != "0" && num[1].length != 1) num[1].num.push("0");
+        final = final.split("").reverse().join("");
+        if (!i) i = 1;
+        else i++;
+        decimals++;
+        decimal = tempdiv(num[0], num[1], maxD-decimals, i, true);
+        decimals += decimal.decimal - parsedNums.decimals;
+        decimal = decimal.final.replace(".", ""); // .replace(/^0/g, "");
+        for(let j = 0; j < i; j++) decimal += "0";
+        // console.varinfo({final});
+        // console.varinfo({add:add(final, decimal).split("")});
+        final = add(final, decimal).split("");
+      } else {
+        final = final.split("");
+      }
+      console.varinfo({decimals})
+      // if (i == 1) decimals++; 
+      while (decimals > final.length) final.push("0");
+      final = formatNums(final, decimals, neg);
+      return getDec ? { final, decimal:decimals } : final;
+    } else {
+      if (checks) {
+        checkNumberString(num1);
+        checkNumberString(num2);
+      }
+      return String(num1.getNumber() / num2.getNumber());
+    }
+  };
+  let a = [...arguments];
+  if (Array.isArray(a[0])) a = a[0];
+  let maxD = typeof a[a.length-1] == "number" ? a[a.length-1] : maxDecimal,
+    permfinal = tempdiv(a[0], a[1], maxD);
+  for (let i = 2; i < a.length-1; i++) permfinal = tempdiv(permfinal, a[i], maxD);
+  return permfinal;
+}
+
 function expo() {
-  let tempexpo = function(num1, num2) {
+  let tempexpo = function(num1, num2, maxD) {
     if (!powermode || (powermode && shouldRun(num1, num2))) {
       if (checks) checkNumberString([num1, num2]);
       let parsedNums = parseNums(num1, num2, 5),
@@ -478,10 +537,9 @@ function expo() {
         // root_of_decimal2*10(num1)**(num2*(10*decimal2))
         throw new TypeError("Decimal exponents aren't supported yet");
       } else {
-        if (neg[1]) num[1].num.unshift("-");
-        if (neg[2]) return div("1", tempexpo(num[1], num[2].set("isNeg", false)));
-        else if (num[2].num.length == 1 && num[2].num[0] == "1") return formatNums(num[1].num, decimals[0], false, true, false);
-        else if ((num[2].num.length == 1 && num[2].num[0] == "0") || (num[1].num.length == 1 && num[1].num[0] == "1")) return "1";
+        if (num[2].num.length == 1 && num[2].num[0] == "1" && !neg[2]) return formatNums(num[1].num, decimals[0], false, true, false);
+        else if ((num[2].num.length == 1 && num[2].num[0] == "0") || (num[1].num.length == 1 && num[1].num[0] == "1" && !neg[1])) return "1";
+        else if (neg[2]) return div("1", tempexpo(num[1], num[2].set("isNeg", false), maxD));
         else {
           if (num[1].num[0] == "-") num[1].num.shift();
           final = multi(num[1], num[1]);
@@ -497,44 +555,21 @@ function expo() {
       return String(num1.getNumber() ** num2.getNumber());
     }
   };
-  let permfinal, a = [...arguments];
+  let a = [...arguments];
   if (Array.isArray(a[0])) a = a[0];
-  permfinal = tempexpo(a[0], a[1]);
-  for (let i = 2; i < a.length; i++) permfinal = tempexpo(permfinal, a[i]);
+  let maxD = typeof a[a.length-1] == "number" ? a[a.length-1] : maxDecimal,
+    permfinal = tempexpo(a[0], a[1]);
+  for (let i = 2; i < a.length; i++) permfinal = tempexpo(permfinal, a[i], maxD);
   return permfinal;
 }
 
-function div() {
-  let tempdiv = function(num1, num2) {
-    if (!powermode || (powermode && shouldRun(num1, num2))) {
-      if (checks) checkNumberString([num1, num2]);
-      let parsedNums = parseNums(num1, num2, 4),
-        neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
-        num = [parsedNums.num1, parsedNums.num2],
-        decimals = parsedNums.decimals,
-        final = "0";
-      while (isLessThanEqual(num[1], num[0])) {
-        num[0] = sub(num[0], num[1]), final = add(final, predefone);
-      }
-      console.varinfo({final})
-      while (decimals > final.length) final += "0";
-      console.log(formatNums(final.split(""), decimals, neg).length)
-      return formatNums(final.split(""), decimals, neg);
-    } else {
-      if (checks) {
-        checkNumberString(num1);
-        checkNumberString(num2);
-      }
-      return String(num1.getNumber() / num2.getNumber());
-    }
-  };
-  let permfinal, maxDecimal, a = [...arguments];
-  if (Array.isArray(a[0])) maxDecimal = a[1], a = a[0];
-  else maxDecimal = a[2];
-  permfinal = tempdiv(a[0], a[1], maxDecimal);
-  for (let i = 2; i < a.length; i++) permfinal = tempdiv(permfinal, a[i], maxDecimal);
-  return permfinal;
-}
+console.varinfo({ANSWER:expo("2", "2")});
+console.varinfo({ANSWER:expo("2", "1")});
+console.varinfo({ANSWER:expo("2", "0")});
+console.varinfo({ANSWER:expo("2", "-1")});
+console.varinfo({ANSWER:expo("2", "-2")});
+console.varinfo({ANSWER:expo("2", "-3")});
+console.varinfo({ANSWER:expo("2", "-4")});
 
 function fact() {
   let a = [...arguments][0];
@@ -545,7 +580,6 @@ function fact() {
   let tempfact = (n, a) => isLessThan(n, "0") ? tempfact(add(n, predefone), multi(n, a)) : n == "0" ? a : tempfact(sub(n, predefone), multi(n, a));
   return tempfact(a, predefone);
 }
-console.log(fact("5"))
 
 function calcplus_info() {
   return {
@@ -557,6 +591,13 @@ function calcplus_info() {
 }
 
 module.exports = {
+  subtract: sub, // NEW
+  multiply: multi, // NEW
+  divide: div, // NEW
+  exponent: expo, // NEW
+  factorial: fact, // NEW
+  ceil: roundUp, // NEW
+  floor: roundDown, // NEW
   a: add,
   s: sub,
   m: multi,
@@ -585,6 +626,7 @@ module.exports = {
   roundDown,
   calcplus_info,
   setMaxSafeInteger,
+  setMaxDecimalLength, // NEW
   toggleAntiCheck,
   togglePowerMode,
   Define

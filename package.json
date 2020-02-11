@@ -4,7 +4,7 @@
   "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision",
   "main": "calcplus.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "calcplus": "node -e 'require(\"./calcplus.js\")'"
   },
   "keywords": [
     "javascript",

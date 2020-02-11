@@ -1,2 +1,2 @@
 language = "nodejs"
-run = "node -e 'require(\"./calcplus.js\")'"
+run = "npm run calcplus"
