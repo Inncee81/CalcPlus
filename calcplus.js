@@ -5,7 +5,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License
  * 
- * This is the NodeJS/ModuleJS release of https://github.com/VirxEC/CalcPlus
+ * This is the NodeJS/ModuleJS release of https://github.com/VirxEC/CalcPlus and https://www.virxcase.ga
  */
 var powermode = false, // Feel free to change this, or use togglePowerMode();
   checks = true, // Feel free to change this, or use toggleAntiCheck();
@@ -572,13 +572,7 @@ console.varinfo({ANSWER:expo("2", "-3")});
 console.varinfo({ANSWER:expo("2", "-4")});
 
 function fact() {
-  let a = [...arguments][0];
-  if (checks) {
-    checkNumberString(a)
-    if (a.split(".").length > 1) throw new TypeError("The function fact() (or f()) doesn't support decimal inputs");
-  }
-  let tempfact = (n, a) => isLessThan(n, "0") ? tempfact(add(n, predefone), multi(n, a)) : n == "0" ? a : tempfact(sub(n, predefone), multi(n, a));
-  return tempfact(a, predefone);
+  return num < 0 ? predefone.set("isNeg", true) : num == 0 ? predefone : multi(num, fact(sub(num, predefone)));
 }
 
 function calcplus_info() {
@@ -586,7 +580,7 @@ function calcplus_info() {
     name: "CalcPlus Beta Library",
     major: 0,
     minor: 4,
-    bugFix: 0
+    bugFix: 1
   };
 }
 
