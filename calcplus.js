@@ -572,6 +572,7 @@ console.varinfo({ANSWER:expo("2", "-3")});
 console.varinfo({ANSWER:expo("2", "-4")});
 
 function fact() {
+  let num = [...arguments][0];
   return num < 0 ? predefone.set("isNeg", true) : num == 0 ? predefone : multi(num, fact(sub(num, predefone)));
 }
 
