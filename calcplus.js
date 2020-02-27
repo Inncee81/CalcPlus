@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Eric (VirxEC/Virx) Michael Veilleux
+ * Copyright 2019-2020 Eric (VirxEC/Virx) Michael Veilleux
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -12,7 +12,7 @@ var powermode = false, // Feel free to change this, or use togglePowerMode();
   maxNumber = Number.MAX_SAFE_INTEGER, // Feel free to change this, or use setMaxSafeInteger(maxSafeInteger);
   minNumber = Number.MIN_SAFE_INTEGER, // Feel free to change this, but it doesn't do anything right now
   maxDecimal = maxNumber; // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
-console.varinfo = (v, x = Object.keys(v)[0]) => console.log(x,JSON.stringify(v[x])); // For debugging, this isn't exported
+// console.varinfo = (v, x = Object.keys(v)[0]) => console.log(x,JSON.stringify(v[x])); // For debugging, this isn't exported
 
 const Define = class {
   constructor(num, isNeg, decimals) {
@@ -562,14 +562,6 @@ function expo() {
   for (let i = 2; i < a.length; i++) permfinal = tempexpo(permfinal, a[i], maxD);
   return permfinal;
 }
-
-console.varinfo({ANSWER:expo("2", "2")});
-console.varinfo({ANSWER:expo("2", "1")});
-console.varinfo({ANSWER:expo("2", "0")});
-console.varinfo({ANSWER:expo("2", "-1")});
-console.varinfo({ANSWER:expo("2", "-2")});
-console.varinfo({ANSWER:expo("2", "-3")});
-console.varinfo({ANSWER:expo("2", "-4")});
 
 function fact() {
   let num = [...arguments][0];

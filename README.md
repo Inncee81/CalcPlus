@@ -1,10 +1,7 @@
 ## Navigation
-<a href="/PreviewLibrary/">Preview the CalcPlus Library</a><br>
-<a href="/LibrarySource/">CalcPlus Library Source Code</a><br>
-<a href="/CPQuerySource/">CPQuery Source Code</a><br>
-<a href="/CalcPlus/">About the CalcPlus Library</a><br>
-<a href="/Discord/">Join the Official Discord</a>
-<a href="https://repl.it/github/VirxEC/CalcPlus">Test latest Node on Repl.it</a>
+<a href="https://www.virxcase.ga/Pages/CP-P">Preview the CalcPlus Library</a><br>
+<a href="https://www.virxcase.ga/Pages/CP-S">CalcPlus Library Source Code</a><br>
+<a href="https://repl.it/github/VirxEC/CalcPlus">Test latest Node.js version on Repl.it</a>
 
 ## About
 
@@ -43,8 +40,8 @@ For now, it only supports JavaScript. I have plans to eventually port it to Pyth
 
 JavaScript Library:<br>
 &nbsp;&nbsp;<a href="https://github.com/VirxEC/CalcPlus/releases">Download latest beta</a><br>
-&nbsp;&nbsp;<a href="https://www.virxcase.ga/assets/Library.js" download="CalcPlus_Library_ALPHA.js">Download latest alpha</a><br>
-&nbsp;&nbsp;`<script src="https://www.virxcase.ga/assets/Library.js">/*Import latest alpha*/</script>`
+&nbsp;&nbsp;<a href="https://www.virxcase.ga/CalcPlus/Library.js" download="CalcPlus_Library_ALPHA.js">Download latest alpha</a><br>
+&nbsp;&nbsp;`<script src="https://www.virxcase.ga/CalcPlus/Library.js">/*Import latest alpha*/</script>`
 
 NodeJS Library:<br>
 &nbsp;&nbsp;`npm install @virxec/calcplus@0.4.0`
