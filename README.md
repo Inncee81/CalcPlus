@@ -51,7 +51,7 @@ NodeJS Library:<br>
 I can't put it here. It's WAY to big. If you want to get an idea of just how big it is, go to the [one million digits of pi page](https://www.piday.org/million/) and try to get to the bottom. Then multiply the length of that page by trillions of trillions of times. That's why it can't be here, it's just a really damn big number.
 
 ## Contact me!
-  Visit meh [discord](https://www.virxcase.ga/Discord/)
+  Visit meh [discord](https://discord.gg/538CZWf)
   
   Email: <a href="mailto:virx@virxcase.ga">virx@virxcase.ga</a>
   
