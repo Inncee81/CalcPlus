@@ -15,7 +15,7 @@ Please note that the JavaScript version of this Library is extremely RAM efficie
 
 It is planned that once the JavaScript version is done, it will be ported to be a Python 3 Library.
 
-Want to see this library in action? Just go [here](https://www.virxcase.ga/PreviewLibrary/)!
+Want to see this library in action? Just go [here](https://www.virxcase.ga/Pages/CP-P)!
 
 ## Advantages of using this library
 Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.) Or, if your language supports using more RAM to calculate huge numbers without losing precision, (like Python,) then the max number is 10<sup>custom_max_integer</sup>-1.
@@ -44,7 +44,7 @@ JavaScript Library:<br>
 &nbsp;&nbsp;`<script src="https://www.virxcase.ga/CalcPlus/Library.js">/*Import latest alpha*/</script>`
 
 NodeJS Library:<br>
-&nbsp;&nbsp;`npm install @virxec/calcplus@0.4.0`
+&nbsp;&nbsp;`npm install @virxec/calcplus@0.4.1`
 
 ## What's the larget number CalcPlus can understand, written out?
 
