@@ -1,6 +1,6 @@
 ## Navigation
-<a href="https://www.virxcase.ga/Pages/CP-P">Preview the CalcPlus Library</a><br>
-<a href="https://www.virxcase.ga/Pages/CP-S">CalcPlus Library Source Code</a><br>
+<a href="https://www.virxcase.ga/CP-P">Preview the CalcPlus Library</a><br>
+<a href="https://www.virxcase.ga/CP-S">CalcPlus Library Source Code</a><br>
 <a href="https://repl.it/github/VirxEC/CalcPlus">Test latest Node.js version on Repl.it</a>
 
 ## About
