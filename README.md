@@ -1,6 +1,7 @@
 ## Navigation
-<a href="https://www.virxcase.ga/Pages/CP-P">Preview the CalcPlus Library</a><br>
-<a href="https://www.virxcase.ga/Pages/CP-S">CalcPlus Library Source Code</a><br>
+<a href="https://www.virxcase.ga">VirxEC Showcase</a><br>
+<a href="https://www.virxcase.ga/CP-P">Preview the CalcPlus Library</a><br>
+<a href="https://www.virxcase.ga/CP-S">CalcPlus Library Source Code</a><br>
 <a href="https://repl.it/github/VirxEC/CalcPlus">Test latest Node.js version on Repl.it</a>
 
 ## About
@@ -34,7 +35,7 @@ In short, it does basic function like addition & subtraction like a human would 
 And from there, multiplication is just repeated addition, division is just repeated subtraction, exponents is just repeated multiplication, and that kind of thing. Of course, thing is very inefficient, so there are a number of opimizations to greatly speed up the process.
 
 ## What coding languages does CalcPlus support?
-For now, it only supports JavaScript. I have plans to eventually port it to Python 3, and then from there who knows where.
+For now, it only supports JavaScript/NodeJS. I have plans to eventually port it to Python 3, and then from there who knows where.
 
 ## Where do I get the CalcPlus library?
 
