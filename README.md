@@ -1,6 +1,6 @@
 ## Navigation
 <a href="https://www.virxcase.ga">VirxEC Showcase</a><br>
-<a href="https://www.virxcase.ga/CP-P">Preview the CalcPlus Library</a><br>
+<a href="https://www.virxcase.ga/CP-P">Preview the CalcPlus JavaScript Library</a><br>
 <a href="https://www.virxcase.ga/CP-S">CalcPlus Library Source Code</a><br>
 <a href="https://repl.it/github/VirxEC/CalcPlus">Test latest Node.js version on Repl.it</a>
 
@@ -21,7 +21,7 @@ Want to see this library in action? Just go [here](https://www.virxcase.ga/Pages
 ## Advantages of using this library
 Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.) Or, if your language supports using more RAM to calculate huge numbers without losing precision, (like Python,) then the max number is 10<sup>custom_max_integer</sup>-1.
 
-In most modern languages, when you go over the limit (we're using a 64-bit OS as an example) it just starts to lose it's precision. For example, to it, 18,446,744,073,709,551,621,573 is just 18,446,744,073,709,551,620,000. That's not the case with this library. Now, you might work in some languages like Python where your language is magically able to calculate huge numbers in an instant without losing precision. However, these languages are tricking you: the larger the number gets, the more RAM it takes. With JavaScript, this hasn't been implemented yet, so this program is still extremely viable. However, even when this comes to JavaScript, it won't matter. There's a feature in CalcPlus that lets you set a threshold. Above x number, the library will kick in, saving your RAM & instead using your CPU. Don't worry, though - If you're using a high threshold and you do something like 10<sup>2<sup>64</sup></sup>, it won't have to start from the beginning. It will instantly caclulate 2<sup>64</sup> with the language (using a bit of RAM) and from there multiply 18,446,744,073,709,551,616 by itself ten times (because it's faster than multiplying ten by itself 18,446,744,073,709,551,616 times, and 2<sup>4</sup> = 4<sup>2</sup>.) If your threshold is double 2<sup>64</sup>, or 2<sup>65</sup>, then it will multiply 18,446,744,073,709,551,616 by 18,446,744,073,709,551,616 and then the algorithm will kick in - even then, the threshold will continue to speed up the process, but it's a little more complicated and I don't feel like explaining. In short, in languages that increase the max number by using up more RAM, setting the threshold is like striking the perfect balance between how much RAM you want to use, and and letting the CPU take over for the missing RAM that's need.
+In most modern languages, when you go over the limit (we're using a 64-bit OS as an example) it just starts to lose it's precision. For example, to it, 18,446,744,073,709,551,621,573 is just 18,446,744,073,709,551,620,000. That's not the case with this library. Now, you might work in some languages like Python where your language is magically able to calculate huge numbers in an instant without losing precision. However, these languages are tricking you: the larger the number gets, the more RAM it takes. With JavaScript, this hasn't been implemented yet, so this program is still extremely viable. However, even when this comes to JavaScript, it won't matter. There's a feature in CalcPlus that lets you set a threshold. Above x number, the library will kick in, saving your RAM & instead of using your CPU. Don't worry, though - If you're using a high threshold and you do something like 10<sup>2<sup>64</sup></sup>, it won't have to start from the beginning. It will instantly calculate 2<sup>64</sup> with the language (using a bit of RAM) and from there multiply 18,446,744,073,709,551,616 by itself ten times (because it's faster than multiplying ten by itself 18,446,744,073,709,551,616 times, and 2<sup>4</sup> = 4<sup>2</sup>.) If your threshold is double 2<sup>64</sup>, or 2<sup>65</sup>, then it will multiply 18,446,744,073,709,551,616 by 18,446,744,073,709,551,616 and then the algorithm will kick in - even then, the threshold will continue to speed up the process, but it's a little more complicated and I don't feel like explaining. In short, in languages that increase the max number by using up more RAM, setting the threshold is like striking the perfect balance between how much RAM you want to use, and letting the CPU take over for the missing RAM that's needed.
 
 ## How does CalcPlus work?
 In short, it does basic function like addition & subtraction like a human would - breaking it down, solving it column by column:
@@ -32,7 +32,7 @@ In short, it does basic function like addition & subtraction like a human would 
   420
 </pre>
 
-And from there, multiplication is just repeated addition, division is just repeated subtraction, exponents is just repeated multiplication, and that kind of thing. Of course, thing is very inefficient, so there are a number of opimizations to greatly speed up the process.
+And from there, multiplication is just repeated addition, division is just repeated subtraction, exponents are just repeated multiplication and that kind of thing. Of course, this is very inefficient, so there are a number of optimizations to vastly speed up the process. Weak computers can instantaneously calculate 2<sup>256</sup>, which is 115792089237316195423570985008687907853269984665640564039457584007913129639936.
 
 ## What coding languages does CalcPlus support?
 For now, it only supports JavaScript/NodeJS. I have plans to eventually port it to Python 3, and then from there who knows where.
@@ -45,7 +45,7 @@ JavaScript Library:<br>
 &nbsp;&nbsp;`<script src="https://www.virxcase.ga/CalcPlus/Library.js">/*Import latest alpha*/</script>`
 
 NodeJS Library:<br>
-&nbsp;&nbsp;`npm install @virxec/calcplus@0.4.1`
+&nbsp;&nbsp;`npm install @virxec/calcplus@0.4.2`
 
 ## What's the larget number CalcPlus can understand, written out?
 
