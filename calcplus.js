@@ -502,7 +502,7 @@ function div() {
       } else {
         final = final.split("");
       }
-      console.varinfo({decimals})
+    //   console.varinfo({decimals})
       // if (i == 1) decimals++; 
       while (decimals > final.length) final.push("0");
       final = formatNums(final, decimals, neg);
