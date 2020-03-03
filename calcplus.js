@@ -215,13 +215,15 @@ function setMaxDecimalLength(maxDecimalLength) {
 }
 
 function shouldRun(num1, num2) {
-  if (num1.length >= String(maxNumber).length || num2.length >= String(maxNumber).length) return true;
-  let maxstr = String(maxNumber),
-    maxChar = Math.max(num1.length, num2.length),
-    num = maxChar == num1.length ? num1 : num2;
-  for (let i = Math.max(num1.length, num2.length); i > 0; i++)
-    if (+num[i] > +maxstr[i]) return true;
-  return false;
+  if (num1[0] != "-" && num2[0] != "-") {
+    if (num1.length >= String(maxNumber).length || num2.length >= String(maxNumber).length) return true;
+    let maxstr = String(maxNumber),
+      maxChar = Math.max(num1.length, num2.length),
+      num = maxChar == num1.length ? num1 : num2;
+    for (let i = Math.max(num1.length, num2.length); i > 0; i++)
+      if (+num[i] > +maxstr[i]) return true;
+    return false;
+  }
 }
 
 function add() {
@@ -502,7 +504,7 @@ function div() {
       } else {
         final = final.split("");
       }
-    //   console.varinfo({decimals})
+      // console.varinfo({decimals});
       // if (i == 1) decimals++; 
       while (decimals > final.length) final.push("0");
       final = formatNums(final, decimals, neg);
@@ -519,7 +521,7 @@ function div() {
   if (Array.isArray(a[0])) a = a[0];
   let maxD = typeof a[a.length-1] == "number" ? a[a.length-1] : maxDecimal,
     permfinal = tempdiv(a[0], a[1], maxD);
-  for (let i = 2; i < a.length-1; i++) permfinal = tempdiv(permfinal, a[i], maxD);
+  for (let i = 2; i < a.length-1; i++) permfinal = tempdiv(permfinal, a[i], maxD, false);
   return permfinal;
 }
 
@@ -578,13 +580,13 @@ function calcplus_info() {
 }
 
 module.exports = {
-  subtract: sub, // NEW
-  multiply: multi, // NEW
-  divide: div, // NEW
-  exponent: expo, // NEW
-  factorial: fact, // NEW
-  ceil: roundUp, // NEW
-  floor: roundDown, // NEW
+  subtract: sub,
+  multiply: multi,
+  divide: div,
+  exponent: expo,
+  factorial: fact,
+  ceil: roundUp,
+  floor: roundDown,
   a: add,
   s: sub,
   m: multi,
@@ -613,7 +615,7 @@ module.exports = {
   roundDown,
   calcplus_info,
   setMaxSafeInteger,
-  setMaxDecimalLength, // NEW
+  setMaxDecimalLength,
   toggleAntiCheck,
   togglePowerMode,
   Define
