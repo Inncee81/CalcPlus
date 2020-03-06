@@ -5,9 +5,10 @@
   "main": "./node/calcplus.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node ./bin/calcplus.js",
     "test": "node ./test.js",
+    "build": "tsc",
+    "testbuild": "npm run build && npm test",
+    "start": "node ./bin/calcplus.js",
     "prod": "npm run build && npm start"
   },
   "keywords": [

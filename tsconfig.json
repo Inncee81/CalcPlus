@@ -2,9 +2,11 @@
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "classic",
-    "pretty": true,
+    "pretty": false,
     "sourceMap": true,
     "target": "esnext",
+    "declaration": true,
+    "declarationDir": "./bin",
     "outDir": "./bin",
     "baseUrl": "./",
     "downlevelIteration": true,
