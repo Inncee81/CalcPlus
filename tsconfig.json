@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "classic",
+    "pretty": true,
+    "sourceMap": true,
+    "target": "esnext",
+    "outDir": "./bin",
+    "baseUrl": "./",
+    "downlevelIteration": true,
+
+  },
+  "include": [
+    "calcplus.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

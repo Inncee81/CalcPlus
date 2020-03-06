@@ -1,20 +1,26 @@
 ## Navigation
 <a href="https://www.virxcase.ga">VirxEC Showcase</a><br>
-<a href="https://www.virxcase.ga/CP-P">Preview the CalcPlus JavaScript Library</a><br>
-<a href="https://www.virxcase.ga/CP-S">CalcPlus Library Source Code</a><br>
+<a href="https://www.virxcase.ga/CP-P">Preview CalcPlus ES6</a><br>
+<a href="https://www.virxcase.ga/CP-S">CalcPlus Source Code</a><br>
 <a href="https://repl.it/github/VirxEC/CalcPlus">Test latest Node.js version on Repl.it</a>
+
+## What is ES6?
+Whenever ES6 is mentioned, Module JavaScript is what's acutally being talked about. If you don't know what ModuleJS is, you can read about it <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">here</a>.
+
+If you want to ever write in ES6, then just do this: `<script type="module">/*ModuleJS here*/</script>`. ES6 is currently unsupported in Internet Explorer (big surprise there) but it has been support for a long time in Chrome, Edge, Firefox, Opera, and Safari.
+
 
 ## About
 
-This is a JavaScript Library that let's numbers be calculated up to:
+This is a ES6 Library that let's numbers be calculated up to:
 
   64 bit OS: 2<sup>64</sup>-1 digits <i><b>long</b></i>, or 10<sup>(2<sup>64</sup>-1)</sup>-1.
   
   32 bit OS: 2<sup>32</sup>-1 digits <i><b>long</b></i>, or 10<sup>(2<sup>32</sup>-1)</sup>-1.
 
-Please note that the JavaScript version of this Library is extremely RAM efficient. Only about 100 megabytes of free RAM is required for the heaviest of tasks (measured by doing 10<sup>2<sup>64</sup></sup> and leaving it for 2 days with no threshold). The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. This is a change from built-in systems in programming languages, which hog tons of RAM but are very CPU efficient.
+Please note that the ES6 version of this Library is extremely RAM efficient. Only about 100 megabytes of free RAM is required for the heaviest of tasks (measured by doing 10<sup>2<sup>64</sup></sup> and leaving it for 2 days with no threshold). The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. This is a change from built-in systems in programming languages, which hog tons of RAM but are very CPU efficient.
 
-It is planned that once the JavaScript version is done, it will be ported to be a Python 3 Library.
+It is planned that once the ES6 version is done, it will be ported to be a Python 3 Library.
 
 Want to see this library in action? Just go [here](https://www.virxcase.ga/Pages/CP-P)!
 
@@ -35,14 +41,14 @@ In short, it does basic function like addition & subtraction like a human would 
 And from there, multiplication is just repeated addition, division is just repeated subtraction, exponents are just repeated multiplication and that kind of thing. Of course, this is very inefficient, so there are a number of optimizations to vastly speed up the process. Weak computers can instantaneously calculate 2<sup>256</sup>, which is 115792089237316195423570985008687907853269984665640564039457584007913129639936.
 
 ## What coding languages does CalcPlus support?
-For now, it only supports JavaScript/NodeJS. I have plans to eventually port it to Python 3, and then from there who knows where.
+For now, it only supports ES6/NodeJS. I have plans to eventually port it to Python 3, and then from there who knows where.
 
-## Where do I get the CalcPlus library?
+## How can I install CalcPlus?
 
-JavaScript Library:<br>
+ES6 JavaScript Library:<br>
 &nbsp;&nbsp;<a href="https://github.com/VirxEC/CalcPlus/releases">Download latest beta</a><br>
-&nbsp;&nbsp;<a href="https://www.virxcase.ga/CalcPlus/Library.js" download="CalcPlus_Library_ALPHA.js">Download latest alpha</a><br>
-&nbsp;&nbsp;`<script src="https://www.virxcase.ga/CalcPlus/Library.js">/*Import latest alpha*/</script>`
+&nbsp;&nbsp;<a href="https://www.virxcase.ga/CalcPlus/CalcPlus.js" download="CalcPlus_ALPHA_ES6.js">Download latest alpha</a><br>
+&nbsp;&nbsp;`<script type="module">import * as calcplus from "https://www.virxcase.ga/CalcPlus/bin/calcplus.js"; /*Import latest alpha*/</script>`
 
 NodeJS Library:<br>
 &nbsp;&nbsp;`npm install @virxec/calcplus@0.4.3`
