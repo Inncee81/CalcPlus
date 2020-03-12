@@ -6,6 +6,8 @@
  * See the License for the specific language governing permissions and limitations under the License
  * 
  * This is the NodeJS/ModuleJS release of https://github.com/VirxEC/CalcPlus and https://www.virxcase.ga
+ * For more information about CalcPlus, go to https://www.virxcase.ga/CalcPlus/
+ * To preview this library online, go to https://www.virxcase.ga/CP-P
  */
 export function calcplus_info() {
     return {
@@ -17,15 +19,16 @@ export function calcplus_info() {
 }
 
 const defaults: { powermode: boolean, maxNumber: number, maxDecimal: number } = {
-    powermode: false,
-    maxNumber: Number.MAX_SAFE_INTEGER,
-    maxDecimal: 10
+    powermode: false, // Feel free to change this, or use togglePowerMode();
+    maxNumber: Number.MAX_SAFE_INTEGER, // Feel free to change this, or use setMaxSafeInteger(maxSafeInteger);
+    maxDecimal: 10 // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 };
-var powermode: boolean = defaults.powermode, // Feel free to change this, or use togglePowerMode();
-    maxNumber: number = defaults.maxNumber, // Feel free to change this, or use setMaxSafeInteger(maxSafeInteger);
-    maxDecimal: number = defaults.maxDecimal; // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 
-let varinfo = (v: object, x = Object.keys(v)[0]) => console.log(x,JSON.stringify(v[x])); // For debugging
+var powermode: boolean = defaults.powermode,
+    maxNumber: number = defaults.maxNumber,
+    maxDecimal: number = defaults.maxDecimal;
+
+let varinfo = (obj: object) => console.log(JSON.stringify(obj)); // For debugging
 
 export class Define extends Object {
     num: string[];
@@ -65,7 +68,7 @@ export class Define extends Object {
 
 export enum MathMode { ADD=1, SUBTRACT, MULTIPLY, DIVIDE, EXPONENT }
 
-export function parseNumbers(num1: Define|string, num2: Define|string, mathMode: MathMode): { num1: Define, num2: Define, isNeg: boolean, decimals: number, maxChar: number } {
+export function parseNumbers(num1: Define | string, num2: Define | string, mathMode: MathMode): { num1: Define, num2: Define, isNeg: boolean, decimals: number, maxChar: number } {
     if (num1 instanceof Define) num1 = num1;
     else num1 = new Define(num1);
 
@@ -125,7 +128,8 @@ export function parseNumbers(num1: Define|string, num2: Define|string, mathMode:
     };
 }
 
-function formatOutput(final: string[]|string, decimals: number, neg: boolean[]|boolean, array: boolean = true, reverse: boolean = true) {
+function formatOutput(final: string[] | string, decimals: number, isNeg: boolean[] | boolean, array: boolean = true, reverse: boolean = true) {
+    if (typeof neg == "object") isNeg = isNeg[0];
     if (!array && typeof final == "string") final = final.length > 1 ? final.split("") : [final];
     if (typeof final != "string") {
         if (reverse && final.length > 1) final = final.reverse();
@@ -134,7 +138,7 @@ function formatOutput(final: string[]|string, decimals: number, neg: boolean[]|b
         if (final.split(".").length == 2) final = final.replace(/\.?0+$/g, '');
         final = final.replace(/^0+/g, '');
         if (final.length > 1 && final.charAt(0) == ".") final = "0" + final;
-        if (neg[0]) final = "-" + final;
+        if (isNeg) final = "-" + final;
         if (final.charAt(final.length - 1) == "." || final.charAt(0) == ".") final = final.replace(".", "");
         final = ["", ".", "-", "-0"].includes(final) ? "0" : final;
         return final;
@@ -153,14 +157,22 @@ export function getPowerMode() {
     return powermode;
 }
 
-export function setMaxSafeInteger(maxSafeInteger: number|"default") {
+export function setMaxSafeInteger(maxSafeInteger: number | "default") {
     if (maxSafeInteger == "default") maxNumber = defaults.maxNumber;
     else maxNumber = maxSafeInteger;
+}
+
+export function getMaxSafeInteger(): number {
+    return maxSafeInteger;
 }
 
 export function setMaxDecimalLength(maxDecimalLength: number|"default") {
     if (maxDecimalLength == "default") maxDecimal = defaults.maxDecimal;
     else maxDecimal = maxDecimalLength;
+}
+
+export function getMaxDecimalLength(): number {
+    return maxDecimalLength;
 }
 
 function shouldRun(num1: string | Define, num2: string | Define) {
@@ -171,16 +183,19 @@ function shouldRun(num1: string | Define, num2: string | Define) {
     else if (num2[0] == "-") num2 = num2.substr(1);
 
     if (num1.length >= String(maxNumber).length || num2.length >= String(maxNumber).length) return true;
-    let maxstr = String(maxNumber),
+    
+    const maxString = String(maxNumber),
         maxChar = Math.max(num1.length, num2.length),
         num = maxChar == num1.length ? num1 : num2;
-    for (let i = Math.max(num1.length, num2.length); i > 0; i++)
-        if (+num[i] > +maxstr[i]) return true;
+        
+    for (let i = maxChar; i > 0; i++)
+        if (+num[i] > +maxString[i]) return true;
+        
     return false;
 }
 
 export function add(...numbers: (string | Define)[]): string {
-    function temp(num1: string|Define, num2:string|Define) {
+    function temp(num1: string | Define, num2:string | Define) {
         if (!powermode || (powermode && shouldRun(num1, num2))) {
             let parsedNums = parseNumbers(num1, num2, 1),
                 neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
@@ -189,8 +204,10 @@ export function add(...numbers: (string | Define)[]): string {
                 final = [],
                 carry = "0",
                 finali: number, time: number;
+                
             if (neg[2]) return subtract(parsedNums.num1, parsedNums.num2.set("isNeg", false));
             else if (neg[1]) return subtract(parsedNums.num2, parsedNums.num1.set("isNeg", false));
+            
             for (let i = parsedNums.maxChar - 1; i >= 0; i--) {
                 finali = parsedNums.maxChar - i - 1;
                 if (time != i + 1) carry = "0";
@@ -201,10 +218,11 @@ export function add(...numbers: (string | Define)[]): string {
                     if (i - 1 < 0) final.push(carry);
                 }
             }
+            
             return formatOutput(final, decimal[0], neg);
         } else return String((num1 instanceof Define ? num1.getNumber() : +num1) + (num2 instanceof Define ? num2.getNumber() : +num2));
     }
-    let permfinal: string | Define, a = [...numbers];
+    let permfinal: string, a = [...numbers];
     permfinal = temp(a[0], a[1]);
     for (let i = 2; i < a.length; i++) permfinal = temp(permfinal, a[i]);
     return permfinal;
