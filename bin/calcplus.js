@@ -15,9 +15,14 @@ export function calcplus_info() {
         bugFix: 0
     };
 }
-var powermode = false, // Feel free to change this, or use togglePowerMode();
-maxNumber = Number.MAX_SAFE_INTEGER, // Feel free to change this, or use setMaxSafeInteger(maxSafeInteger);
-maxDecimal = maxNumber; // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
+const defaults = {
+    powermode: false,
+    maxNumber: Number.MAX_SAFE_INTEGER,
+    maxDecimal: 10
+};
+var powermode = defaults.powermode, // Feel free to change this, or use togglePowerMode();
+maxNumber = defaults.maxNumber, // Feel free to change this, or use setMaxSafeInteger(maxSafeInteger);
+maxDecimal = defaults.maxDecimal; // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 let varinfo = (v, x = Object.keys(v)[0]) => console.log(x, JSON.stringify(v[x])); // For debugging
 export class Define extends Object {
     constructor(numberString, isNegative, decimals) {
@@ -51,7 +56,15 @@ export class Define extends Object {
         return +formatOutput(this.num, this.decimals, this.isNeg);
     }
 }
-function parseNumbers(num1, num2, mode) {
+export var MathMode;
+(function (MathMode) {
+    MathMode[MathMode["ADD"] = 1] = "ADD";
+    MathMode[MathMode["SUBTRACT"] = 2] = "SUBTRACT";
+    MathMode[MathMode["MULTIPLY"] = 3] = "MULTIPLY";
+    MathMode[MathMode["DIVIDE"] = 4] = "DIVIDE";
+    MathMode[MathMode["EXPONENT"] = 5] = "EXPONENT";
+})(MathMode || (MathMode = {}));
+export function parseNumbers(num1, num2, mathMode) {
     if (num1 instanceof Define)
         num1 = num1;
     else
@@ -60,56 +73,57 @@ function parseNumbers(num1, num2, mode) {
         num2 = num2;
     else
         num2 = new Define(num2);
-    let num = [null, num1.num, num2.num], neg = [false, num1.isNeg, num2.isNeg], decimal = [0, num1.decimals, num2.decimals];
-    if (mode != 5) {
-        if (neg[1] != neg[2] && [3, 4].includes(mode))
-            neg[0] = true;
-        let maxChar = Math.max(num[1].length, num[2].length);
-        if (decimal[1] > 0 || decimal[2] > 0) {
-            decimal[0] = mode == 1 || mode == 2 ? Math.max(decimal[1], decimal[2]) : mode == 3 ? decimal[1] + decimal[2] : decimal[1] - decimal[2];
-            if (decimal[0] < 0)
-                decimal[0] = 0;
+    let isNeg = false, decimals = 0;
+    if (mathMode != 5) {
+        if (num1.isNeg != num2.isNeg && [3, 4].includes(mathMode))
+            isNeg = true;
+        let maxChar = Math.max(num1.num.length, num2.num.length);
+        if (num1.decimals > 0 || num2.decimals > 0) {
+            decimals = mathMode == 1 || mathMode == 2 ? Math.max(num1.decimals, num2.decimals) : mathMode == 3 ? num1.decimals + num2.decimals : num1.decimals - num2.decimals;
+            if (decimals < 0)
+                decimals = 0;
         }
-        for (let i = 0; !neg[0] && (neg[1] || neg[2]) && mode == 1 && num[2].length == maxChar && i < num[1].length; i++)
-            if (num[2][i] > num[1][i])
-                neg[0] = true;
-        if (mode == 2 && num[2].length - decimal[2] == maxChar && num[1].length - decimal[1] != maxChar)
-            neg[0] = true;
-        if (maxChar == num[2].length && mode == 3)
-            num[1] = [num[2], num[2] = num[1]][0];
-        if (decimal[1] != decimal[2] && [1, 2].includes(mode)) {
-            if (decimal[1] == decimal[0])
-                for (let i = 0; i < decimal[1] - decimal[2]; i++)
-                    num[2].push("0");
-            else if (decimal[2] == decimal[0])
-                for (let i = 0; i < decimal[2] - decimal[1]; i++)
-                    num[1].push("0");
+        for (let i = 0; !isNeg && (num1.isNeg || num2.isNeg) && mathMode == 1 && num2.num.length == maxChar && i < num1.num.length; i++)
+            if (num2.num[i] > num1.num[i])
+                isNeg = true;
+        if (mathMode == 2 && num2.num.length - num2.decimals == maxChar && num1.num.length - num1.decimals != maxChar)
+            isNeg = true;
+        if (maxChar == num2.num.length && mathMode == 3)
+            num1.num = [num2.num, num2.num = num1.num][0];
+        if (num1.decimals != num2.decimals && [1, 2].includes(mathMode)) {
+            if (num1.decimals == decimals)
+                for (let i = 0; i < num1.decimals - num2.decimals; i++)
+                    num2.num.push("0");
+            else if (num2.decimals == decimals)
+                for (let i = 0; i < num2.decimals - num1.decimals; i++)
+                    num1.num.push("0");
         }
-        if (num[1].length != num[2].length && [1, 2, 4].includes(mode)) {
-            while (num[1].length - num[2].length > 0)
-                num[2].unshift("0");
-            while (num[2].length - num[1].length > 0)
-                num[1].unshift("0");
+        if (num1.num.length != num2.num.length && [1, 2, 4].includes(mathMode)) {
+            while (num1.num.length - num2.num.length > 0)
+                num2.num.unshift("0");
+            while (num2.num.length - num1.num.length > 0)
+                num1.num.unshift("0");
         }
-        let negCalc = num[2].length == maxChar;
-        for (let i = 0; !neg[0] && mode == 2 && negCalc && !(num[1][i] > num[2][i]) && i < num[1].length; i++)
-            if (num[1][i] < num[2][i])
-                neg[0] = true;
+        let negCalc = num2.num.length == maxChar;
+        for (let i = 0; !isNeg && mathMode == 2 && negCalc && !(num1.num[i] > num2.num[i]) && i < num1.num.length; i++)
+            if (num1.num[i] < num2.num[i])
+                isNeg = true;
     }
-    if ([3, 4].includes(mode) && neg[1] && neg[2])
-        neg[0] = false;
-    if ([3, 4].includes(mode))
-        neg[1] = false, neg[2] = false;
-    for (let i = num[1].length; mode == 4 && i < num[2].length; i++) {
-        num[1].push("0");
-        decimal[0]++;
+    if (mathMode == 3 || mathMode == 4) {
+        num1.isNeg = false, num2.isNeg = false;
+        if (num1.isNeg && num2.isNeg)
+            isNeg = false;
+    }
+    for (let i = num1.num.length; mathMode == 4 && i < num2.num.length; i++) {
+        num1.num.push("0");
+        decimals++;
     }
     return {
-        num1: new Define(num[1], neg[1], decimal[1]),
-        num2: new Define(num[2], neg[2], decimal[2]),
-        isNeg: neg[0],
-        maxChar: Math.max(num[1].length, num[2].length),
-        decimals: decimal[0]
+        num1,
+        num2,
+        isNeg,
+        decimals,
+        maxChar: Math.max(num1.num.length, num2.num.length)
     };
 }
 function formatOutput(final, decimals, neg, array = true, reverse = true) {
@@ -135,29 +149,25 @@ function formatOutput(final, decimals, neg, array = true, reverse = true) {
     }
 }
 export function togglePowerMode() {
-    if (!powermode)
-        console.info("Disabled power mode. Recommended for debugging only.");
-    else
-        console.info(`Enabled power mode. This will make it so the library will only activate if the sum/difference is over maxNumber (${maxNumber}).`, "To enable power mode forever, change the first variable on line 10 to true.");
     powermode = !powermode;
 }
+export function setPowerMode(mode) {
+    powermode = mode;
+}
+export function getPowerMode() {
+    return powermode;
+}
 export function setMaxSafeInteger(maxSafeInteger) {
-    if (powermode) {
-        if (maxSafeInteger == "default")
-            maxNumber = Number.MAX_SAFE_INTEGER;
-        else
-            maxNumber = maxSafeInteger;
-        console.info(`To set the max safe number back to the default value of ${Number.MAX_SAFE_INTEGER}, do setMaxSafeInteger('default');`, "To change the value forever, change the variable on lines 12 (maximum) & 13 (minimum).");
-    }
+    if (maxSafeInteger == "default")
+        maxNumber = defaults.maxNumber;
     else
-        console.warn("You must turn on Power Mode before you can set the max safe number.");
+        maxNumber = maxSafeInteger;
 }
 export function setMaxDecimalLength(maxDecimalLength) {
     if (maxDecimalLength == "default")
-        maxDecimal = maxNumber;
+        maxDecimal = defaults.maxDecimal;
     else
         maxDecimal = maxDecimalLength;
-    console.info(`To set the max decimal length back to the default value of ${maxNumber}, do setMaxDecimalLength('default');`, "To change teh value forever, change the variable on line 14.");
 }
 function shouldRun(num1, num2) {
     if (num1 instanceof Define)
