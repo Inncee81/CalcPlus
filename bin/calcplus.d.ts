@@ -22,7 +22,23 @@ export declare class Define extends Object {
     set(name: string, item: string | boolean): this;
     getNumber(): number;
 }
+export declare enum MathMode {
+    ADD = 1,
+    SUBTRACT = 2,
+    MULTIPLY = 3,
+    DIVIDE = 4,
+    EXPONENT = 5
+}
+export declare function parseNumbers(num1: Define | string, num2: Define | string, mathMode: MathMode): {
+    num1: Define;
+    num2: Define;
+    isNeg: boolean;
+    decimals: number;
+    maxChar: number;
+};
 export declare function togglePowerMode(): void;
+export declare function setPowerMode(mode: boolean): void;
+export declare function getPowerMode(): boolean;
 export declare function setMaxSafeInteger(maxSafeInteger: number | "default"): void;
 export declare function setMaxDecimalLength(maxDecimalLength: number | "default"): void;
 export declare function add(...numbers: (string | Define)[]): string;
