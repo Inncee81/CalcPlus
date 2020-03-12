@@ -20,17 +20,32 @@ var powermode: boolean = false, // Feel free to change this, or use togglePowerM
     maxNumber: number = Number.MAX_SAFE_INTEGER, // Feel free to change this, or use setMaxSafeInteger(maxSafeInteger);
     maxDecimal: number = maxNumber; // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 
-// let varinfo = (v: object, x = Object.keys(v)[0]) => console.log(x,JSON.stringify(v[x])); // For debugging
+let varinfo = (v: object, x = Object.keys(v)[0]) => console.log(x,JSON.stringify(v[x])); // For debugging
 
 export class Define extends Object {
     num: string[];
     isNeg: boolean;
     decimals: number;
-    constructor(num: string[], isNeg: boolean, decimals: number) {
+    
+    constructor(numberString: string[], isNegative: boolean, decimals: number)
+    constructor(numberString: string);
+    constructor(numberString: string | string[], isNegative?: boolean, decimals?: number) {
         super();
-        this.num = num;
-        this.isNeg = isNeg;
-        this.decimals = decimals;
+        if (typeof numberString == "object") {
+            this.num = numberString;
+            this.isNeg = isNegative;
+            this.decimals = decimals;
+        } else if (typeof numberString == "string") {
+            let numisplit = numberString.split("-"), item: any = numberString;
+            if (numisplit.length == 2) item = numisplit[1], this.isNeg = true;
+            item = item.replace(/,/g, "");
+            if (item.split(".").length == 2) item = item.replace(/$0+/g, "");
+            if (item.length > 1 && item.charAt(0) == ".") item = "0" + item;
+            item = ["", ".", "-"].includes(item) ? "0" : item;
+            if (!Array.isArray(item)) item = item.split("");
+            let numpos = item.indexOf(".");
+            this.num = item.filter((w: string) => w != "."), this.decimals = numpos != -1 ? item.length - numpos : 0;
+        }
     }
 
     public set(name: string, item: string | boolean): this {
@@ -44,31 +59,15 @@ export class Define extends Object {
 }
 
 function parseNumbers(num1: Define|string, num2: Define|string, mode: 1|2|3|4|5): {num1: Define, num2: Define, isNeg: boolean, maxChar: number, decimals: number} {
-    let neg: boolean[] = [false, false, false],
-        decimal: number[] = [0, 0, 0],
-        num: string[][] = [];
+    if (num1 instanceof Define) num1 = num1;
+    else num1 = new Define(num1);
 
-    function parse(nmbr: string|Define|string[], i: number): void {
-        if (typeof nmbr == "object" && !(nmbr instanceof Define)) nmbr = nmbr.join("");
-        if (typeof nmbr === "string") {
-            let numisplit = nmbr.split("-"), item: any = nmbr;
-            if (numisplit.length == 2) item = numisplit[1], neg[i] = true;
-            item = item.replace(/,/g, "");
-            if (item.split(".").length == 2) item = item.replace(/$0+/g, "");
-            if (item.length > 1 && item.charAt(0) == ".") item = "0" + item;
-            item = ["", ".", "-"].includes(item) ? "0" : item;
-            if (!Array.isArray(item)) item = item.split("");
-            let numpos = item.indexOf(".");
-            num[i] = item.filter((w: string) => w != "."), decimal[i] = numpos != -1 ? item.length - numpos : 0;
-        } else if (nmbr instanceof Define) {
-            neg[i] = nmbr.isNeg;
-            decimal[i] = nmbr.decimals;
-            num[i] = [...nmbr.num];
-        }
-    }
+    if (num2 instanceof Define) num2 = num2;
+    else num2 = new Define(num2);
 
-    parse(num1, 1);
-    parse(num2, 2);
+    let num: string[][] = [null, num1.num, num2.num],
+        neg: boolean[] = [false, num1.isNeg, num2.isNeg],
+        decimal: number[] = [0, num1.decimals, num2.decimals];
 
     if (mode != 5) {
         if (neg[1] != neg[2] && [3, 4].includes(mode)) neg[0] = true;
@@ -99,7 +98,7 @@ function parseNumbers(num1: Define|string, num2: Define|string, mode: 1|2|3|4|5)
     }
     if ([3, 4].includes(mode) && neg[1] && neg[2]) neg[0] = false;
     if ([3, 4].includes(mode)) neg[1] = false, neg[2] = false;
-    for (let i = 0; mode == 4 && i < num[2].length; i++) {
+    for (let i = num[1].length; mode == 4 && i < num[2].length; i++) {
         num[1].push("0");
         decimal[0]++;
     }

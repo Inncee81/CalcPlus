@@ -17,7 +17,8 @@ export declare class Define extends Object {
     num: string[];
     isNeg: boolean;
     decimals: number;
-    constructor(num: string[], isNeg: boolean, decimals: number);
+    constructor(numberString: string[], isNegative: boolean, decimals: number);
+    constructor(numberString: string);
     set(name: string, item: string | boolean): this;
     getNumber(): number;
 }
