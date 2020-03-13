@@ -59,7 +59,7 @@ export class Define extends Object {
     }
 
     public getNumber() {
-        return +formatOutput(this.num, this.decimals, this.isNeg);
+        return +formatOutput(this.num, this.decimals, this.isNeg, false);
     }
 }
 
@@ -120,7 +120,7 @@ export function parse(num1: Define, num2: Define, mathMode: MathMode): { num1: D
     };
 }
 
-function formatOutput(final: string[] | string, decimals: number, isNeg: boolean, array: boolean = true, reverse: boolean = true) {
+function formatOutput(final: string[] | string, decimals: number, isNeg: boolean, reverse: boolean = true) {
     if (typeof final == "string") final = final.length > 1 ? final.split("") : [final]
     if (reverse && final.length > 1) final = final.reverse();
     if (decimals > 0) final.splice(final.length - decimals, 0, ".");
@@ -197,23 +197,22 @@ function ADD(num1: Define | string, num2: Define | string): Define | string {
             return subtract(num2, num1);
         }
 
-        for (let i = maxChar -1; i >= 0; i--) {
-            const finali = maxChar - i -1;
+        for (let i = maxChar - 1; i >= 0; i--) {
+            let semifinal: String | number = +num1.num[i] + +num2.num[i];
+            if (time == i + 1) semifinal += carry;
 
-            if (time != i + 1) carry = 0;
-            final[finali] = String(+num1[i] + +num2[i] + carry);
-            if (+final[finali] > 9) {
-                const carryChar = final[finali].charAt(0);
-                final[finali] = final[finali].charAt(1);
+            if (semifinal > 9) {
+                semifinal = String(semifinal);
+                const carryChar = semifinal.charAt(0);
+                final.push(semifinal.charAt(1));
 
-                if (i - 1 < 0) final.push(carryChar);
+                if (i == 0) final.push(carryChar);
                 else time = i;
 
                 carry = +carryChar;
-            }
-
-            return new Define(final, parsed.isNeg, parsed.decimals);
+            } else final.push(String(semifinal));
         }
+        return new Define(final.reverse(), parsed.isNeg, parsed.decimals);
     } else return String((num1 instanceof Define ? num1.getNumber() : +num1) + (num2 instanceof Define ? num2.getNumber() : +num2));
 }
 
@@ -223,7 +222,7 @@ export function add(...numbers: (Define | string)[]): string {
     
     for (let i = 2; i < a.length; i++) permfinal = ADD(permfinal, a[i]);
 
-    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg) : permfinal;
+    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg, false) : permfinal;
 }
 
 function SUBTRACT(num1: Define | string, num2: Define | string): Define | string {
@@ -256,22 +255,22 @@ function SUBTRACT(num1: Define | string, num2: Define | string): Define | string
 
         for (let i = maxChar - 1; i >= 0; i--) {
             const finali: number = maxChar - i - 1,
-                fans: number = +num1[i] - +num2[i];
+                semifinal: number = +num1.num[i] - +num2.num[i];
             
-            if (fans < 0 && i != 0) {
-                const j = i - 1;
+            if (semifinal < 0 && i != 0) {
+                let j = i - 1;
 
-                final[finali] = String(fans + 10), num1[j] = String(+num1[j] - 1);
+                final[finali] = String(semifinal + 10), num1[j] = String(+num1[j] - 1);
 
-                while (num1[j] < 0 && j != num1.decimals) num1[j] = String(+num1[j] + 10), j = j - 1, num1[j] = String(+num1[j] - 1);
+                while (+num1.num[j] < 0 && j != num1.decimals) num1.num[j] = String(+num1[j] + 10), j = j - 1, num1.num[j] = String(+num1.num[j] - 1);
 
                 if (num1.decimals > 0 && j == num1.decimals)
-                    while (num1[j] < 0 && j != 0) num1[j] = String((+num1[j]) + 10), j = j - 1, num1[j] = String(num1[j] + 1);
-            } else if (fans <= 0 && i == 0) final[finali] = String(fans).charAt(0) == "-" ? String(fans*-1 - 1) : String(fans);
-            else final[finali] = String(fans);
+                    while (+num1.num[j] < 0 && j != 0) num1.num[j] = String((+num1.num[j]) + 10), j = j - 1, num1.num[j] = String(num1.num[j] + 1);
+            } else if (semifinal <= 0 && i == 0) final[finali] = String(semifinal).charAt(0) == "-" ? String(semifinal*-1 - 1) : String(semifinal);
+            else final[finali] = String(semifinal);
         }
 
-        return new Define(final, parsed.isNeg, parsed.decimals);
+        return new Define(final.reverse(), parsed.isNeg, parsed.decimals);
     } else return String((num1 instanceof Define ? num1.getNumber() : +num1) - (num2 instanceof Define ? num2.getNumber() : +num2));
 }
 
@@ -281,7 +280,7 @@ export function subtract(...numbers: (Define | string)[]): string {
     
     for (let i = 2; i < a.length; i++) permfinal = SUBTRACT(permfinal, a[i]);
 
-    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg) : permfinal;
+    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg, false) : permfinal;
 }
 
 export function isLessThan(num1: Define | string, num2: Define | string): boolean {
@@ -354,40 +353,47 @@ function MULTIPLY(num1: Define | string, num2: Define | string): Define | string
         
         const parsed = parse(num1, num2, 3);
         
-        let final: string[] = [],
+        let final: Define[] = [],
             carry: number = 0,
-            f = [],
+            f: string[] = [],
             time: number;
             
-        for (let recursive1 = num2.num.length - 1; recursive1 >= 0; recursive1--) {
-            const r1i: number = num2.num.length - recursive1 - 1;
-            final[r1i]: (Define | string)[] = [];
+        for (let bottom = num2.num.length - 1; bottom >= 0; bottom--) {
+            const r1i: number = num2.num.length - bottom - 1;
+            let semifinal: string[] = [];
             
-            if (recursive1 != num2.num.length - 1) f.push("0");
+            if (bottom != num2.num.length - 1) f.push("0");
             
-            for (let recursive2 = num1.num.length - 1; recursive2 >= 0; recursive2--) {
-                const r2i = num1.num.length - recursive1 - 1;
+            for (let top = num1.num.length - 1; top >= 0; top--) {
+                const r2i = num1.num.length - top - 1;
                 
-                if (time != recursive2 + 1) carry = 0;
-                if (+num2.num[recursive1] != 0 && +num1.num[recursive1] != 0) {
-                    final[r1i][r2i] = String(+num2.num[recursive1] * +num1.num[recursive1] + carry);
+                if (time != top + 1) carry = 0;
+                if (+num2.num[bottom] != 0 && +num1.num[bottom] != 0) {
+                    semifinal[r2i] = String(+num2.num[bottom] * +num1.num[bottom] + carry);
                     
-                    if (final[r1i][r2i] > 9) {
-                        const carryChar = final[r1i][r2i].charAt(0);
-                        final[r1i][r2i] = final[r1i][r2i].charAt(1);
+                    if (+semifinal[r2i] > 9) {
+                        const carryChar = semifinal[r2i].charAt(0);
+                        semifinal[r2i] = semifinal[r2i].charAt(1);
         
-                        if (recursive2 == 0) final[r1i].push(carryChar);
-                        else time = recursive2;
+                        if (top == 0) semifinal.push(carryChar);
+                        else time = top;
         
                         carry = +carryChar;
                     }
-                } else final[r1i][r2i] = "0";
+                } else semifinal[r2i] = "0";
             }
             
-            final[r1i] = new Define(f.concat(final[r1i]), false, parsed.decimals);
+            if (f.length > 0) semifinal = f.concat(semifinal);
+            final[r1i] = new Define(semifinal, false, 0);
         }
         
-        return (parsed.isNeg ? "-" : "") + add(...final);
+        varinfo({ final });
+        if (final.length > 1) {
+            let answer = ADD(final[0], final[1]);
+            for (let i = 2; i < final.length; i++) answer = ADD(answer, final[i]);
+            return answer;
+        }
+        return final[0];
     } else return String((num1 instanceof Define ? num1.getNumber() : +num1) * (num2 instanceof Define ? num2.getNumber() : +num2));
 }
 

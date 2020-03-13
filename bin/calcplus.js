@@ -19,10 +19,10 @@ export function calcplus_info() {
 }
 const defaults = {
     powermode: false,
-    maxNumber: Number.MAX_SAFE_INTEGER,
-    maxDecimal: 10 // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
+    maxNumberLength: 15,
+    maxDecimalLength: 10 // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 };
-var powermode = defaults.powermode, maxNumber = defaults.maxNumber, maxDecimal = defaults.maxDecimal;
+var powermode = defaults.powermode, maxNumberLength = defaults.maxNumberLength, maxDecimalLength = defaults.maxDecimalLength;
 let varinfo = (obj) => console.log(JSON.stringify(obj)); // For debugging
 export class Define extends Object {
     constructor(numberString, isNegative, decimals) {
@@ -48,7 +48,7 @@ export class Define extends Object {
         }
     }
     getNumber() {
-        return +formatOutput(this.num, this.decimals, this.isNeg);
+        return +formatOutput(this.num, this.decimals, this.isNeg, false);
     }
 }
 export var MathMode;
@@ -113,29 +113,24 @@ export function parse(num1, num2, mathMode) {
         decimals
     };
 }
-function formatOutput(final, decimals, isNeg, array = true, reverse = true) {
-    if (!array && typeof final == "string")
+function formatOutput(final, decimals, isNeg, reverse = true) {
+    if (typeof final == "string")
         final = final.length > 1 ? final.split("") : [final];
-    if (typeof final != "string") {
-        if (reverse && final.length > 1)
-            final = final.reverse();
-        if (decimals > 0)
-            final.splice(final.length - decimals, 0, ".");
-        final = final.join("");
-        if (final.split(".").length == 2)
-            final = final.replace(/\.?0+$/g, '');
-        final = final.replace(/^0+/g, '');
-        if (final.length > 1 && final.charAt(0) == ".")
-            final = "0" + final;
-        if (isNeg)
-            final = "-" + final;
-        if (final.charAt(final.length - 1) == "." || final.charAt(0) == ".")
-            final = final.replace(".", "");
-        return ["", ".", "-", "-0"].includes(final) ? "0" : final;
-    }
-}
-export function togglePowerMode() {
-    powermode = !powermode;
+    if (reverse && final.length > 1)
+        final = final.reverse();
+    if (decimals > 0)
+        final.splice(final.length - decimals, 0, ".");
+    final = final.join("");
+    if (final.includes("."))
+        final = final.replace(/\.?0+$/g, '');
+    final = final.replace(/^0+/g, '');
+    if (final.length > 1 && final.charAt(0) == ".")
+        final = "0" + final;
+    if (isNeg)
+        final = "-" + final;
+    if (final.charAt(final.length - 1) == "." || final.charAt(0) == ".")
+        final = final.replace(".", "");
+    return ["", ".", "-", "-0"].includes(final) ? "0" : final;
 }
 export function setPowerMode(mode) {
     powermode = mode;
@@ -143,39 +138,35 @@ export function setPowerMode(mode) {
 export function getPowerMode() {
     return powermode;
 }
-export function setMaxSafeInteger(maxSafeInteger) {
-    if (maxSafeInteger == "default")
-        maxNumber = defaults.maxNumber;
+export function setMaxSafeInteger(maxIntegerLength) {
+    if (maxIntegerLength == "default")
+        maxNumberLength = defaults.maxNumberLength;
     else
-        maxNumber = maxSafeInteger;
+        maxNumberLength = maxIntegerLength;
 }
 export function getMaxSafeInteger() {
-    return maxNumber;
+    return maxNumberLength;
 }
-export function setMaxDecimalLength(maxDecimalLength) {
-    if (maxDecimalLength == "default")
-        maxDecimal = defaults.maxDecimal;
+export function setMaxDecimalLength(maxDecimals) {
+    if (maxDecimals == "default")
+        maxDecimalLength = defaults.maxDecimalLength;
     else
-        maxDecimal = maxDecimalLength;
+        maxDecimalLength = maxDecimals;
 }
 export function getMaxDecimalLength() {
-    return maxDecimal;
+    return maxDecimalLength;
 }
 function shouldRun(num1, num2) {
     if (num1 instanceof Define)
         num1 = num1.num.join("");
-    else if (num1[0] == "-")
-        num1 = num1.charAt(1);
+    else if (num1.charAt(0) == "-")
+        num1 = num1.substr(1);
     if (num2 instanceof Define)
         num2 = num2.num.join("");
-    else if (num2[0] == "-")
-        num2 = num2.charAt(1);
-    if (num1.length >= String(maxNumber).length || num2.length >= String(maxNumber).length)
+    else if (num2.charAt(0) == "-")
+        num2 = num2.substr(1);
+    if (num1.length > maxNumberLength || num2.length > maxNumberLength)
         return true;
-    const maxString = String(maxNumber), maxChar = Math.max(num1.length, num2.length), num = maxChar == num1.length ? num1 : num2;
-    for (let i = maxChar; i > 0; i++)
-        if (+num[i] > +maxString[i])
-            return true;
     return false;
 }
 function ADD(num1, num2) {
@@ -196,30 +187,33 @@ function ADD(num1, num2) {
             return subtract(num2, num1);
         }
         for (let i = maxChar - 1; i >= 0; i--) {
-            const finali = maxChar - i - 1;
-            if (time != i + 1)
-                carry = 0;
-            final[finali] = String(+num1[i] + +num2[i] + carry);
-            if (+final[finali] > 9) {
-                const carryChar = final[finali].charAt(0);
-                final[finali] = final[finali].charAt(1);
-                if (i - 1 < 0)
+            let semifinal = +num1.num[i] + +num2.num[i];
+            if (time == i + 1)
+                semifinal += carry;
+            if (semifinal > 9) {
+                semifinal = String(semifinal);
+                const carryChar = semifinal.charAt(0);
+                final.push(semifinal.charAt(1));
+                if (i == 0)
                     final.push(carryChar);
                 else
                     time = i;
                 carry = +carryChar;
             }
-            return new Define(final, parsed.isNeg, parsed.decimals);
+            else
+                final.push(String(semifinal));
         }
+        return new Define(final.reverse(), parsed.isNeg, parsed.decimals);
     }
     else
         return String((num1 instanceof Define ? num1.getNumber() : +num1) + (num2 instanceof Define ? num2.getNumber() : +num2));
 }
 export function add(...numbers) {
-    let a = [...numbers], permfinal = ADD(a[0], a[1]);
+    const a = [...numbers];
+    let permfinal = ADD(a[0], a[1]);
     for (let i = 2; i < a.length; i++)
         permfinal = ADD(permfinal, a[i]);
-    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg) : permfinal;
+    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg, false) : permfinal;
 }
 function SUBTRACT(num1, num2) {
     if (!powermode || (powermode && shouldRun(num1, num2))) {
@@ -243,31 +237,32 @@ function SUBTRACT(num1, num2) {
             return item;
         }
         for (let i = maxChar - 1; i >= 0; i--) {
-            let finali = maxChar - i - 1, fans = +num1[i] - +num2[i];
-            if (fans < 0 && i != 0) {
+            const finali = maxChar - i - 1, semifinal = +num1.num[i] - +num2.num[i];
+            if (semifinal < 0 && i != 0) {
                 let j = i - 1;
-                final[finali] = String(fans + 10), num1[j] = String(+num1[j] - 1);
-                while (num1[j] < 0 && j != num1.decimals)
-                    num1[j] = String(+num1[j] + 10), j = j - 1, num1[j] = String(+num1[j] - 1);
+                final[finali] = String(semifinal + 10), num1[j] = String(+num1[j] - 1);
+                while (+num1.num[j] < 0 && j != num1.decimals)
+                    num1.num[j] = String(+num1[j] + 10), j = j - 1, num1.num[j] = String(+num1.num[j] - 1);
                 if (num1.decimals > 0 && j == num1.decimals)
-                    while (num1[j] < 0 && j != 0)
-                        num1[j] = String((+num1[j]) + 10), j = j - 1, num1[j] = String(num1[j] + 1);
+                    while (+num1.num[j] < 0 && j != 0)
+                        num1.num[j] = String((+num1.num[j]) + 10), j = j - 1, num1.num[j] = String(num1.num[j] + 1);
             }
-            else if (fans <= 0 && i == 0)
-                final[finali] = String(fans).charAt(0) == "-" ? String(fans * -1 - 1) : String(fans);
+            else if (semifinal <= 0 && i == 0)
+                final[finali] = String(semifinal).charAt(0) == "-" ? String(semifinal * -1 - 1) : String(semifinal);
             else
-                final[finali] = String(fans);
+                final[finali] = String(semifinal);
         }
-        return new Define(final, parsed.isNeg, parsed.decimals);
+        return new Define(final.reverse(), parsed.isNeg, parsed.decimals);
     }
     else
         return String((num1 instanceof Define ? num1.getNumber() : +num1) - (num2 instanceof Define ? num2.getNumber() : +num2));
 }
 export function subtract(...numbers) {
-    let a = [...numbers], permfinal = SUBTRACT(a[0], a[1]);
+    const a = [...numbers];
+    let permfinal = SUBTRACT(a[0], a[1]);
     for (let i = 2; i < a.length; i++)
         permfinal = SUBTRACT(permfinal, a[i]);
-    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg) : permfinal;
+    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg, false) : permfinal;
 }
 export function isLessThan(num1, num2) {
     if (!powermode || (powermode && shouldRun(num1, num2))) {
@@ -346,51 +341,62 @@ export function roundUp(item) {
     else
         return String(Math.ceil(item instanceof Define ? item.getNumber() : +item));
 }
-/*
-export function multiply(...numbers: (Define | string)[]): string {
-    function temp(num1:string|Define, num2:string|Define) {
-        if (!powermode || (powermode && shouldRun(num1, num2))) {
-            let parsedNums = parse(num1, num2, 3),
-                neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
-                decimals = parsedNums.decimals,
-                num = [null, parsedNums.num1.num, parsedNums.num2.num],
-                final = [],
-                carry = 0,
-                product = "",
-                f = [],
-                time: number;
-
-            for (let f2 = num[2].length - 1; f2 >= 0; f2--) {
-                let f2i = num[2].length - f2 - 1;
-                final[f2i] = [];
-                if (f2 != num[2].length - 1) f.push("0");
-                for (let f1 = num[1].length - 1; f1 >= 0; f1--) {
-                    let f1i = num[1].length - f1 - 1;
-                    if (time != f1 + 1) carry = 0;
-                    if (+num[2][f2] != 0 && +num[1][f2] != 0) {
-                        final[f2i][f1i] = String((+num[2][f2]) * (+num[1][f1]) + carry);
-                        if (final[f2i][f1i] > 9) {
-                            let temp = final[f2i][f1i].split('');
-                            final[f2i][f1i] = temp[1], carry = +temp[0], time = f1;
-                            if (f1 == 0) final[f2i].push(String(carry));
-                        }
-                    } else final[f2i][f1i] = "0";
+function MULTIPLY(num1, num2) {
+    if (!powermode || (powermode && shouldRun(num1, num2))) {
+        if (typeof num1 == "string")
+            num1 = new Define(num1);
+        if (typeof num2 == "string")
+            num2 = new Define(num2);
+        const parsed = parse(num1, num2, 3);
+        let final = [], carry = 0, f = [], time;
+        for (let bottom = num2.num.length - 1; bottom >= 0; bottom--) {
+            const r1i = num2.num.length - bottom - 1;
+            let semifinal = [];
+            if (bottom != num2.num.length - 1)
+                f.push("0");
+            for (let top = num1.num.length - 1; top >= 0; top--) {
+                const r2i = num1.num.length - top - 1;
+                if (time != top + 1)
+                    carry = 0;
+                if (+num2.num[bottom] != 0 && +num1.num[bottom] != 0) {
+                    semifinal[r2i] = String(+num2.num[bottom] * +num1.num[bottom] + carry);
+                    if (+semifinal[r2i] > 9) {
+                        const carryChar = semifinal[r2i].charAt(0);
+                        semifinal[r2i] = semifinal[r2i].charAt(1);
+                        if (top == 0)
+                            semifinal.push(carryChar);
+                        else
+                            time = top;
+                        carry = +carryChar;
+                    }
                 }
-                final[f2i] = formatOutput(f.concat(final[f2i]), decimals, false);
+                else
+                    semifinal[r2i] = "0";
             }
-            product = final[0];
-            for (let i = 1; i < final.length; i++) product = add(product, final[i]);
-            if (neg[0] == true) return "-" + product;
-            return (neg[0] ? "-" : "") + product;
-        } else return String((num1 instanceof Define ? num1.getNumber() : +num1) * (num2 instanceof Define ? num2.getNumber() : +num2));
+            if (f.length > 0)
+                semifinal = f.concat(semifinal);
+            final[r1i] = new Define(semifinal, false, 0);
+        }
+        varinfo({ final });
+        if (final.length > 1) {
+            let answer = ADD(final[0], final[1]);
+            for (let i = 2; i < final.length; i++)
+                answer = ADD(answer, final[i]);
+            return answer;
+        }
+        return final[0];
     }
-    let permfinal: Define | string, a = [...numbers];
-    permfinal = temp(a[0], a[1]);
-    for (let i = 2; i < a.length; i++) permfinal = temp(permfinal, a[i]);
-    return permfinal;
+    else
+        return String((num1 instanceof Define ? num1.getNumber() : +num1) * (num2 instanceof Define ? num2.getNumber() : +num2));
 }
-
-export function divide(...numbers: string[]): string {
+export function multiply(...numbers) {
+    const a = [...numbers];
+    let permfinal = MULTIPLY(a[0], a[1]);
+    for (let i = 2; i < a.length; i++)
+        permfinal = MULTIPLY(permfinal, a[i]);
+    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg) : permfinal;
+}
+/* export function divide(...numbers: string[]): string {
     function temp(num1:string|Define, num2:string|Define, maxD: number, i: number, getDec: boolean) {
         if (!powermode || (powermode && shouldRun(num1, num2))) {
             let parsedNums = parse(num1, num2, 4),

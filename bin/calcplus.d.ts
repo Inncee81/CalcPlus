@@ -36,12 +36,11 @@ export declare function parse(num1: Define, num2: Define, mathMode: MathMode): {
     isNeg: boolean;
     decimals: number;
 };
-export declare function togglePowerMode(): void;
 export declare function setPowerMode(mode: boolean): void;
 export declare function getPowerMode(): boolean;
-export declare function setMaxSafeInteger(maxSafeInteger: number | "default"): void;
+export declare function setMaxSafeInteger(maxIntegerLength: number | "default"): void;
 export declare function getMaxSafeInteger(): number;
-export declare function setMaxDecimalLength(maxDecimalLength: number | "default"): void;
+export declare function setMaxDecimalLength(maxDecimals: number | "default"): void;
 export declare function getMaxDecimalLength(): number;
 export declare function add(...numbers: (Define | string)[]): string;
 export declare function subtract(...numbers: (Define | string)[]): string;
@@ -52,4 +51,5 @@ export declare function isGreaterThanEqual(num1: Define | string, num2: Define |
 export declare function round(item: Define | string): string;
 export declare function roundDown(item: Define | string): string;
 export declare function roundUp(item: Define | string): string;
+export declare function multiply(...numbers: (Define | string)[]): string;
 export { roundUp as ceil, roundDown as floor };
