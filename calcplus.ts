@@ -183,8 +183,7 @@ function ADD(num1: Define | string, num2: Define | string): Define | string {
             maxChar = Math.max(parsed.num1.num.length, parsed.num2.num.length);
 
         let final: string[] = [],
-            carry: number = 0,
-            time: number;
+            carry: number = 0;
 
         num1 = parsed.num1, num2 = parsed.num2;
         
@@ -199,7 +198,7 @@ function ADD(num1: Define | string, num2: Define | string): Define | string {
 
         for (let i = maxChar - 1; i >= 0; i--) {
             let semifinal: String | number = +num1.num[i] + +num2.num[i];
-            if (time == i + 1) semifinal += carry;
+            if (carry != 0) semifinal += carry, carry = 0;
 
             if (semifinal > 9) {
                 semifinal = String(semifinal);
@@ -207,7 +206,6 @@ function ADD(num1: Define | string, num2: Define | string): Define | string {
                 final.push(semifinal.charAt(1));
 
                 if (i == 0) final.push(carryChar);
-                else time = i;
 
                 carry = +carryChar;
             } else final.push(String(semifinal));
@@ -285,8 +283,9 @@ export function subtract(...numbers: (Define | string)[]): string {
 
 export function isLessThan(num1: Define | string, num2: Define | string): boolean {
     if (!powermode || (powermode && shouldRun(num1, num2))) {
-        let num = subtract(num2, num1);
-        if (num.split("-").length == 1 && +num != 0) return true;
+        const num: Define | string = SUBTRACT(num2, num1);
+        if (typeof num == "string" && num.split("-").length == 1 && +num != 0) return true;
+        else if (num instanceof Define && !num.isNeg && +num.num != 0) return true;
         return false;
     } else return (num1 instanceof Define ? num1.getNumber() : +num1) < (num2 instanceof Define ? num2.getNumber() : +num2);
 }
@@ -355,8 +354,7 @@ function MULTIPLY(num1: Define | string, num2: Define | string): Define | string
         
         let final: Define[] = [],
             carry: number = 0,
-            f: string[] = [],
-            time: number;
+            f: string[] = [];
             
         for (let bottom = num2.num.length - 1; bottom >= 0; bottom--) {
             const r1i: number = num2.num.length - bottom - 1;
@@ -367,24 +365,25 @@ function MULTIPLY(num1: Define | string, num2: Define | string): Define | string
             for (let top = num1.num.length - 1; top >= 0; top--) {
                 const r2i = num1.num.length - top - 1;
                 
-                if (time != top + 1) carry = 0;
-                if (+num2.num[bottom] != 0 && +num1.num[bottom] != 0) {
-                    semifinal[r2i] = String(+num2.num[bottom] * +num1.num[bottom] + carry);
+                if (+num2.num[bottom] != 0 && +num1.num[top] != 0) {
+                    let trifinal: String | number = +num2.num[bottom] * +num1.num[bottom];
+                    if (carry != 0) trifinal += carry, carry = 0;
                     
-                    if (+semifinal[r2i] > 9) {
-                        const carryChar = semifinal[r2i].charAt(0);
-                        semifinal[r2i] = semifinal[r2i].charAt(1);
+                    if (+trifinal > 9) {
+                        trifinal = ""+trifinal;
+                        const carryChar = trifinal.charAt(0);
+                        semifinal[r2i] = trifinal.charAt(1);
         
                         if (top == 0) semifinal.push(carryChar);
-                        else time = top;
         
                         carry = +carryChar;
-                    }
+                    } else semifinal[r2i] = ""+trifinal;
                 } else semifinal[r2i] = "0";
             }
             
             if (f.length > 0) semifinal = f.concat(semifinal);
             final[r1i] = new Define(semifinal, false, 0);
+            varinfo({ final });
         }
         
         varinfo({ final });
