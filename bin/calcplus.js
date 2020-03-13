@@ -34,7 +34,7 @@ export class Define extends Object {
         }
         else if (typeof numberString == "string") {
             numberString = numberString.replace(/,/g, "");
-            if (numberString.charAt(0) == "-")
+            if (numberString[0] == "-")
                 numberString = numberString.replace("-", ""), this.isNeg = true;
             else
                 this.isNeg = false;
@@ -124,11 +124,11 @@ function formatOutput(final, decimals, isNeg, reverse = true) {
     if (final.includes("."))
         final = final.replace(/\.?0+$/g, '');
     final = final.replace(/^0+/g, '');
-    if (final.length > 1 && final.charAt(0) == ".")
+    if (final.length > 1 && final[0] == ".")
         final = "0" + final;
     if (isNeg)
         final = "-" + final;
-    if (final.charAt(final.length - 1) == "." || final.charAt(0) == ".")
+    if (final[final.length - 1] == "." || final[0] == ".")
         final = final.replace(".", "");
     return ["", ".", "-", "-0"].includes(final) ? "0" : final;
 }
@@ -159,11 +159,11 @@ export function getMaxDecimalLength() {
 function shouldRun(num1, num2) {
     if (num1 instanceof Define)
         num1 = num1.num.join("");
-    else if (num1.charAt(0) == "-")
+    else if (num1[0] == "-")
         num1 = num1.substr(1);
     if (num2 instanceof Define)
         num2 = num2.num.join("");
-    else if (num2.charAt(0) == "-")
+    else if (num2[0] == "-")
         num2 = num2.substr(1);
     if (num1.length > maxNumberLength || num2.length > maxNumberLength)
         return true;
@@ -176,7 +176,7 @@ function ADD(num1, num2) {
         if (typeof num2 == "string")
             num2 = new Define(num2);
         const parsed = parse(num1, num2, 1), maxChar = Math.max(parsed.num1.num.length, parsed.num2.num.length);
-        let final = [], carry = 0, time;
+        let final = [], carry = 0;
         num1 = parsed.num1, num2 = parsed.num2;
         if (num2.isNeg) {
             num2.isNeg = false;
@@ -188,16 +188,14 @@ function ADD(num1, num2) {
         }
         for (let i = maxChar - 1; i >= 0; i--) {
             let semifinal = +num1.num[i] + +num2.num[i];
-            if (time == i + 1)
-                semifinal += carry;
+            if (carry != 0)
+                semifinal += carry, carry = 0;
             if (semifinal > 9) {
                 semifinal = String(semifinal);
-                const carryChar = semifinal.charAt(0);
-                final.push(semifinal.charAt(1));
+                const carryChar = semifinal[0];
+                final.push(semifinal[1]);
                 if (i == 0)
                     final.push(carryChar);
-                else
-                    time = i;
                 carry = +carryChar;
             }
             else
@@ -238,17 +236,20 @@ function SUBTRACT(num1, num2) {
         }
         for (let i = maxChar - 1; i >= 0; i--) {
             const finali = maxChar - i - 1, semifinal = +num1.num[i] - +num2.num[i];
-            if (semifinal < 0 && i != 0) {
-                let j = i - 1;
-                final[finali] = String(semifinal + 10), num1[j] = String(+num1[j] - 1);
-                while (+num1.num[j] < 0 && j != num1.decimals)
-                    num1.num[j] = String(+num1[j] + 10), j = j - 1, num1.num[j] = String(+num1.num[j] - 1);
-                if (num1.decimals > 0 && j == num1.decimals)
-                    while (+num1.num[j] < 0 && j != 0)
-                        num1.num[j] = String((+num1.num[j]) + 10), j = j - 1, num1.num[j] = String(num1.num[j] + 1);
+            if (semifinal < 0) {
+                if (i == 0)
+                    final[finali] = String(semifinal * -1 - 1);
+                else {
+                    let j = i - 1;
+                    final[finali] = String(semifinal + 10), num1.num[j] = String(+num1.num[j] - 1);
+                    while (+num1.num[j] < 0 && j != num1.decimals)
+                        num1.num[j] = String(+num1[j] + 10), j = j - 1, num1.num[j] = String(+num1.num[j] - 1);
+                    if (num1.decimals > 0 && j == num1.decimals) {
+                        while (+num1.num[j] < 0 && j != 0)
+                            num1.num[j] = String((+num1.num[j]) + 10), j = j - 1, num1.num[j] = String(num1.num[j] + 1);
+                    }
+                }
             }
-            else if (semifinal <= 0 && i == 0)
-                final[finali] = String(semifinal).charAt(0) == "-" ? String(semifinal * -1 - 1) : String(semifinal);
             else
                 final[finali] = String(semifinal);
         }
@@ -266,8 +267,10 @@ export function subtract(...numbers) {
 }
 export function isLessThan(num1, num2) {
     if (!powermode || (powermode && shouldRun(num1, num2))) {
-        let num = subtract(num2, num1);
-        if (num.split("-").length == 1 && +num != 0)
+        const num = SUBTRACT(num2, num1);
+        if (typeof num == "string" && num.split("-").length == 1 && +num != 0)
+            return true;
+        else if (num instanceof Define && !num.isNeg && +num.num != 0)
             return true;
         return false;
     }
@@ -348,7 +351,7 @@ function MULTIPLY(num1, num2) {
         if (typeof num2 == "string")
             num2 = new Define(num2);
         const parsed = parse(num1, num2, 3);
-        let final = [], carry = 0, f = [], time;
+        let final = [], carry = 0, f = [];
         for (let bottom = num2.num.length - 1; bottom >= 0; bottom--) {
             const r1i = num2.num.length - bottom - 1;
             let semifinal = [];
@@ -356,19 +359,20 @@ function MULTIPLY(num1, num2) {
                 f.push("0");
             for (let top = num1.num.length - 1; top >= 0; top--) {
                 const r2i = num1.num.length - top - 1;
-                if (time != top + 1)
-                    carry = 0;
                 if (+num2.num[bottom] != 0 && +num1.num[bottom] != 0) {
-                    semifinal[r2i] = String(+num2.num[bottom] * +num1.num[bottom] + carry);
-                    if (+semifinal[r2i] > 9) {
-                        const carryChar = semifinal[r2i].charAt(0);
-                        semifinal[r2i] = semifinal[r2i].charAt(1);
+                    let trifinal = +num2.num[bottom] * +num1.num[top];
+                    if (carry != 0)
+                        trifinal += carry, carry = 0;
+                    if (+trifinal > 9) {
+                        trifinal = "" + trifinal;
+                        const carryChar = trifinal[0];
+                        semifinal[r2i] = trifinal[1];
                         if (top == 0)
                             semifinal.push(carryChar);
-                        else
-                            time = top;
                         carry = +carryChar;
                     }
+                    else
+                        semifinal[r2i] = "" + trifinal;
                 }
                 else
                     semifinal[r2i] = "0";
@@ -377,7 +381,6 @@ function MULTIPLY(num1, num2) {
                 semifinal = f.concat(semifinal);
             final[r1i] = new Define(semifinal, false, 0);
         }
-        varinfo({ final });
         if (final.length > 1) {
             let answer = ADD(final[0], final[1]);
             for (let i = 2; i < final.length; i++)

@@ -46,7 +46,7 @@ export class Define extends Object {
         } else if (typeof numberString == "string") {
             numberString = numberString.replace(/,/g, "");
 
-            if (numberString.charAt(0) == "-") numberString = numberString.replace("-", ""), this.isNeg = true;
+            if (numberString[0] == "-") numberString = numberString.replace("-", ""), this.isNeg = true;
             else this.isNeg = false;
 
             if (numberString.includes(".")) {
@@ -129,9 +129,9 @@ function formatOutput(final: string[] | string, decimals: number, isNeg: boolean
     if (final.includes(".")) final = final.replace(/\.?0+$/g, '');
     final = final.replace(/^0+/g, '');
 
-    if (final.length > 1 && final.charAt(0) == ".") final = "0" + final;
+    if (final.length > 1 && final[0] == ".") final = "0" + final;
     if (isNeg) final = "-" + final;
-    if (final.charAt(final.length - 1) == "." || final.charAt(0) == ".") final = final.replace(".", "");
+    if (final[final.length - 1] == "." || final[0] == ".") final = final.replace(".", "");
 
     return ["", ".", "-", "-0"].includes(final) ? "0" : final;
 }
@@ -164,10 +164,10 @@ export function getMaxDecimalLength(): number {
 
 function shouldRun(num1: Define | string, num2: Define | string): boolean {
     if (num1 instanceof Define) num1 = num1.num.join("");
-    else if (num1.charAt(0) == "-") num1 = num1.substr(1);
+    else if (num1[0] == "-") num1 = num1.substr(1);
 
     if (num2 instanceof Define) num2 = num2.num.join("");
-    else if (num2.charAt(0) == "-") num2 = num2.substr(1);
+    else if (num2[0] == "-") num2 = num2.substr(1);
 
     if (num1.length > maxNumberLength || num2.length > maxNumberLength) return true;
         
@@ -202,8 +202,8 @@ function ADD(num1: Define | string, num2: Define | string): Define | string {
 
             if (semifinal > 9) {
                 semifinal = String(semifinal);
-                const carryChar = semifinal.charAt(0);
-                final.push(semifinal.charAt(1));
+                const carryChar = semifinal[0];
+                final.push(semifinal[1]);
 
                 if (i == 0) final.push(carryChar);
 
@@ -255,17 +255,20 @@ function SUBTRACT(num1: Define | string, num2: Define | string): Define | string
             const finali: number = maxChar - i - 1,
                 semifinal: number = +num1.num[i] - +num2.num[i];
             
-            if (semifinal < 0 && i != 0) {
-                let j = i - 1;
+            if (semifinal < 0) {
+                if (i == 0) final[finali] = String(semifinal*-1 - 1);
+                else {
+                    let j = i - 1;
 
-                final[finali] = String(semifinal + 10), num1[j] = String(+num1[j] - 1);
+                    final[finali] = String(semifinal + 10), num1.num[j] = String(+num1.num[j] - 1);
 
-                while (+num1.num[j] < 0 && j != num1.decimals) num1.num[j] = String(+num1[j] + 10), j = j - 1, num1.num[j] = String(+num1.num[j] - 1);
+                    while (+num1.num[j] < 0 && j != num1.decimals) num1.num[j] = String(+num1[j] + 10), j = j - 1, num1.num[j] = String(+num1.num[j] - 1);
 
-                if (num1.decimals > 0 && j == num1.decimals)
-                    while (+num1.num[j] < 0 && j != 0) num1.num[j] = String((+num1.num[j]) + 10), j = j - 1, num1.num[j] = String(num1.num[j] + 1);
-            } else if (semifinal <= 0 && i == 0) final[finali] = String(semifinal).charAt(0) == "-" ? String(semifinal*-1 - 1) : String(semifinal);
-            else final[finali] = String(semifinal);
+                    if (num1.decimals > 0 && j == num1.decimals) {
+                        while (+num1.num[j] < 0 && j != 0) num1.num[j] = String((+num1.num[j]) + 10), j = j - 1, num1.num[j] = String(num1.num[j] + 1);
+                    }
+                }
+            } else final[finali] = String(semifinal);
         }
 
         return new Define(final.reverse(), parsed.isNeg, parsed.decimals);
@@ -365,14 +368,14 @@ function MULTIPLY(num1: Define | string, num2: Define | string): Define | string
             for (let top = num1.num.length - 1; top >= 0; top--) {
                 const r2i = num1.num.length - top - 1;
                 
-                if (+num2.num[bottom] != 0 && +num1.num[top] != 0) {
-                    let trifinal: String | number = +num2.num[bottom] * +num1.num[bottom];
+                if (+num2.num[bottom] != 0 && +num1.num[bottom] != 0) {
+                    let trifinal: String | number = +num2.num[bottom] * +num1.num[top];
                     if (carry != 0) trifinal += carry, carry = 0;
                     
                     if (+trifinal > 9) {
                         trifinal = ""+trifinal;
-                        const carryChar = trifinal.charAt(0);
-                        semifinal[r2i] = trifinal.charAt(1);
+                        const carryChar = trifinal[0];
+                        semifinal[r2i] = trifinal[1];
         
                         if (top == 0) semifinal.push(carryChar);
         
@@ -383,10 +386,8 @@ function MULTIPLY(num1: Define | string, num2: Define | string): Define | string
             
             if (f.length > 0) semifinal = f.concat(semifinal);
             final[r1i] = new Define(semifinal, false, 0);
-            varinfo({ final });
         }
         
-        varinfo({ final });
         if (final.length > 1) {
             let answer = ADD(final[0], final[1]);
             for (let i = 2; i < final.length; i++) answer = ADD(answer, final[i]);
