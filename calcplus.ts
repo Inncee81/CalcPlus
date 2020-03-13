@@ -406,7 +406,15 @@ export function multiply(...numbers: (Define | string)[]): string {
     return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg) : permfinal;
 }
 
-/* export function divide(...numbers: string[]): string {
+function DIVIDE(num1: Define | string, num2: Define | string, maxD?: number, i?: number, getDec?: boolean): Define | string {
+    return "( ͡ಠ ʖ̯ ͡ಠ)";
+}
+
+export function divide(...numbers: string[]): string {
+    return "( ͡ಠ ʖ̯ ͡ಠ)";
+}
+
+/*export function divide(...numbers: string[]): string {
     function temp(num1:string|Define, num2:string|Define, maxD: number, i: number, getDec: boolean) {
         if (!powermode || (powermode && shouldRun(num1, num2))) {
             let parsedNums = parse(num1, num2, 4),
@@ -447,44 +455,54 @@ export function multiply(...numbers: (Define | string)[]): string {
     let a = [...numbers], permfinal = temp(a[0], a[1], maxDecimal, 1, false);
     for (let i = 2; i < a.length - 1; i++) permfinal = temp(permfinal, a[i], maxDecimal, 1, false);
     return permfinal;
+}*/
+
+function EXPONENT(num1: Define | string, num2: Define | string, maxD?: any): Define | string {
+    if (!powermode || (powermode && shouldRun(num1, num2))) {
+        if (typeof num1 == "string") num1 = new Define(num1);
+        if (typeof num2 == "string") num2 = new Define(num2);
+        if (!maxD) maxD = maxDecimalLength;
+
+        const parsed = parse(num1, num2, 5);
+
+        num1 = parsed.num1, num2 = parsed.num2;
+
+        if (num1.decimals > 0) {
+            // root_of_decimal2*10(num1)**(num2*(10*decimal2))
+            throw new TypeError("Decimal exponentnents aren't supported yet");
+        } else {
+            if (num2.num.length == 1 && num2.num[0] == "1" && !num2.isNeg) return new Define(num1.num, false, parsed.decimals);
+            else if ((num2.num.length == 1 && +num2.num[0] == 0) || num1.num.length == 1 && +num1.num[0] == 1 && !num1.isNeg) return new Define(["1"], false, 0);
+            else if (num2.isNeg) {
+                num2.isNeg = false;
+                return DIVIDE(new Define(["1"], false, 0), num2, maxD);
+            } else if (num1.isNeg) {
+                num2.isNeg = false;
+                return DIVIDE("1", EXPONENT(num1, num2), maxD)
+            }
+            else {
+                let final: Define | string = MULTIPLY(num1, num1);
+                console.log(final);
+                for (let i: Define | string = new Define(["2"], false, 0); isLessThan(i, num2); i = ADD(i, new Define(["1"], false, 0))) final = MULTIPLY(final, num1);
+                
+                return final;
+            }
+        }
+    } else return String((num1 instanceof Define ? num1.getNumber() : +num1) ** (num2 instanceof Define ? num2.getNumber() : +num2));
 }
 
 export function exponent(...numbers: any[]): string {
-    function temp(num1: Define | string, num2: Define | string, maxD: any) {
-        if (!powermode || (powermode && shouldRun(num1, num2))) {
-            let parsedNums = parse(num1, num2, 5),
-                num = [null, parsedNums.num1, parsedNums.num2],
-                decimals = [parsedNums.decimals, parsedNums.num2.decimals],
-                neg = [parsedNums.isNeg, parsedNums.num1.isNeg, parsedNums.num2.isNeg],
-                final = "";
+    const a = [...numbers];
+    let permfinal: Define | string = EXPONENT(a[0], a[1]);
+    
+    for (let i = 2; i < a.length; i++) permfinal = EXPONENT(permfinal, a[i]);
 
-            if (decimals[1] > 0) {
-                // root_of_decimal2*10(num1)**(num2*(10*decimal2))
-                throw new TypeError("Decimal exponentnents aren't supported yet");
-            } else {
-                if (num[2].num.length == 1 && num[2].num[0] == "1" && !neg[2]) return formatOutput(num[1].num, decimals[0], false, true, false);
-                else if ((num[2].num.length == 1 && num[2].num[0] == "0") || (num[1].num.length == 1 && num[1].num[0] == "1" && !neg[1])) return "1";
-                else if (neg[2]) return divide("1", temp(num[1], num[2].set("isNeg", false), maxD));
-                else {
-                    if (num[1].num[0] == "-") num[1].num.shift();
-                    final = multiply(num[1], num[1]);
-                    for (let i = "2"; isLessThan(new Define(i.split(""), false, 0), num[2]); i = add(new Define(i.split(""), false, 0), new Define(["1"], false, 0))) final = multiply(final, num[1]);
-                    return final;
-                }
-            }
-        } else return String((num1 instanceof Define ? num1.getNumber() : +num1) ** (num2 instanceof Define ? num2.getNumber() : +num2));
-    }
-    let a = [...numbers];
-    if (Array.isArray(a[0])) a = a[0];
-    let maxD = typeof a[a.length - 1] == "number" ? a[a.length - 1] : maxDecimal,
-        permfinal = temp(a[0], a[1], maxD);
-    for (let i = 2; i < a.length; i++) permfinal = temp(permfinal, a[i], maxD);
-    return permfinal;
+    return permfinal instanceof Define ? formatOutput(permfinal.num, permfinal.decimals, permfinal.isNeg) : permfinal;
 }
 
 export function factorial(item: Define | string): string|Define {
     return +item < 0 ? new Define(["1"], true, 0) : +item == 0 ? new Define(["1"], false, 0) : multiply(item, factorial(subtract(item, new Define(["1"], false, 0))));
-}*/
+}
 
 export {
     // exponent as pow,

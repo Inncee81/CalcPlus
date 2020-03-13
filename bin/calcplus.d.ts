@@ -52,4 +52,7 @@ export declare function round(item: Define | string): string;
 export declare function roundDown(item: Define | string): string;
 export declare function roundUp(item: Define | string): string;
 export declare function multiply(...numbers: (Define | string)[]): string;
+export declare function divide(...numbers: string[]): string;
+export declare function exponent(...numbers: any[]): string;
+export declare function factorial(item: Define | string): string | Define;
 export { roundUp as ceil, roundDown as floor };
