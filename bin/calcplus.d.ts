@@ -15,24 +15,21 @@ export declare function calcplus_info(): {
     minor: number;
     bugFix: number;
 };
-export declare class Define extends Object {
-    num: string[];
-    isNeg: boolean;
+interface numberProperties extends Object {
+    numbers: string[];
+    isNegative: boolean;
     decimals: number;
-    constructor(numberString: string[], isNegative: boolean, decimals: number);
-    constructor(numberString: string);
-    getNumber(): number;
 }
+export declare function define(numberString: string): numberProperties;
 export declare enum MathMode {
     ADD = 1,
     SUBTRACT = 2,
     MULTIPLY = 3,
-    DIVIDE = 4,
-    EXPONENT = 5
+    DIVIDE = 4
 }
-export declare function parse(num1: Define, num2: Define, mathMode: MathMode): {
-    num1: Define;
-    num2: Define;
+export declare function parse(num1: numberProperties, num2: numberProperties, mathMode: MathMode): {
+    num1: numberProperties;
+    num2: numberProperties;
     isNeg: boolean;
     decimals: number;
 };
@@ -42,17 +39,17 @@ export declare function setMaxSafeInteger(maxIntegerLength: number | "default"):
 export declare function getMaxSafeInteger(): number;
 export declare function setMaxDecimalLength(maxDecimals: number | "default"): void;
 export declare function getMaxDecimalLength(): number;
-export declare function add(...numbers: (Define | string)[]): string;
-export declare function subtract(...numbers: (Define | string)[]): string;
-export declare function isLessThan(num1: Define | string, num2: Define | string): boolean;
-export declare function isGreaterThan(num1: Define | string, num2: Define | string): boolean;
-export declare function isLessThanEqual(num1: Define | string, num2: Define | string): boolean;
-export declare function isGreaterThanEqual(num1: Define | string, num2: Define | string): boolean;
-export declare function round(item: Define | string): string;
-export declare function roundDown(item: Define | string): string;
-export declare function roundUp(item: Define | string): string;
-export declare function multiply(...numbers: (Define | string)[]): string;
+export declare function add(...numbers: (string | numberProperties)[]): string;
+export declare function subtract(...numbers: (string | numberProperties)[]): string;
+export declare function isLessThan(num1: string | numberProperties, num2: string | numberProperties): boolean;
+export declare function isGreaterThan(num1: string | numberProperties, num2: string | numberProperties): boolean;
+export declare function isLessThanEqual(num1: string | numberProperties, num2: string | numberProperties): boolean;
+export declare function isGreaterThanEqual(num1: string | numberProperties, num2: string | numberProperties): boolean;
+export declare function round(item: string | numberProperties): string;
+export declare function roundDown(item: string | numberProperties): string;
+export declare function roundUp(item: string | numberProperties): string;
+export declare function multiply(...numbers: (string | numberProperties)[]): string;
 export declare function divide(...numbers: string[]): string;
 export declare function exponent(...numbers: any[]): string;
-export declare function factorial(item: Define | string): string | Define;
-export { roundUp as ceil, roundDown as floor };
+export declare function factorial(item: string | numberProperties): string | numberProperties;
+export { exponent as pow, roundUp as ceil, roundDown as floor };
