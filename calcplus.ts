@@ -1,13 +1,19 @@
 /**
  * Copyright 2019-2020 Eric (VirxEC/Virx) Michael Veilleux
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+ * 
  * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * 
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * 
  * See the License for the specific language governing permissions and limitations under the License
  * 
- * This is the NodeJS/ModuleJS release of https://github.com/VirxEC/CalcPlus and https://www.virxcase.ga
- * For more information about CalcPlus, go to https://www.virxcase.ga/CalcPlus/
- * To preview this library online, go to https://www.virxcase.ga/CP-P
+ * This is the NodeJS/ModuleJS release of {@link https://github.com/VirxEC/CalcPlus CalcPlus} as seen on {@link https://www.virxcase.ga VirxEC Showcase}
+ * 
+ * For more information about CalcPlus, go to {@link https://www.virxcase.ga/CalcPlus/ About CalcPlus on VirxEC Showcase}
+ * 
+ * To preview this library online, go to {@link https://www.virxcase.ga/CP-P Preview CalcPlus on VirxEC Showcase}
  */
 export function calcplus_info() {
     return {
@@ -20,7 +26,7 @@ export function calcplus_info() {
 
 const defaults: { powermode: boolean, maxNumberLength: number, maxDecimalLength: number } = {
     powermode: false, // Feel free to change this, or use togglePowerMode();
-    maxNumberLength: 15, // Feel free to change this, or use setMaxIntegerLength(maxIntegerLength);
+    maxNumberLength: String(Number.MAX_SAFE_INTEGER).length - 1, // Feel free to change this, or use setMaxIntegerLength(maxIntegerLength);
     maxDecimalLength: 10 // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 };
 
@@ -90,17 +96,21 @@ export function parse(num1: numberProperties, num2: numberProperties, mathMode: 
     for (let i = 0; !isNeg && mathMode === 2 && negCalc && !(num1.numbers[i] > num2.numbers[i]) && i < num1.numbers.length; i++)
         if (num1.numbers[i] < num2.numbers[i]) isNeg = true;
 
+    if (mathMode === 2 && isNeg && !num1.isNegative && !num2.isNegative) num1 = [num2, num2 = num1][0];
+
     if (mathMode === 3 || mathMode === 4) {
         if (num1.isNegative !== num2.isNegative) isNeg = true;
         if (num1.isNegative && num2.isNegative) {
             isNeg = false;
             num1 = [num2, num2 = num1][0];
         }
-    }
 
-    for (let i = num1.numbers.length; mathMode === 4 && i < num2.numbers.length; i++) {
-        num1.numbers.push("0");
-        decimals++;
+        if (mathMode === 4) {
+            for (let i = num1.numbers.length; i < num2.numbers.length; i++) {
+                num1.numbers.push("0");
+                decimals++;
+            }
+        }
     }
 
     return {
@@ -125,8 +135,8 @@ function formatOutput(numbers: string[], decimals: number, isNegative: boolean) 
     return ["", ".", "-", "-0"].includes(final) ? "0" : final;
 }
 
-function stringToNumber(item: string | numberProperties): number {
-    return typeof item === "string" ? +item : +formatOutput(item.numbers, item.decimals, item.isNegative);
+function toNumber(item: string | number | numberProperties): number {
+    return typeof item === "number" ? item : typeof item === "string" ? +item : +formatOutput(item.numbers, item.decimals, item.isNegative);
 }
 
 function shouldRun(num1: string | numberProperties, num2?: string | numberProperties): boolean {
@@ -135,15 +145,18 @@ function shouldRun(num1: string | numberProperties, num2?: string | numberProper
             if (num1[0] === "-") num1 = num1.substr(1);
         } else num1 = num1.numbers.join("");
 
-        if (num2 === null) num2 = "";
-        else if (typeof num2 === "string") {
+        if (num1.length > maxNumberLength) return true;
+
+        if (num2 === null) return false;
+        if (typeof num2 === "string") {
             if (num2[0] === "-") num2 = num2.substr(1);
         } else num2 = num2.numbers.join("");
 
-        if (num1.length > maxNumberLength || num2.length > maxNumberLength) return true;
+        if (num2.length > maxNumberLength) return true;
 
         return false;
-    } else return true;
+    }
+    return true;
 }
 
 export function setPowerMode(mode: boolean): void {
@@ -155,8 +168,7 @@ export function getPowerMode(): boolean {
 }
 
 export function setMaxSafeInteger(maxIntegerLength: number | "default"): void {
-    if (maxIntegerLength === "default") maxNumberLength = defaults.maxNumberLength;
-    else maxNumberLength = maxIntegerLength;
+    maxNumberLength = maxIntegerLength === "default" ? defaults.maxNumberLength : maxIntegerLength;
 }
 
 export function getMaxSafeInteger(): number {
@@ -164,16 +176,18 @@ export function getMaxSafeInteger(): number {
 }
 
 export function setMaxDecimalLength(maxDecimals: number | "default"): void {
-    if (maxDecimals === "default") maxDecimalLength = defaults.maxDecimalLength;
-    else maxDecimalLength = maxDecimals;
+    maxDecimalLength = maxDecimals === "default" ? defaults.maxDecimalLength : maxDecimals;
 }
 
 export function getMaxDecimalLength(): number {
     return maxDecimalLength;
 }
 
-function ADD(num1: string | numberProperties, num2: string | numberProperties): string | numberProperties {
-    if (shouldRun(num1, num2)) {
+function ADD(num1: string | number | numberProperties, num2: string | number | numberProperties): number | numberProperties {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+        if (typeof num1 === "number") num1 = define(String(num1));
+        else if (typeof num2 === "number") num2 = define(String(num2));
+        
         if (typeof num1 === "string") num1 = define(num1);
         if (typeof num2 === "string") num2 = define(num2);
 
@@ -187,11 +201,11 @@ function ADD(num1: string | numberProperties, num2: string | numberProperties): 
 
         if (num2.isNegative) {
             num2.isNegative = false;
-            return subtract(num1, num2);
+            return SUBTRACT(num1, num2);
         }
         if (num1.isNegative) {
             num1.isNegative = false;
-            return subtract(num2, num1);
+            return SUBTRACT(num2, num1);
         }
 
         for (let i = maxChar - 1; i >= 0; i--) {
@@ -213,20 +227,23 @@ function ADD(num1: string | numberProperties, num2: string | numberProperties): 
             isNegative: parsed.isNeg,
             decimals: parsed.decimals
         };
-    } else return String(stringToNumber(num1) + stringToNumber(num2));
+    } else return toNumber(num1) + toNumber(num2);
 }
 
-export function add(...numbers: (string | numberProperties)[]): string {
+export function add(...numbers: (string | numberProperties)[]): string | number {
     const a = [...numbers];
-    let permfinal: string | numberProperties = ADD(a[0], a[1]);
+    let permfinal: number | numberProperties = ADD(a[0], a[1]);
 
     for (let i = 2; i < a.length; i++) permfinal = ADD(permfinal, a[i]);
 
-    return typeof permfinal === "string" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
+    return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
 }
 
-function SUBTRACT(num1: string | numberProperties, num2: string | numberProperties): string | numberProperties {
-    if (shouldRun(num1, num2)) {
+function SUBTRACT(num1: number | string | numberProperties, num2: number | string | numberProperties): number | numberProperties {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+        if (typeof num1 === "number") num1 = define(String(num1));
+        else if (typeof num2 === "number") num2 = define(String(num2));
+        
         if (typeof num1 === "string") num1 = define(num1);
         if (typeof num2 === "string") num2 = define(num2);
 
@@ -246,7 +263,7 @@ function SUBTRACT(num1: string | numberProperties, num2: string | numberProperti
             num1.isNegative = false;
             const item = ADD(num1, num2);
 
-            if (typeof item === "string") return "-" + item;
+            if (typeof item === "number") return item*-1;
 
             item.isNegative = true;
             return item;
@@ -277,102 +294,118 @@ function SUBTRACT(num1: string | numberProperties, num2: string | numberProperti
             isNegative: parsed.isNeg,
             decimals: parsed.decimals
         };
-    } else return String(stringToNumber(num1) - stringToNumber(num2));
+    } else return toNumber(num1) - toNumber(num2);
 }
 
-export function subtract(...numbers: (string | numberProperties)[]): string {
+export function subtract(...numbers: (string | numberProperties)[]): string | number {
     const a = [...numbers];
-    let permfinal: string | numberProperties = SUBTRACT(a[0], a[1]);
+    let permfinal: number | numberProperties = SUBTRACT(a[0], a[1]);
 
     for (let i = 2; i < a.length; i++) permfinal = SUBTRACT(permfinal, a[i]);
 
-    return typeof permfinal === "string" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
+    return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
 }
 
-export function isLessThan(num1: string | numberProperties, num2: string | numberProperties): boolean {
-    if (shouldRun(num1, num2)) {
-        const num: string | numberProperties = SUBTRACT(num2, num1);
+export function isLessThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+        const num: number | numberProperties = SUBTRACT(num2, num1);
 
         if (typeof num === "string" && num[0] !== "-" && +num !== 0) return true;
+        
         else if (typeof num === "object" && !num.isNegative && +num.numbers !== 0) return true;
 
         return false;
-    } else return stringToNumber(num1) < stringToNumber(num2);
+    } else return toNumber(num1) < toNumber(num2);
 }
 
-export function isGreaterThan(num1: string | numberProperties, num2: string | numberProperties): boolean {
-    if (shouldRun(num1, num2)) {
-            const num: string | numberProperties = SUBTRACT(num2, num1);
-            varinfo({ num });
+export function isGreaterThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+            const num: number | numberProperties = SUBTRACT(num2, num1);
     
             if (typeof num === "string" && num[0] === "-" && +num !== 0) return true;
             else if (typeof num === "object" && num.isNegative && +num.numbers !== 0) return true;
             
             return false;
-    } else return stringToNumber(num1) > stringToNumber(num2);
+    } else return toNumber(num1) > toNumber(num2);
 }
 
-export function isLessThanEqual(num1: string | numberProperties, num2: string | numberProperties): boolean {
-    if (shouldRun(num1, num2)) {
-        const num: string | numberProperties = SUBTRACT(num2, num1);
+export function isLessThanEqual(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+        const num: number | numberProperties = SUBTRACT(num2, num1);
 
         if (typeof num === "string" && num[0] !== "-") return true;
+        
         else if (typeof num === "object" && !num.isNegative) return true;
         
         return false;
-    } else return stringToNumber(num1) < stringToNumber(num2);
+    } else return toNumber(num1) < toNumber(num2);
 }
 
-export function isGreaterThanEqual(num1: string | numberProperties, num2: string | numberProperties): boolean {
-    if (shouldRun(num1, num2)) {
-            const num: string | numberProperties = SUBTRACT(num2, num1);
-    
-            if (typeof num === "string" && num[0] === "-") return true;
-            else if (typeof num === "object" && num.isNegative) return true;
+export function isGreaterThanEqual(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+        const num: number | numberProperties = SUBTRACT(num2, num1);
+  
+        if (typeof num === "string" && num[0] === "-") return true;
+        else if (typeof num === "object" && num.isNegative) return true;
             
-            return false;
-    } else return stringToNumber(num1) > stringToNumber(num2);
+        return false;
+    } else return toNumber(num1) > toNumber(num2);
 }
 
-export function round(item: string | numberProperties): string {
-    if (shouldRun(item)) {
+export function round(item: string | number | numberProperties): string | number {
+    if (typeof item !== "number" && shouldRun(item)) {
         if (typeof item === "object") {
             let temp = item.numbers[item.decimals];
             item.numbers.length -= item.decimals;
 
-            if (item.decimals > 0 && +temp > 4) return add(item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 });
+            if (item.decimals > 0 && +temp > 4) {
+                const final = ADD(item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 });
+            }
             return item.numbers.join("");
         }
 
-        let temp = item.split(".");
-        if (temp.length > 1 && +temp[1].split("")[0] > 4) return add(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 });
+        const temp = item.split(".");
+        if (temp.length > 1 && +temp[1].split("")[0] > 4) {
+            const final = ADD(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 });
+            return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;
+        }
         return temp[0];
-    } else return String(Math.round(stringToNumber(item)));
+    } else return Math.round(toNumber(item));
 }
 
-export function roundDown(item: string | numberProperties): string {
-    if (shouldRun(item)) {
+export function roundDown(item: string | number | numberProperties): string | number {
+    if (typeof item !== "number" &&shouldRun(item)) {
+        let final;
         if (typeof item === "object") {
             item.numbers.length -= item.decimals;
-            return item.isNegative ? subtract("-" + item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 }) : item.numbers.join("");
+            final = item.isNegative ? SUBTRACT("-" + item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 }) : item.numbers.join("");
+        } else {
+            const temp = item.split(".")[0];
+            final = temp[0] === "-" ? SUBTRACT(temp, { numbers: ["1"], isNegative: false, decimals: 0 }) : temp;
         }
 
-        let temp = item.split(".")[0];
-        return temp[0] === "-" ? subtract(temp, { numbers: ["1"], isNegative: false, decimals: 0 }) : temp;
-    } else return String(Math.floor(stringToNumber(item)));
+        return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;
+    } else return Math.floor(toNumber(item));
 }
 
-export function roundUp(item: string | numberProperties): string {
-    if (shouldRun(item)) {
-        if (typeof item === "object") return item.decimals > 0 ? item.isNegative ? formatOutput((() => { item.numbers.length -= item.decimals; return item.numbers.reverse(); })(), 0, true) : add(item, { numbers: ["1"], isNegative: false, decimals: 0 }) : formatOutput(item.numbers.reverse(), 0, item.isNegative);
+export function roundUp(item: string | numberProperties): string | number {
+    if (typeof item !== "number" && shouldRun(item)) {
+        let final;
+        if (typeof item === "object") final = item.decimals > 0 ? item.isNegative ? formatOutput((() => { item.numbers.length -= item.decimals; return item.numbers.reverse(); })(), 0, true) : ADD(item, { numbers: ["1"], isNegative: false, decimals: 0 }) : formatOutput(item.numbers.reverse(), 0, item.isNegative);
+        else {
+            const temp = item.split(".");
+            final = temp.length === 2 ? temp[0][0] === "-" ? temp[0] : ADD(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 }) : item;
+        }
+
+        return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;
+    } else return Math.ceil(toNumber(item));
+}
+
+function MULTIPLY(num1: string | number | numberProperties, num2: string | number | numberProperties): number | numberProperties {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+        if (typeof num1 === "number") num1 = define(String(num1));
+        else if (typeof num2 === "number") num2 = define(String(num2));
         
-        let temp = item.split(".");
-        return temp.length === 2 ? temp[0][0] === "-" ? temp[0] : add(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 }) : item;
-    } else return String(Math.ceil(stringToNumber(item)));
-}
-
-function MULTIPLY(num1: string | numberProperties, num2: string | numberProperties): string | numberProperties {
-    if (shouldRun(num1, num2)) {
         if (typeof num1 === "string") num1 = define(num1);
         if (typeof num2 === "string") num2 = define(num2);
 
@@ -422,37 +455,38 @@ function MULTIPLY(num1: string | numberProperties, num2: string | numberProperti
             return answer;
         }
         return final[0];
-    } else return String(stringToNumber(num1) * stringToNumber(num2));
+    } else return toNumber(num1) * toNumber(num2);
 }
 
-export function multiply(...numbers: (string | numberProperties)[]): string {
+export function multiply(...numbers: (string | numberProperties)[]): string | number {
     const a = [...numbers];
-    let permfinal: string | numberProperties = MULTIPLY(a[0], a[1]);
+    let permfinal: number | numberProperties = MULTIPLY(a[0], a[1]);
 
     for (let i = 2; i < a.length; i++) permfinal = MULTIPLY(permfinal, a[i]);
 
-    return typeof permfinal === "string" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
+    return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
 }
 
-function DIVIDE(num1: string | numberProperties, num2: string | numberProperties, maxD?: number, i?: number, getDec?: boolean): string | numberProperties {
-    return "( ͡ಠ ʖ̯ ͡ಠ)";
+function DIVIDE(num1: string | number | numberProperties, num2: string | number | numberProperties, maxD?: number, i?: number, getDec?: boolean): number | numberProperties {
+    return toNumber(num1) / toNumber(num2);
 }
 
-export function divide(...numbers: string[]): string {
+export function divide(...numbers: string[]): string | number {
     const a = [...numbers];
-    let permfinal: string | numberProperties = DIVIDE(a[0], a[1]);
+    let permfinal: number | numberProperties = DIVIDE(a[0], a[1]);
 
     for (let i = 2; i < a.length; i++) permfinal = DIVIDE(permfinal, a[i]);
 
-    return typeof permfinal === "string" ? permfinal : formatOutput(permfinal.numbers.reverse(), permfinal.decimals, permfinal.isNegative);
+    return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers.reverse(), permfinal.decimals, permfinal.isNegative);
 }
 
 /*export function divide(...numbers: string[]): string {
     function temp(num1:string|Define, num2:string|Define, maxD: number, i: number, getDec: boolean) {
-        if (shouldRun(num1, num2)) {
+        if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
             let parsedNums = parse(num1, num2, 4),
-                neg = [parsedNums.isNegative, parsedNums.numbers1.isNegative, parsedNums.numbers2.isNegative],
-                num: any = [parsedNums.numbers1.numbers, parsedNums.numbers2.numbers],
+                nelse eg = [parsedNums.isNegative, parsedNums.numbers1.isNegative, parsedNums.numbers2.isNegative],
+                n
+                um: any = [parsedNums.numbers1.numbers, parsedNums.numbers2.numbers],
                 decimals = parsedNums.decimals,
                 final: any = "0";
             if (num[0].numbers === ["0"]) return "0";
@@ -483,15 +517,18 @@ export function divide(...numbers: string[]): string {
                 final,
                 decimal: decimals
             } : final;
-        } else return String(stringToNumber(num1) / stringToNumber(num2));
+        } else return String(toNumber(num1) / toNumber(num2));
     }
     let a = [...numbers], permfinal = temp(a[0], a[1], maxDecimal, 1, false);
     for (let i = 2; i < a.length - 1; i++) permfinal = temp(permfinal, a[i], maxDecimal, 1, false);
     return permfinal;
 }*/
 
-function EXPONENT(num1: string | numberProperties, num2: string | numberProperties, maxD?: any): string | numberProperties {
-    if (shouldRun(num1, num2)) {
+function EXPONENT(num1: string | number | numberProperties, num2: string | number | numberProperties, maxD?: any): number | numberProperties {
+    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+        if (typeof num1 === "number") num1 = define(String(num1));
+        else if (typeof num2 === "number") num2 = define(String(num2));
+        
         if (typeof num1 === "string") num1 = define(num1);
         if (typeof num2 === "string") num2 = define(num2);
         if (!maxD) maxD = maxDecimalLength;
@@ -509,26 +546,31 @@ function EXPONENT(num1: string | numberProperties, num2: string | numberProperti
                 num2.isNegative = false;
                 return DIVIDE("1", EXPONENT(num1, num2), maxD)
             } else {
-                let final: string | numberProperties = MULTIPLY(num1, num1);
-                for (let i: string | numberProperties = { numbers: ["2"], isNegative: true, decimals: 0 }; isLessThanEqual(i, num2); i = ADD(i, { numbers: ["1"], isNegative: false, decimals: 0 })) final = MULTIPLY(final, num1);
+                let final: number | numberProperties = MULTIPLY(num1, num1);
+                for (let i: number | numberProperties = { numbers: ["2"], isNegative: true, decimals: 0 }; isLessThanEqual(i, num2); i = ADD(i, { numbers: ["1"], isNegative: false, decimals: 0 })) final = MULTIPLY(final, num1);
 
                 return final;
             }
         }
-    } else return String(stringToNumber(num1) ** stringToNumber(num2));
+    } else return toNumber(num1) ** toNumber(num2);
 }
 
-export function exponent(...numbers: any[]): string {
+export function exponent(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
-    let permfinal: string | numberProperties = EXPONENT(a[0], a[1]);
+    let permfinal: number | numberProperties = EXPONENT(a[0], a[1]);
 
     for (let i = 2; i < a.length; i++) permfinal = EXPONENT(permfinal, a[i]);
 
-    return typeof permfinal === "string" ? permfinal : formatOutput(permfinal.numbers.reverse(), permfinal.decimals, permfinal.isNegative);
+    return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers.reverse(), permfinal.decimals, permfinal.isNegative);
 }
 
-export function factorial(item: string | numberProperties): string | numberProperties {
-    return +item < 0 ? { numbers: ["1"], isNegative: true, decimals: 0 } : +item === 0 ? { numbers: ["1"], isNegative: false, decimals: 0 } : multiply(item, factorial(subtract(item, { numbers: ["1"], isNegative: false, decimals: 0 })));
+function FACTORIAL(item: string | number | numberProperties): number | numberProperties {
+    return +item < 0 ? { numbers: ["1"], isNegative: true, decimals: 0 } : +item === 0 ? { numbers: ["1"], isNegative: false, decimals: 0 } : MULTIPLY(item, FACTORIAL(SUBTRACT(item, { numbers: ["1"], isNegative: false, decimals: 0 })));
+}
+
+export function factorial(number): string | number {
+    const final = FACTORIAL(number);
+    return typeof final == "number" ? final : formatOutput(final.numbers, final.decimals, final.isNegative)
 }
 
 export {
