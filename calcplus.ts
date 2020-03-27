@@ -68,23 +68,48 @@ export function parse(num1: numberProperties, num2: numberProperties, mathMode: 
     let isNeg: boolean = false,
         decimals: number = 0;
 
-    let maxChar = Math.max(num1.numbers.length, num2.numbers.length);
     if (num1.decimals > 0 || num2.decimals > 0) {
-        decimals = mathMode === 1 || mathMode === 2 ? Math.max(num1.decimals, num2.decimals) : mathMode === 3 ? num1.decimals + num2.decimals : num1.decimals - num2.decimals;
+        decimals = [1, 2].includes(mathMode) ? Math.max(num1.decimals, num2.decimals) : mathMode === 3 ? num1.decimals + num2.decimals : num1.decimals - num2.decimals;
         if (decimals < 0) decimals = 0;
     }
 
-    for (let i = 0; !isNeg && (num1.isNegative || num2.isNegative) && mathMode === 1 && num2.numbers.length === maxChar && i < num1.numbers.length; i++)
-        if (num2.numbers[i] > num1.numbers[i]) isNeg = true;
+    const maxChar = Math.max(num1.numbers.length, num2.numbers.length);
+    
+    if ([1, 2].includes(mathMode)) {
+        if (mathMode === 1) {
+            if (num2.numbers.length === maxChar) {
+                for (let i = 0; !isNeg && (num1.isNegative || num2.isNegative) && i < num1.numbers.length; i++) {
+                    if (num2.numbers[i] > num1.numbers[i]) isNeg = true;
+                }
+            }
+        }
+        
+        if (mathMode == 2) {
+            if (num1.isNegative && num2.isNegative) {
+                num1.isNegative = false;
+                num2.isNegative = false;
+            }
 
-    if (mathMode === 2 && num2.numbers.length - num2.decimals === maxChar && num1.numbers.length - num1.decimals !== maxChar) isNeg = true;
-    if (maxChar === num2.numbers.length && mathMode === 3) num1.numbers = [num2.numbers, num2.numbers = num1.numbers][0];
+            if (num2.numbers.length - num2.decimals === maxChar && num1.numbers.length - num1.decimals !== maxChar) isNeg = true;
 
-    if (num1.decimals !== num2.decimals && [1, 2].includes(mathMode)) {
-        if (num1.decimals === decimals)
-            for (let i = 0; i < num1.decimals - num2.decimals; i++) num2.numbers.push("0");
-        else if (num2.decimals === decimals)
-            for (let i = 0; i < num2.decimals - num1.decimals; i++) num1.numbers.push("0");
+            if (!isNeg && num2.numbers.length === maxChar) {
+                for (let i = 0; !isNeg && !(num1.numbers[i] > num2.numbers[i]) && i < num1.numbers.length; i++) {
+                    if (num1.numbers[i] < num2.numbers[i]) isNeg = true;
+                }
+            }
+
+            if (isNeg && !num1.isNegative && !num2.isNegative) {
+                num1 = [num2, num2 = num1][0];
+                isNeg = false;
+            }
+        }
+
+        if (num1.decimals !== num2.decimals) {
+            if (num1.decimals === decimals)
+                for (let i = 0; i < num1.decimals - num2.decimals; i++) num2.numbers.push("0");
+            else if (num2.decimals === decimals)
+                for (let i = 0; i < num2.decimals - num1.decimals; i++) num1.numbers.push("0");
+        }
     }
 
     if (num1.numbers.length !== num2.numbers.length && [1, 2, 4].includes(mathMode)) {
@@ -92,13 +117,11 @@ export function parse(num1: numberProperties, num2: numberProperties, mathMode: 
         while (num2.numbers.length - num1.numbers.length > 0) num1.numbers.unshift("0");
     }
 
-    let negCalc = num2.numbers.length === maxChar;
-    for (let i = 0; !isNeg && mathMode === 2 && negCalc && !(num1.numbers[i] > num2.numbers[i]) && i < num1.numbers.length; i++)
-        if (num1.numbers[i] < num2.numbers[i]) isNeg = true;
-
-    if (mathMode === 2 && isNeg && !num1.isNegative && !num2.isNegative) num1 = [num2, num2 = num1][0];
-
     if (mathMode === 3 || mathMode === 4) {
+        if (mathMode === 3) {
+            if (maxChar === num2.numbers.length) num1 = [num2, num2 = num1][0];
+        }
+
         if (num1.isNegative !== num2.isNegative) isNeg = true;
         if (num1.isNegative && num2.isNegative) {
             isNeg = false;
@@ -203,6 +226,7 @@ function ADD(num1: string | number | numberProperties, num2: string | number | n
             num2.isNegative = false;
             return SUBTRACT(num1, num2);
         }
+
         if (num1.isNegative) {
             num1.isNegative = false;
             return SUBTRACT(num2, num1);
@@ -222,6 +246,7 @@ function ADD(num1: string | number | numberProperties, num2: string | number | n
                 carry = +carryChar;
             } else final.push(String(semifinal));
         }
+
         return {
             numbers: final.reverse(),
             isNegative: parsed.isNeg,
@@ -254,7 +279,7 @@ function SUBTRACT(num1: number | string | numberProperties, num2: number | strin
 
         num1 = parsed.num1, num2 = parsed.num2;
 
-        if (num2.isNegative && !num1.isNegative) {
+        if (!num1.isNegative && num2.isNegative) {
             num2.isNegative = false;
             return ADD(num1, num2);
         }

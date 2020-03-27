@@ -1,2 +1,8 @@
 node_modules/
 .theia/
+.gitpod.yml
+.vscode/
+.github/
+_config.yml
+.npmrc
+LICENSE

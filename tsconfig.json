@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "classic",
+    "moduleResolution": "node",
     "sourceMap": true,
     "target": "esnext",
     "declaration": true,
@@ -11,8 +11,5 @@
   },
   "include": [
     "calcplus.ts"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }
