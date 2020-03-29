@@ -434,8 +434,6 @@ function MULTIPLY(num1: string | number | numberProperties, num2: string | numbe
         if (typeof num1 === "string") num1 = define(num1);
         if (typeof num2 === "string") num2 = define(num2);
 
-        const parsed = parse(num1, num2, 3);
-
         let final: numberProperties[] = [],
             f: string[] = [];
 

@@ -411,7 +411,6 @@ function MULTIPLY(num1, num2) {
             num1 = define(num1);
         if (typeof num2 === "string")
             num2 = define(num2);
-        const parsed = parse(num1, num2, 3);
         let final = [], f = [];
         for (let bottom = num2.numbers.length - 1; bottom >= 0; bottom--) {
             const r1i = num2.numbers.length - bottom - 1;

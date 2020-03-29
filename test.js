@@ -1,38 +1,43 @@
-import { add, subtract as sub } from './bin/calcplus.js';
+import * as cp from './bin/calcplus.js';
 
-var id = 0;
-
-function test(result, func, ...args) {
-    id++;
-    const resultT = func(...args);
-    if (!result === resultT) throw new InternalError(`Expected "${JSON.parse(result)}" but instead got "${JSON.parse(resultT)}" on ${id}.`);
+function random(min, max) {
+    return Math.random() * (max - min) + min;
 }
 
-// adding
-test("21", add, "15", "6");
-test("9", add, "15", "6");
-test("21", add, "6", "-15");
-test("9", add, "-6", "-15");
-test("-9", add, "6", "15");
-test("-21", add, "-6", "15");
-test(9, add, 15, 6);
-test(21, add, 6, -15);
-test(9, add, -6, -15);
-test(-9, add, 6, 15);
-test(-21, add, -6, 15);
+console.log("Validating functions...")
 
-// subtracting
-test("9", sub, "15", "6");
-test("21", sub, "6", "-15");
-test("9", sub, "-6", "-15");
-test("-9", sub, "6", "15");
-test("-21", sub, "-6", "15");
-test(9, sub, 15, 6);
-test(21, sub, 6, -15);
-test(9, sub, -6, -15);
-test(-9, sub, 6, 15);
-test(-21, sub, -6, 15);
+for (let i = 0; i < 10000; i++) {
+    let num1 = random(-200, 200),
+        num2 = random(-200, 200);
+    const resultT = cp.add(String(num1), String(num2)),
+        result = num1 + num2;
+    if (!result === resultT) throw new InternalError(`Expected "${JSON.parse(result)}" but instead got "${JSON.parse(resultT)}"`);
+}
 
-// test("759375", "multiply", "52605", "15");
-// test("759375", "exponent", "15", "5");
+console.log("ADD has been validated");
+
+for (let i = 0; i < 10000; i++) {
+    let num1 = random(-200, 200),
+        num2 = random(-200, 200);
+    const resultT = cp.subtract(String(num1), String(num2)),
+        result = num1 - num2;
+    if (!result === resultT) throw new InternalError(`Expected "${JSON.parse(result)}" but instead got "${JSON.parse(resultT)}"`);
+}
+
+console.log("SUBTRACT has been validated");
+
+for (let i = 0; i < 10000; i++) {
+    let num1 = random(-200, 200),
+        num2 = random(-200, 200);
+    const resultT = cp.multiply(String(num1), String(num2)),
+        result = num1 * num2;
+    if (!result === resultT) throw new InternalError(`Expected "${JSON.parse(result)}" but instead got "${JSON.parse(resultT)}"`);
+}
+
+console.log("MULTIPLY has been validated");
+
+console.log(`${15 ** 4} | ${cp.exponent("15", "4")}`);
+
+console.log("EXPONENT has been validated");
+
 // test("3", "divide", "15", "5");
