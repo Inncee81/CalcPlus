@@ -62,8 +62,10 @@ ES6 JavaScript Library:<br>
 &lt;/script>
 </pre>
 
-NodeJS Library:<br>
+NodeJS Library*:<br>
 <pre>  npm install @virxec/calcplus@0.4.3`</pre>
+
+*<i>Please note: Once you install the library, you must then go into your package.json and change the set "type" to "module". If you don't know how to use ES6 modules, you must research it first</i>
 
 ## What's the larget number CalcPlus can understand, written out?
 
@@ -72,7 +74,7 @@ I can't put it here. It's WAY to big. If you want to get an idea of just how big
 ## Contact me
   I'm in the EST timezone.
 
-  Discord: https://discord.gg/Fyu8Bdd
+  Discord: <a href="https://discord.gg/Fyu8Bdd">https://discord.gg/Fyu8Bdd</a>
   
   Email: <a href="mailto:virx@virxcase.ga">virx@virxcase.ga</a>
   
