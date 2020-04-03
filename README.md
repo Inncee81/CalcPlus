@@ -36,13 +36,13 @@ In most modern languages, when you go over the limit (we're using a 64-bit OS as
 
 ## How does CalcPlus work?
 In short, it does basic function like addition & subtraction like a human would - breaking it down, solving it column by column:
-<pre>
+```
       1 1   1 
     3 0 2 . 0 1 5
 +   0 1 8 . 9 9 0
 =================
     3 2 1 . 0 0 5
-</pre>
+```
 
 And from there, multiplication is just repeated addition, division is just repeated subtraction, exponents are just repeated multiplication and that kind of thing. Of course, this is very inefficient, so there are a number of optimizations to vastly speed up the process. Weak computers can instantaneously calculate 2<sup>256</sup>, which is 115792089237316195423570985008687907853269984665640564039457584007913129639936.
 
@@ -54,10 +54,16 @@ For now, it only supports ES6/NodeJS. I have plans to eventually port it to Pyth
 ES6 JavaScript Library:<br>
 &nbsp;&nbsp;<a href="https://github.com/VirxEC/CalcPlus/releases">Download latest beta</a><br>
 &nbsp;&nbsp;<a href="https://www.virxcase.ga/CalcPlus/CalcPlus.js" download="CalcPlus_ALPHA_ES6.js">Download latest alpha</a><br>
-&nbsp;&nbsp;`<script type="module">import * as calcplus from "https://www.virxcase.ga/CalcPlus/bin/calcplus.js"; /*Import latest alpha*/</script>`
+&nbsp;&nbsp;Import latest alpha:
+<pre>
+&lt;script type="module">
+  import * as calcplus from "https://www.virxcase.ga/CalcPlus/bin/calcplus.js";
+  /*Import latest alpha*/
+&lt;/script>
+</pre>
 
 NodeJS Library:<br>
-&nbsp;&nbsp;`npm install @virxec/calcplus@0.4.3`
+<pre>  npm install @virxec/calcplus@0.4.3`</pre>
 
 ## What's the larget number CalcPlus can understand, written out?
 
@@ -66,10 +72,10 @@ I can't put it here. It's WAY to big. If you want to get an idea of just how big
 ## Contact me
   I'm in the EST timezone.
 
-  Discord: https://discord.gg/538CZWf
+  Discord: https://discord.gg/Fyu8Bdd
   
   Email: <a href="mailto:virx@virxcase.ga">virx@virxcase.ga</a>
   
-  Issues/Questions/Feature Requests: https://github.com/VirxEC/CalcPlus/issues
+  Issues/Questions/Feature Requests: <a href="https://github.com/VirxEC/CalcPlus/issues">https://github.com/VirxEC/CalcPlus/issues</a>
   
   
