@@ -2,7 +2,7 @@
   "name": "@virxec/calcplus",
   "version": "0.5.0",
   "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision",
-  "main": "./node/calcplus.js",
+  "main": "./bin/calcplus.js",
   "type": "module",
   "scripts": {
     "test": "node ./test.js",
