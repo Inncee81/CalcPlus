@@ -51,7 +51,7 @@ For now, it only supports ES6/NodeJS. I have plans to eventually port it to Pyth
 
 ## How can I install CalcPlus?
 
-ES6 JavaScript Library:<br>
+ES6 Library:<br>
 &nbsp;&nbsp;<a href="https://github.com/VirxEC/CalcPlus/releases">Download latest beta</a><br>
 &nbsp;&nbsp;<a href="https://www.virxcase.ga/CalcPlus/CalcPlus.js" download="CalcPlus_ALPHA_ES6.js">Download latest alpha</a><br>
 &nbsp;&nbsp;Import latest alpha:
