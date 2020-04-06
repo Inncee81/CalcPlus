@@ -17,8 +17,10 @@ console.log("ADD has been validated");
 for (let i = 0; i < 10000; i++) {
     let num1 = random(-200, 200),
         num2 = random(-200, 200);
+
     const resultT = +cp.subtract(num1, num2),
         result = +(+num1 - +num2).toFixed(3);
+
     if (result !== resultT) throw new Error(`${num1} - ${num2} should be ${result} but instead got ${resultT} on check #${i+1}`);
 }
 
@@ -27,8 +29,10 @@ console.log("SUBTRACT has been validated");
 for (let i = 0; i < 10000; i++) {
     let num1 = random(-200, 200),
         num2 = random(-200, 200);
+
     const resultT = +cp.multiply(String(num1), String(num2)),
         result = +(num1 * num2).toFixed(3);
+
     if (result !== resultT) throw new Error(`${num1} * ${num2} should be ${result} but instead got ${resultT} on check #${i+1}`);
 }
 

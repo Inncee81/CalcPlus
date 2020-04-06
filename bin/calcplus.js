@@ -66,49 +66,58 @@ export function parse(num1, num2, mathMode) {
     const maxChar = Math.max(num1.numbers.length, num2.numbers.length);
     if ([1, 2].includes(mathMode)) {
         if (mathMode === 1) {
-            if (num2.numbers.length === maxChar) {
-                for (let i = 0; !isNeg && (num1.isNegative || num2.isNegative) && i < num1.numbers.length; i++) {
-                    if (num2.numbers[i] > num1.numbers[i])
+            if (!isNeg && (num1.isNegative || num2.isNegative) && num2.numbers.length === maxChar) {
+                for (let i = 0; i < num1.numbers.length; i++) {
+                    if (num2.numbers[i] > num1.numbers[i]) {
                         isNeg = true;
+                        break;
+                    }
                 }
             }
         }
-        if (mathMode == 2) {
+        if (num1.numbers.length !== num2.numbers.length) {
+            if (num1.decimals !== num2.decimals) {
+                if (num1.decimals === decimals) {
+                    for (let i = 0; i < num1.decimals - num2.decimals; i++) {
+                        num2.decimals++;
+                        num2.numbers.push("0");
+                    }
+                }
+                else if (num2.decimals === decimals) {
+                    for (let i = 0; i < num2.decimals - num1.decimals; i++) {
+                        num1.decimals++;
+                        num1.numbers.push("0");
+                    }
+                }
+            }
+            while (num1.numbers.length - num2.numbers.length > 0)
+                num2.numbers.unshift("0");
+            while (num2.numbers.length - num1.numbers.length > 0)
+                num1.numbers.unshift("0");
+        }
+        if (mathMode === 2) {
             if (num1.isNegative && num2.isNegative) {
                 num1.isNegative = false;
                 num2.isNegative = false;
+                num1 = [num2, num2 = num1][0];
             }
-            if (num2.numbers.length - num2.decimals === maxChar && num1.numbers.length - num1.decimals !== maxChar)
-                isNeg = true;
             if (!isNeg && num2.numbers.length === maxChar) {
-                for (let i = 0; !isNeg && !(num1.numbers[i] > num2.numbers[i]) && i < num1.numbers.length; i++) {
-                    if (num1.numbers[i] < num2.numbers[i])
+                for (let i = 0; i < maxChar; i++) {
+                    if (num1.numbers[i] === num2.numbers[i])
+                        continue;
+                    else if (num1.numbers[i] > num2.numbers[i])
+                        break;
+                    else {
                         isNeg = true;
+                        break;
+                    }
                 }
             }
             if (isNeg && !num1.isNegative && !num2.isNegative)
                 num1 = [num2, num2 = num1][0];
         }
-        if (num1.numbers.length !== num2.numbers.length) {
-            if (num1.decimals !== num2.decimals) {
-                if (num1.decimals === decimals)
-                    for (let i = 0; i < num1.decimals - num2.decimals; i++)
-                        num2.numbers.push("0");
-                else if (num2.decimals === decimals)
-                    for (let i = 0; i < num2.decimals - num1.decimals; i++)
-                        num1.numbers.push("0");
-            }
-            while (num1.numbers.length - num2.numbers.length > 0) {
-                num2.numbers.unshift("0");
-                num2.decimals++;
-            }
-            while (num2.numbers.length - num1.numbers.length > 0) {
-                num1.numbers.unshift("0");
-                num1.decimals++;
-            }
-        }
     }
-    if (mathMode === 3 || mathMode === 4) {
+    if ([3, 4].includes(mathMode)) {
         if (mathMode === 3) {
             if (maxChar === num2.numbers.length)
                 num1 = [num2, num2 = num1][0];
@@ -278,10 +287,10 @@ function SUBTRACT(num1, num2) {
                     let j = i - 1;
                     final[finali] = String(semifinal + 10), num1.numbers[j] = String(+num1.numbers[j] - 1);
                     while (+num1.numbers[j] < 0 && j !== num1.decimals)
-                        num1.numbers[j] = String(+num1[j] + 10), j = j - 1, num1.numbers[j] = String(+num1.numbers[j] - 1);
+                        num1.numbers[j] = String(+num1.numbers[j] + 10), j = j - 1, num1.numbers[j] = String(+num1.numbers[j] - 1);
                     if (num1.decimals > 0 && j === num1.decimals) {
                         while (+num1.numbers[j] < 0 && j !== 0)
-                            num1.numbers[j] = String((+num1.numbers[j]) + 10), j = j - 1, num1.numbers[j] = String(num1.numbers[j] + 1);
+                            num1.numbers[j] = String(+num1.numbers[j] + 10), j = j - 1, num1.numbers[j] = String(+num1.numbers[j] - 1);
                     }
                 }
             }
@@ -307,7 +316,7 @@ export function subtract(...numbers) {
 export function isLessThan(num1, num2) {
     if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
         const num = SUBTRACT(num2, num1);
-        if (typeof num === "string" && num[0] !== "-" && +num !== 0)
+        if (typeof num === "number" && Math.sign(num) === -1 && num !== 0)
             return true;
         else if (typeof num === "object" && !num.isNegative && +num.numbers !== 0)
             return true;
@@ -319,7 +328,7 @@ export function isLessThan(num1, num2) {
 export function isGreaterThan(num1, num2) {
     if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
         const num = SUBTRACT(num2, num1);
-        if (typeof num === "string" && num[0] === "-" && +num !== 0)
+        if (typeof num === "number" && Math.sign(num) === 1 && num !== 0)
             return true;
         else if (typeof num === "object" && num.isNegative && +num.numbers !== 0)
             return true;
@@ -328,12 +337,11 @@ export function isGreaterThan(num1, num2) {
     else
         return toNumber(num1) > toNumber(num2);
 }
-// this function doesn't work!
 export function isLessThanEqual(num1, num2) {
     if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
         const num = SUBTRACT(num2, num1);
-        if (typeof num === "string" && num[0] !== "-")
-            return true; // type === number
+        if (typeof num === "number" && Math.sign(num) === 1)
+            return true;
         else if (typeof num === "object" && !num.isNegative)
             return true;
         return false;
@@ -344,7 +352,7 @@ export function isLessThanEqual(num1, num2) {
 export function isGreaterThanEqual(num1, num2) {
     if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
         const num = SUBTRACT(num2, num1);
-        if (typeof num === "string" && num[0] === "-")
+        if (typeof num === "number" && Math.sign(num) === -1)
             return true;
         else if (typeof num === "object" && num.isNegative)
             return true;
@@ -360,6 +368,7 @@ export function round(item) {
             item.numbers.length -= item.decimals;
             if (item.decimals > 0 && +temp > 4) {
                 const final = ADD(item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 });
+                return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;
             }
             return item.numbers.join("");
         }
@@ -529,8 +538,6 @@ function EXPONENT(num1, num2, maxD) {
             num2 = define(num2);
         if (!maxD)
             maxD = maxDecimalLength;
-        varinfo({ num1 });
-        varinfo({ num2 });
         if (num1.decimals > 0) {
             // root_of_decimal2*10(num1)**(num2*(10*decimal2))
             throw new TypeError("Decimal exponentnents aren't supported yet");
@@ -575,6 +582,27 @@ function FACTORIAL(item) {
 export function factorial(number) {
     const final = FACTORIAL(number);
     return typeof final == "number" ? final : formatOutput(final.numbers, final.decimals, final.isNegative);
+    /*
+    The following is a method for calculating Factorials up to 15 decimals
+
+    const g = 7,
+        C = [0.99999999999980993, 676.5203681218851, -1259.1392167224028,771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 0.0000099843695780195716, 0.00000015056327351493116];
+
+    function gamma(z) {
+
+        if (z < 0.5) return Math.PI / (Math.sin(Math.PI * z) * gamma(1 - z));
+        else {
+            z -= 1;
+
+            let x = C[0];
+            for (var i = 1; i < g + 2; i++)
+            x += C[i] / (z + i);
+
+            const t = z + g + 0.5;
+            return Math.sqrt(2 * Math.PI) * Math.pow(t, (z + 0.5)) * Math.exp(-t) * x;
+        }
+    }
+    */
 }
 export { exponent as pow, roundUp as ceil, roundDown as floor };
 //# sourceMappingURL=calcplus.js.map
