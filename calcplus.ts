@@ -45,13 +45,14 @@ interface numberProperties extends Object {
 export function define(numberString: string): numberProperties {
     let isNegative: boolean,
         decimals: number;
+        
     numberString = numberString.replace(/,/g, "");
 
     if (numberString[0] === "-") numberString = numberString.replace("-", ""), isNegative = true;
     else isNegative = false;
 
     if (numberString.includes(".")) {
-        decimals = numberString.length - numberString.indexOf(".");
+        decimals = numberString.length - numberString.indexOf(".") - 1;
         numberString = numberString.replace(".", "");
     } else decimals = 0;
 
@@ -131,6 +132,25 @@ export function parse(num1: numberProperties, num2: numberProperties, mathMode: 
     if ([3, 4].includes(mathMode)) {
         if (mathMode === 3) {
             if (maxChar === num2.numbers.length) num1 = [num2, num2 = num1][0];
+            
+            if (num1.numbers.length !== num2.numbers.length) {
+                if (num1.decimals !== num2.decimals) {
+                    if (num1.decimals === decimals) {
+                        for (let i = 0; i < num1.decimals - num2.decimals; i++) {
+                            num2.decimals++;
+                            num2.numbers.push("0");
+                        }
+                    } else if (num2.decimals === decimals) {
+                        for (let i = 0; i < num2.decimals - num1.decimals; i++) {
+                            num1.decimals++;
+                            num1.numbers.push("0");
+                        }
+                    }
+                }
+
+                while (num1.numbers.length - num2.numbers.length > 0) num2.numbers.unshift("0");
+                while (num2.numbers.length - num1.numbers.length > 0) num1.numbers.unshift("0");
+            }
         }
 
         if (num1.isNegative !== num2.isNegative) isNeg = true;
@@ -156,7 +176,7 @@ export function parse(num1: numberProperties, num2: numberProperties, mathMode: 
 }
 
 function formatOutput(numbers: string[], decimals: number, isNegative: boolean) {
-    if (decimals > 0) numbers.splice(numbers.length - decimals + 1, 0, ".");
+    if (decimals > 0) numbers.splice(numbers.length - decimals, 0, ".");
     let final: string = numbers.join("");
 
     if (final.includes(".")) final = final.replace(/\.?0+$/g, '');
@@ -266,7 +286,7 @@ function ADD(num1: string | number | numberProperties, num2: string | number | n
     } else return toNumber(num1) + toNumber(num2);
 }
 
-export function add(...numbers: (string | numberProperties)[]): string | number {
+export function add(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = ADD(a[0], a[1]);
 
@@ -332,7 +352,7 @@ function SUBTRACT(num1: number | string | numberProperties, num2: number | strin
     } else return toNumber(num1) - toNumber(num2);
 }
 
-export function subtract(...numbers: (string | numberProperties)[]): string | number {
+export function subtract(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = SUBTRACT(a[0], a[1]);
 
@@ -423,7 +443,7 @@ export function roundDown(item: string | number | numberProperties): string | nu
     } else return Math.floor(toNumber(item));
 }
 
-export function roundUp(item: string | numberProperties): string | number {
+export function roundUp(item: string | number | numberProperties): string | number {
     if (typeof item !== "number" && shouldRun(item)) {
         let final;
         if (typeof item === "object") final = item.decimals > 0 ? item.isNegative ? formatOutput((() => { item.numbers.length -= item.decimals; return item.numbers.reverse(); })(), 0, true) : ADD(item, { numbers: ["1"], isNegative: false, decimals: 0 }) : formatOutput(item.numbers.reverse(), 0, item.isNegative);
@@ -443,6 +463,10 @@ function MULTIPLY(num1: string | number | numberProperties, num2: string | numbe
 
         if (typeof num1 === "string") num1 = define(num1);
         if (typeof num2 === "string") num2 = define(num2);
+
+        let parsed = parse(num1, num2, 3);
+
+        num1 = parsed.num1, num2 = parsed.num2;
 
         let final: numberProperties[] = [],
             f: string[] = [];
@@ -485,13 +509,25 @@ function MULTIPLY(num1: string | number | numberProperties, num2: string | numbe
         if (final.length > 1) {
             let answer = ADD(final[0], final[1]);
             for (let i = 2; i < final.length; i++) answer = ADD(answer, final[i]);
-            return answer;
+
+
+            return typeof answer === "number" ? answer : {
+                numbers: answer.numbers,
+                decimals: parsed.decimals,
+                isNegative: parsed.isNeg
+            };
         }
-        return final[0];
+        
+        return {
+            numbers: final[0].numbers,
+            decimals: parsed.decimals,
+            isNegative: parsed.isNeg
+        };
+
     } else return toNumber(num1) * toNumber(num2);
 }
 
-export function multiply(...numbers: (string | numberProperties)[]): string | number {
+export function multiply(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = MULTIPLY(a[0], a[1]);
 
@@ -504,7 +540,7 @@ function DIVIDE(num1: string | number | numberProperties, num2: string | number 
     return toNumber(num1) / toNumber(num2);
 }
 
-export function divide(...numbers: string[]): string | number {
+export function divide(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = DIVIDE(a[0], a[1]);
 
@@ -606,13 +642,13 @@ function FACTORIAL(item: string | number | numberProperties): number | numberPro
     return +item < 0 ? { numbers: ["1"], isNegative: true, decimals: 0 } : +item === 0 ? { numbers: ["1"], isNegative: false, decimals: 0 } : MULTIPLY(item, FACTORIAL(SUBTRACT(item, { numbers: ["1"], isNegative: false, decimals: 0 })));
 }
 
-export function factorial(number): string | number {
+export function factorial(number: string | number | numberProperties): string | number {
     const final = FACTORIAL(number);
     return typeof final == "number" ? final : formatOutput(final.numbers, final.decimals, final.isNegative);
     /*
     The following is a method for calculating Factorials up to 15 decimals
 
-    const g = 7,
+    const g = 7, <- Precision, must be 1 to 15
         C = [0.99999999999980993, 676.5203681218851, -1259.1392167224028,771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 0.0000099843695780195716, 0.00000015056327351493116];
 
     function gamma(z) {

@@ -38,7 +38,7 @@ export function define(numberString) {
     else
         isNegative = false;
     if (numberString.includes(".")) {
-        decimals = numberString.length - numberString.indexOf(".");
+        decimals = numberString.length - numberString.indexOf(".") - 1;
         numberString = numberString.replace(".", "");
     }
     else
@@ -121,6 +121,26 @@ export function parse(num1, num2, mathMode) {
         if (mathMode === 3) {
             if (maxChar === num2.numbers.length)
                 num1 = [num2, num2 = num1][0];
+            if (num1.numbers.length !== num2.numbers.length) {
+                if (num1.decimals !== num2.decimals) {
+                    if (num1.decimals === decimals) {
+                        for (let i = 0; i < num1.decimals - num2.decimals; i++) {
+                            num2.decimals++;
+                            num2.numbers.push("0");
+                        }
+                    }
+                    else if (num2.decimals === decimals) {
+                        for (let i = 0; i < num2.decimals - num1.decimals; i++) {
+                            num1.decimals++;
+                            num1.numbers.push("0");
+                        }
+                    }
+                }
+                while (num1.numbers.length - num2.numbers.length > 0)
+                    num2.numbers.unshift("0");
+                while (num2.numbers.length - num1.numbers.length > 0)
+                    num1.numbers.unshift("0");
+            }
         }
         if (num1.isNegative !== num2.isNegative)
             isNeg = true;
@@ -144,7 +164,7 @@ export function parse(num1, num2, mathMode) {
 }
 function formatOutput(numbers, decimals, isNegative) {
     if (decimals > 0)
-        numbers.splice(numbers.length - decimals + 1, 0, ".");
+        numbers.splice(numbers.length - decimals, 0, ".");
     let final = numbers.join("");
     if (final.includes("."))
         final = final.replace(/\.?0+$/g, '');
@@ -422,6 +442,8 @@ function MULTIPLY(num1, num2) {
             num1 = define(num1);
         if (typeof num2 === "string")
             num2 = define(num2);
+        let parsed = parse(num1, num2, 3);
+        num1 = parsed.num1, num2 = parsed.num2;
         let final = [], f = [];
         for (let bottom = num2.numbers.length - 1; bottom >= 0; bottom--) {
             const r1i = num2.numbers.length - bottom - 1;
@@ -459,9 +481,17 @@ function MULTIPLY(num1, num2) {
             let answer = ADD(final[0], final[1]);
             for (let i = 2; i < final.length; i++)
                 answer = ADD(answer, final[i]);
-            return answer;
+            return typeof answer === "number" ? answer : {
+                numbers: answer.numbers,
+                decimals: parsed.decimals,
+                isNegative: parsed.isNeg
+            };
         }
-        return final[0];
+        return {
+            numbers: final[0].numbers,
+            decimals: parsed.decimals,
+            isNegative: parsed.isNeg
+        };
     }
     else
         return toNumber(num1) * toNumber(num2);
@@ -585,7 +615,7 @@ export function factorial(number) {
     /*
     The following is a method for calculating Factorials up to 15 decimals
 
-    const g = 7,
+    const g = 7, <- Precision, must be 1 to 15
         C = [0.99999999999980993, 676.5203681218851, -1259.1392167224028,771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 0.0000099843695780195716, 0.00000015056327351493116];
 
     function gamma(z) {
