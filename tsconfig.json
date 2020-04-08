@@ -7,7 +7,9 @@
     "declaration": true,
     "declarationDir": "./bin",
     "outDir": "./bin",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "strict": true,
+    "removeComments": true
   },
   "include": [
     "calcplus.ts"
