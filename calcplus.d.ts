@@ -37,8 +37,4 @@ export declare function isGreaterThanEqual(num1: string | number | numberPropert
 export declare function round(item: string | number | numberProperties): string | number;
 export declare function roundDown(item: string | number | numberProperties): string | number;
 export declare function roundUp(item: string | number | numberProperties): string | number;
-export declare function multiply(...numbers: (string | number | numberProperties)[]): string | number;
-export declare function divide(...numbers: (string | number | numberProperties)[]): string | number;
-export declare function exponent(...numbers: (string | number | numberProperties)[]): string | number;
-export declare function factorial(number: string | number | numberProperties): string | number;
-export { exponent as pow, roundUp as ceil, roundDown as floor };
+export { roundUp as ceil, roundDown as floor };
