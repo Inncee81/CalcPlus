@@ -63,7 +63,7 @@ ES6 Library:<br>
 </pre>
 
 NodeJS Library*:<br>
-<pre>  npm install @virxec/calcplus@0.5.0`</pre>
+<pre>  npm install @virxec/calcplus@0.5.1</pre>
 
 *<i>Please note: Once you install the library, you must then go into your package.json and change the set "type" to "module". If you don't know how to use ES6 modules, you must research it first</i>
 

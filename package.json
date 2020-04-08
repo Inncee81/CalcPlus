@@ -1,6 +1,6 @@
 {
   "name": "@virxec/calcplus",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision",
   "main": "./calcplus.js",
   "type": "module",
@@ -26,12 +26,6 @@
   ],
   "author": "Eric (VirxEC/Virx)",
   "license": "Apache-2.0",
-  "dependencies": {
-    "node": "^13.12.0",
-    "@types/node": "^13.11.0",
-    "npm": "^6.14.4",
-    "typescript": "^3.8.3"
-  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
