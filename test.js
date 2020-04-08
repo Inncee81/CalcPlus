@@ -1,4 +1,4 @@
-import * as cp from './bin/calcplus.js';
+import * as cp from './calcplus.js';
 
 function random(min, max) {
     return (Math.random() * ((max) - (min)) + (min)).toFixed(3);

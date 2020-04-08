@@ -2,14 +2,14 @@
   "name": "@virxec/calcplus",
   "version": "0.5.0",
   "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision",
-  "main": "./bin/calcplus.js",
+  "main": "./calcplus.js",
   "type": "module",
   "scripts": {
     "test": "node ./test.js",
     "build": "tsc",
     "livebuild": "tsc -w",
     "testbuild": "npm run build && npm test",
-    "start": "node ./bin/calcplus.js",
+    "start": "node ./calcplus.js",
     "prod": "npm run build && npm start"
   },
   "keywords": [

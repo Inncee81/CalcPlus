@@ -1,0 +1,11 @@
+node_modules/
+src/
+.theia/
+.vscode/
+.github/
+.gitpod.yml
+_config.yml
+*.npmrc
+.gitignore
+test.js
+tsconfig.json

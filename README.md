@@ -57,7 +57,7 @@ ES6 Library:<br>
 &nbsp;&nbsp;Import latest alpha:
 <pre>
 &lt;script type="module">
-  import * as calcplus from "https://www.virxcase.ga/CalcPlus/bin/calcplus.js";
+  import * as calcplus from "https://www.virxcase.ga/CalcPlus/calcplus.js";
   /*Import latest alpha*/
 &lt;/script>
 </pre>

@@ -5,13 +5,16 @@
     "sourceMap": true,
     "target": "esnext",
     "declaration": true,
-    "declarationDir": "./bin",
-    "outDir": "./bin",
+    "declarationDir": "./",
+    "outDir": "./",
     "baseUrl": "./",
     "strict": true,
     "removeComments": true
   },
   "include": [
-    "calcplus.ts"
+    "./src/calcplus.ts"
+  ],
+  "exclude": [
+    "./node_modules/*"
   ]
 }
