@@ -1,9 +1,9 @@
 export function calcplus_info() {
     return {
-        name: "CalcPlus NodeJS/ModuleJS Library",
+        name: "CalcPlus Node/Module JS Library",
         major: 0,
         minor: 5,
-        bugFix: 0
+        bugFix: 2
     };
 }
 const defaults = {
