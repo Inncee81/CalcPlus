@@ -3,7 +3,7 @@ export function calcplus_info() {
         name: "CalcPlus Node/Module JS Library",
         major: 0,
         minor: 5,
-        bugFix: 2
+        bugFix: 3
     };
 }
 const defaults = {
@@ -187,22 +187,19 @@ function shouldRun(num1, num2) {
     }
     return true;
 }
-export function setPowerMode(mode) {
-    powermode = mode;
-}
-export function getPowerMode() {
+export function PowerMode(mode) {
+    if (mode)
+        powermode = mode;
     return powermode;
 }
-export function setMaxSafeInteger(maxIntegerLength) {
-    maxNumberLength = maxIntegerLength === "default" ? defaults.maxNumberLength : maxIntegerLength;
-}
-export function getMaxSafeInteger() {
+export function MaxIntegerLength(length) {
+    if (length)
+        maxNumberLength = length === "default" ? defaults.maxNumberLength : length;
     return maxNumberLength;
 }
-export function setMaxDecimalLength(maxDecimals) {
-    maxDecimalLength = maxDecimals === "default" ? defaults.maxDecimalLength : maxDecimals;
-}
-export function getMaxDecimalLength() {
+export function MaxDecimalLength(length) {
+    if (length)
+        maxDecimalLength = length === "default" ? defaults.maxDecimalLength : length;
     return maxDecimalLength;
 }
 function ADD(num1, num2) {

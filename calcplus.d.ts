@@ -22,12 +22,9 @@ export declare function parse(num1: numberProperties, num2: numberProperties, ma
     isNeg: boolean;
     decimals: number;
 };
-export declare function setPowerMode(mode: boolean): void;
-export declare function getPowerMode(): boolean;
-export declare function setMaxSafeInteger(maxIntegerLength: number | "default"): void;
-export declare function getMaxSafeInteger(): number;
-export declare function setMaxDecimalLength(maxDecimals: number | "default"): void;
-export declare function getMaxDecimalLength(): number;
+export declare function PowerMode(mode?: boolean): boolean;
+export declare function MaxIntegerLength(length?: number | "default"): number;
+export declare function MaxDecimalLength(length?: number | "default"): number;
 export declare function add(...numbers: (string | number | numberProperties)[]): string | number;
 export declare function subtract(...numbers: (string | number | numberProperties)[]): string | number;
 export declare function isLessThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean;

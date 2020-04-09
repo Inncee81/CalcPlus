@@ -20,7 +20,7 @@ export function calcplus_info() {
         name: "CalcPlus Node/Module JS Library",
         major: 0,
         minor: 5,
-        bugFix: 2
+        bugFix: 3
     };
 }
 
@@ -214,27 +214,18 @@ function shouldRun(num1: string | numberProperties, num2?: string | numberProper
     return true;
 }
 
-export function setPowerMode(mode: boolean): void {
-    powermode = mode;
-}
-
-export function getPowerMode(): boolean {
+export function PowerMode(mode?: boolean): boolean {
+    if (mode) powermode = mode;
     return powermode;
 }
 
-export function setMaxSafeInteger(maxIntegerLength: number | "default"): void {
-    maxNumberLength = maxIntegerLength === "default" ? defaults.maxNumberLength : maxIntegerLength;
-}
-
-export function getMaxSafeInteger(): number {
+export function MaxIntegerLength(length?: number | "default"): number {
+    if (length) maxNumberLength = length === "default" ? defaults.maxNumberLength : length;
     return maxNumberLength;
 }
 
-export function setMaxDecimalLength(maxDecimals: number | "default"): void {
-    maxDecimalLength = maxDecimals === "default" ? defaults.maxDecimalLength : maxDecimals;
-}
-
-export function getMaxDecimalLength(): number {
+export function MaxDecimalLength(length?: number | "default"): number {
+    if (length) maxDecimalLength = length === "default" ? defaults.maxDecimalLength : length;
     return maxDecimalLength;
 }
 
