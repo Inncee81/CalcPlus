@@ -20,7 +20,7 @@ export function calcplus_info() {
         name: "CalcPlus Node/Module JS Library",
         major: 0,
         minor: 5,
-        bugFix: 3
+        bugFix: 4
     };
 }
 
