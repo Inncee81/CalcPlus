@@ -1,8 +1,23 @@
 import * as cp from './calcplus.js';
 
 function random(min, max) {
-    return (Math.random() * ((max) - (min)) + (min)).toFixed(3);
+    return (Math.random() * (max - min) + min).toFixed(3);
 }
+
+function randomInt(min, max) {
+    return (Math.floor(Math.random() * (max - min) + min)).toString();
+}
+
+for (let i = 0; i < 10000; i++) {
+    let num1 = randomInt(0, 200),
+        num2 = randomInt(0, 200);
+
+    const resultT = +cp.add(num1, num2),
+        result = +(+num1 + +num2).toFixed(3);
+
+    if (result !== resultT) throw new Error(`${num1} + ${num2} should be ${result} but instead got ${resultT} on check #${i+1}`);
+}
+
 
 for (let i = 0; i < 10000; i++) {
     let num1 = random(0, 200),

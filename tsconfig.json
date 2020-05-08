@@ -8,8 +8,8 @@
     "declarationDir": "./",
     "outDir": "./",
     "baseUrl": "./",
-    "strict": true,
-    "removeComments": true
+    "strict": true
+    // "removeComments": true
   },
   "include": [
     "./src/calcplus.ts"
