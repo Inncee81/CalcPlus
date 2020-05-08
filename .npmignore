@@ -8,3 +8,4 @@ _config.yml
 .gitignore
 test.js
 tsconfig.json
+CNAME.*
