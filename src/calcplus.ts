@@ -454,7 +454,7 @@ export function roundUp(item: string | number | numberProperties): string | numb
             temp[1] = temp[1].replace(/0+$/, "");
             
             if (temp[1].length === 0) temp.pop();
-            final = temp.length === 2 ? temp[0][0] === "-" ? temp[0] : ADD(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 }) : item;
+            final = temp.length === 2 ? temp[0][0] === "-" ? temp[0] : ADD(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 }) : temp[0];
         }
 
         return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;

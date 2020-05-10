@@ -44,5 +44,5 @@
     "testbuild": "npm run build && npm test"
   },
   "type": "module",
-  "version": "0.5.4"
+  "version": "0.5.5"
 }
