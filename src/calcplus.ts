@@ -1,14 +1,20 @@
+/*!
+Copyright 2019-2020 Eric Michael Veilleux
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 /**
- * Copyright 2019-2020 Eric (VirxEC/Virx) Michael Veilleux
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
- *
- * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *
- * See the License for the specific language governing permissions and limitations under the License
- *
  * This is the NodeJS/ModuleJS release of {@link https://github.com/VirxEC/CalcPlus CalcPlus} as seen on {@link https://www.virxcase.ga VirxEC Showcase}
  *
  * For more information about CalcPlus, go to {@link https://calcplus.virxcase.ga/ About CalcPlus on VirxEC Showcase}
@@ -17,7 +23,7 @@
  */
 export function calcplus_info() {
     return {
-        name: "CalcPlus Node/Module JS Library",
+        name: "CalcPlus Node TypeScript/Module JavaScript Library",
         major: 0,
         minor: 5,
         bugFix: 4
@@ -202,7 +208,7 @@ function shouldRun(num1: string | numberProperties, num2?: string | numberProper
         if (num1.length > maxNumberLength) return true;
 
         if (num2 === undefined) return false;
-        
+
         if (typeof num2 === "string") {
             if (num2[0] === "-") num2 = num2.substr(1);
         } else num2 = num2.numbers.join("");
@@ -304,7 +310,7 @@ function SUBTRACT(num1: number | string | numberProperties, num2: number | strin
             num1.isNegative = false;
             const item = ADD(num1, num2);
 
-            if (typeof item === "number") return item*-1;
+            if (typeof item === "number") return item * -1;
 
             item.isNegative = true;
             return item;
@@ -358,8 +364,7 @@ export function isLessThan(num1: string | number | numberProperties, num2: strin
         const num: number | numberProperties = SUBTRACT(num2, num1);
 
         if (typeof num === "number" && Math.sign(num) === -1 && num !== 0) return true;
-
-        else if (typeof num === "object" && !num.isNegative && +num.numbers !== 0) return true;
+        else if (typeof num === "object" && !num.isNegative && +num.numbers.join('') !== 0) return true;
 
         return false;
     } else return toNumber(num1) < toNumber(num2);
@@ -367,12 +372,12 @@ export function isLessThan(num1: string | number | numberProperties, num2: strin
 
 export function isGreaterThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean {
     if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
-            const num: number | numberProperties = SUBTRACT(num2, num1);
+        const num: number | numberProperties = SUBTRACT(num2, num1);
 
-            if (typeof num === "number" && Math.sign(num) === 1 && num !== 0) return true;
-            else if (typeof num === "object" && num.isNegative && +num.numbers !== 0) return true;
+        if (typeof num === "number" && Math.sign(num) === 1 && num !== 0) return true;
+        else if (typeof num === "object" && num.isNegative && +num.numbers.join('') !== 0) return true;
 
-            return false;
+        return false;
     } else return toNumber(num1) > toNumber(num2);
 }
 
@@ -384,7 +389,7 @@ export function isLessThanEqual(num1: string | number | numberProperties, num2: 
         else if (typeof num === "object" && !num.isNegative) return true;
 
         return false;
-    } else return toNumber(num1) < toNumber(num2);
+    } else return toNumber(num1) <= toNumber(num2);
 }
 
 export function isGreaterThanEqual(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean {
@@ -392,10 +397,10 @@ export function isGreaterThanEqual(num1: string | number | numberProperties, num
         const num: number | numberProperties = SUBTRACT(num2, num1);
 
         if (typeof num === "number" && Math.sign(num) === -1) return true;
-        else if (typeof num === "object" && num.isNegative) return true;
+        else if (typeof num === "object" && (num.isNegative || +num.numbers.join('') === 0)) return true;
 
         return false;
-    } else return toNumber(num1) > toNumber(num2);
+    } else return toNumber(num1) >= toNumber(num2);
 }
 
 export function round(item: string | number | numberProperties): string | number {
@@ -405,15 +410,17 @@ export function round(item: string | number | numberProperties): string | number
             item.numbers.length -= item.decimals;
 
             if (item.decimals > 0 && +temp > 4) {
-                const final = ADD(item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 });
+                const final = item.isNegative ? SUBTRACT(item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 }) : ADD(item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 });
+
                 return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;
             }
             return item.numbers.join("");
         }
 
         const temp = item.split(".");
-        if (temp.length > 1 && +temp[1].split("")[0] > 4) {
-            const final = ADD(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 });
+        if (temp.length > 1 && +temp[1][0] >= 5) {
+            const final = temp[0][0] == "-" ? SUBTRACT(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 }) : ADD(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 });
+
             return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;
         }
         return temp[0];
@@ -421,14 +428,17 @@ export function round(item: string | number | numberProperties): string | number
 }
 
 export function roundDown(item: string | number | numberProperties): string | number {
-    if (typeof item !== "number" &&shouldRun(item)) {
+    if (typeof item !== "number" && shouldRun(item)) {
         let final;
         if (typeof item === "object") {
             item.numbers.length -= item.decimals;
             final = item.isNegative ? SUBTRACT("-" + item.numbers.join(""), { numbers: ["1"], isNegative: false, decimals: 0 }) : item.numbers.join("");
         } else {
-            const temp = item.split(".")[0];
-            final = temp[0] === "-" ? SUBTRACT(temp, { numbers: ["1"], isNegative: false, decimals: 0 }) : temp;
+            const temp = item.split(".");
+            temp[1] = temp[1].replace(/0+$/, "");
+
+            if (temp[1].length === 0) temp.pop();
+            final = temp.length === 2 ? temp[0][0] === "-" ? SUBTRACT(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 }) : temp[0] : temp[0];
         }
 
         return typeof final === "object" ? formatOutput(final.numbers, final.decimals, final.isNegative) : final;
@@ -441,6 +451,9 @@ export function roundUp(item: string | number | numberProperties): string | numb
         if (typeof item === "object") final = item.decimals > 0 ? item.isNegative ? formatOutput((() => { item.numbers.length -= item.decimals; return item.numbers.reverse(); })(), 0, true) : ADD(item, { numbers: ["1"], isNegative: false, decimals: 0 }) : formatOutput(item.numbers.reverse(), 0, item.isNegative);
         else {
             const temp = item.split(".");
+            temp[1] = temp[1].replace(/0+$/, "");
+            
+            if (temp[1].length === 0) temp.pop();
             final = temp.length === 2 ? temp[0][0] === "-" ? temp[0] : ADD(temp[0], { numbers: ["1"], isNegative: false, decimals: 0 }) : item;
         }
 
@@ -459,6 +472,8 @@ function MULTIPLY(num1: string | number | numberProperties, num2: string | numbe
         let parsed = parse(num1, num2, 3);
 
         num1 = parsed.num1, num2 = parsed.num2;
+
+        varinfo({ parsed })
 
         let final: numberProperties[] = [],
             f: string[] = [];
