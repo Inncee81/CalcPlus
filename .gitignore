@@ -5,3 +5,4 @@ node_modules/
 .github/
 _config.yml
 *.npmrc
+npm-debug.log

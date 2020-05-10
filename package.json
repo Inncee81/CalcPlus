@@ -36,5 +36,10 @@
   "bugs": {
     "url": "https://github.com/VirxEC/CalcPlus/issues"
   },
-  "homepage": "https://calcplus.virxcase.ga/"
+  "homepage": "https://calcplus.virxcase.ga/",
+  "devDependencies": {
+    "@types/mathjs": "^6.0.5",
+    "mathjs": "^7.0.0",
+    "typescript": "^3.9.0-beta"
+  }
 }

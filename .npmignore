@@ -9,3 +9,4 @@ _config.yml
 test.js
 tsconfig.json
 CNAME.*
+npm-debug.log
