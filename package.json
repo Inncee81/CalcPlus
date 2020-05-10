@@ -1,17 +1,18 @@
 {
-  "name": "@virxec/calcplus",
-  "version": "0.5.4",
-  "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision",
-  "main": "./calcplus.js",
-  "type": "module",
-  "scripts": {
-    "test": "node ./test.js",
-    "build": "tsc",
-    "livebuild": "tsc -w",
-    "testbuild": "npm run build && npm test",
-    "start": "node ./calcplus.js",
-    "prod": "npm run build && npm start"
+  "author": "Eric (VirxEC/Virx)",
+  "bugs": {
+    "url": "https://github.com/VirxEC/CalcPlus/issues"
   },
+  "description": "CalcPlus lets numbers be calculated way over the normal limit without losing precision",
+  "devDependencies": {
+    "@types/mathjs": "^6.0.5",
+    "mathjs": "^7.0.0",
+    "typescript": "^3.9.0-beta"
+  },
+  "engines": {
+    "node": ">= 14"
+  },
+  "homepage": "https://calcplus.virxcase.ga/",
   "keywords": [
     "typescript",
     "library",
@@ -24,8 +25,9 @@
     "threshold",
     "calcplus"
   ],
-  "author": "Eric (VirxEC/Virx)",
   "license": "Apache-2.0",
+  "main": "./calcplus.js",
+  "name": "@virxec/calcplus",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -33,13 +35,14 @@
     "type": "git",
     "url": "git://github.com/VirxEC/CalcPlus.git"
   },
-  "bugs": {
-    "url": "https://github.com/VirxEC/CalcPlus/issues"
+  "scripts": {
+    "build": "tsc",
+    "livebuild": "tsc -w",
+    "prod": "npm run build && npm start",
+    "start": "node ./calcplus.js",
+    "test": "node ./test.js",
+    "testbuild": "npm run build && npm test"
   },
-  "homepage": "https://calcplus.virxcase.ga/",
-  "devDependencies": {
-    "@types/mathjs": "^6.0.5",
-    "mathjs": "^7.0.0",
-    "typescript": "^3.9.0-beta"
-  }
+  "type": "module",
+  "version": "0.5.4"
 }

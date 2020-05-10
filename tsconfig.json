@@ -1,20 +1,19 @@
 {
   "compilerOptions": {
-    "module": "esnext",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "target": "esnext",
+    "baseUrl": "./",
     "declaration": true,
     "declarationDir": "./",
+    "module": "esnext",
+    "moduleResolution": "node",
     "outDir": "./",
-    "baseUrl": "./",
-    "strict": true
-    // "removeComments": true
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext"
   },
-  "include": [
-    "./src/calcplus.ts"
-  ],
   "exclude": [
     "./node_modules/*"
+  ],
+  "include": [
+    "./src/calcplus.ts"
   ]
 }
