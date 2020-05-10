@@ -56,5 +56,4 @@ export declare function isGreaterThanEqual(num1: string | number | numberPropert
 export declare function round(item: string | number | numberProperties): string | number;
 export declare function roundDown(item: string | number | numberProperties): string | number;
 export declare function roundUp(item: string | number | numberProperties): string | number;
-export declare function multiply(...numbers: (string | number | numberProperties)[]): string | number;
 export { roundUp as ceil, roundDown as floor };

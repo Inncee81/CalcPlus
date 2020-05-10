@@ -440,78 +440,65 @@ export function roundUp(item) {
     else
         return Math.ceil(toNumber(item));
 }
-function MULTIPLY(num1, num2) {
-    if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
-        if (typeof num1 === "number")
-            num1 = define(String(num1));
-        else if (typeof num2 === "number")
-            num2 = define(String(num2));
-        if (typeof num1 === "string")
-            num1 = define(num1);
-        if (typeof num2 === "string")
-            num2 = define(num2);
-        let parsed = parse(num1, num2, 3);
-        num1 = parsed.num1, num2 = parsed.num2;
-        varinfo({ parsed });
-        let final = [], f = [];
-        for (let bottom = num2.numbers.length - 1; bottom >= 0; bottom--) {
-            const r1i = num2.numbers.length - bottom - 1;
-            let semifinal = [], carry = 0;
-            if (bottom !== num2.numbers.length - 1)
-                f.push("0");
-            for (let top = num1.numbers.length - 1; top >= 0; top--) {
-                const r2i = num1.numbers.length - top - 1;
-                if (+num2.numbers[bottom] !== 0 && +num1.numbers[bottom] !== 0) {
-                    let trifinal = +num2.numbers[bottom] * +num1.numbers[top] + carry;
-                    carry = 0;
-                    if (+trifinal > 9) {
-                        trifinal = "" + trifinal;
-                        const carryChar = trifinal[0];
-                        semifinal[r2i] = trifinal[1];
-                        if (top === 0)
-                            semifinal.push(carryChar);
-                        carry = +carryChar;
-                    }
-                    else
-                        semifinal[r2i] = "" + trifinal;
-                }
-                else
-                    semifinal[r2i] = "0";
-            }
-            if (f.length > 0)
-                semifinal = f.concat(semifinal);
-            final[r1i] = {
-                numbers: semifinal.reverse(),
-                isNegative: false,
-                decimals: 0
-            };
-        }
-        if (final.length > 1) {
-            let answer = ADD(final[0], final[1]);
-            for (let i = 2; i < final.length; i++)
-                answer = ADD(answer, final[i]);
-            return typeof answer === "number" ? answer : {
-                numbers: answer.numbers,
-                decimals: parsed.decimals,
-                isNegative: parsed.isNeg
-            };
-        }
-        return {
-            numbers: final[0].numbers,
-            decimals: parsed.decimals,
-            isNegative: parsed.isNeg
-        };
-    }
-    else
-        return toNumber(num1) * toNumber(num2);
-}
-export function multiply(...numbers) {
-    const a = [...numbers];
-    let permfinal = MULTIPLY(a[0], a[1]);
-    for (let i = 2; i < a.length; i++)
-        permfinal = MULTIPLY(permfinal, a[i]);
-    return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
-}
+// function MULTIPLY(num1: string | number | numberProperties, num2: string | number | numberProperties): number | numberProperties {
+//     if (typeof num1 !== "number" && typeof num2 !== "number" && shouldRun(num1, num2)) {
+//         if (typeof num1 === "number") num1 = define(String(num1));
+//         else if (typeof num2 === "number") num2 = define(String(num2));
+//         if (typeof num1 === "string") num1 = define(num1);
+//         if (typeof num2 === "string") num2 = define(num2);
+//         let parsed = parse(num1, num2, 3);
+//         num1 = parsed.num1, num2 = parsed.num2;
+//         varinfo({ parsed })
+//         let final: numberProperties[] = [],
+//             f: string[] = [];
+//         for (let bottom = num2.numbers.length - 1; bottom >= 0; bottom--) {
+//             const r1i: number = num2.numbers.length - bottom - 1;
+//             let semifinal: string[] = [],
+//                 carry = 0;
+//             if (bottom !== num2.numbers.length - 1) f.push("0");
+//             for (let top = num1.numbers.length - 1; top >= 0; top--) {
+//                 const r2i = num1.numbers.length - top - 1;
+//                 if (+num2.numbers[bottom] !== 0 && +num1.numbers[bottom] !== 0) {
+//                     let trifinal: number | String = +num2.numbers[bottom] * +num1.numbers[top] + carry;
+//                     carry = 0;
+//                     if (+trifinal > 9) {
+//                         trifinal = "" + trifinal;
+//                         const carryChar = trifinal[0];
+//                         semifinal[r2i] = trifinal[1];
+//                         if (top === 0) semifinal.push(carryChar);
+//                         carry = +carryChar;
+//                     } else semifinal[r2i] = "" + trifinal;
+//                 } else semifinal[r2i] = "0";
+//             }
+//             if (f.length > 0) semifinal = f.concat(semifinal);
+//             final[r1i] = {
+//                 numbers: semifinal.reverse(),
+//                 isNegative: false,
+//                 decimals: 0
+//             };
+//         }
+//         if (final.length > 1) {
+//             let answer = ADD(final[0], final[1]);
+//             for (let i = 2; i < final.length; i++) answer = ADD(answer, final[i]);
+//             return typeof answer === "number" ? answer : {
+//                 numbers: answer.numbers,
+//                 decimals: parsed.decimals,
+//                 isNegative: parsed.isNeg
+//             };
+//         }
+//         return {
+//             numbers: final[0].numbers,
+//             decimals: parsed.decimals,
+//             isNegative: parsed.isNeg
+//         };
+//     } else return toNumber(num1) * toNumber(num2);
+// }
+// export function multiply(...numbers: (string | number | numberProperties)[]): string | number {
+//     const a = [...numbers];
+//     let permfinal: number | numberProperties = MULTIPLY(a[0], a[1]);
+//     for (let i = 2; i < a.length; i++) permfinal = MULTIPLY(permfinal, a[i]);
+//     return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
+// }
 // function DIVIDE(num1: string | number | numberProperties, num2: string | number | numberProperties, maxD?: number, i?: number, getDec?: boolean): number | numberProperties {
 //     return toNumber(num1) / toNumber(num2);
 // }
