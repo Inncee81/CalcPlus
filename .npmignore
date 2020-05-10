@@ -8,5 +8,5 @@ _config.yml
 .gitignore
 test.js
 tsconfig.json
-CNAME.*
+CNAME
 npm-debug.log
