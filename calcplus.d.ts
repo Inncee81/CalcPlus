@@ -31,23 +31,59 @@ interface numberProperties extends Object {
     isNegative: boolean;
     decimals: number;
 }
+/**
+ * This function takes a number string and returns the number's properties
+ * @param numberString A number but contained in a string
+ */
 export declare function define(numberString: string): numberProperties;
+/**
+ * This is used when passing a MathMode into the parse function
+ */
 export declare enum MathMode {
     ADD = 1,
     SUBTRACT = 2,
     MULTIPLY = 3,
     DIVIDE = 4
 }
+/**
+ *
+ * @param num1 An object containing a number's properties
+ * @param num2 An object containing a number's properties
+ * @param mathMode The math function that the number are to be parsed for
+ */
 export declare function parse(num1: numberProperties, num2: numberProperties, mathMode: MathMode): {
     num1: numberProperties;
     num2: numberProperties;
     isNeg: boolean;
     decimals: number;
 };
+/**
+ * PowerMode is set to the specified value
+ * Returns the current PowerMode
+ * @param mode Value (optional) to set the state of PowerMode to
+ */
 export declare function PowerMode(mode?: boolean): boolean;
+/**
+ * MaxIntegerLength is set to the specified value
+ * Returns the current MaxIntegerLength
+ * @param length Value (optional) to set the state of MaxIntegerLength to
+ */
 export declare function MaxIntegerLength(length?: number | "default"): number;
+/**
+ * MaxDecimalLength is set to the specified value
+ * Returns the current MaxDecimalLength
+ * @param length Value (optional) to set the state of MaxDecimalLength to
+ */
 export declare function MaxDecimalLength(length?: number | "default"): number;
+/**
+ * Returns the sum of all the addends passed
+ * @param numbers A series of 2 or more addends
+ */
 export declare function add(...numbers: (string | number | numberProperties)[]): string | number;
+/**
+ * Returns
+ * @param numbers
+ */
 export declare function subtract(...numbers: (string | number | numberProperties)[]): string | number;
 export declare function isLessThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean;
 export declare function isGreaterThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean;

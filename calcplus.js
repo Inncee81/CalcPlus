@@ -35,6 +35,10 @@ const defaults = {
 };
 var powermode = defaults.powermode, maxNumberLength = defaults.maxNumberLength, maxDecimalLength = defaults.maxDecimalLength;
 let varinfo = (obj) => console.log(JSON.stringify(obj)); // For debugging
+/**
+ * This function takes a number string and returns the number's properties
+ * @param numberString A number but contained in a string
+ */
 export function define(numberString) {
     let isNegative, decimals;
     numberString = numberString.replace(/,/g, "");
@@ -54,6 +58,9 @@ export function define(numberString) {
         decimals
     };
 }
+/**
+ * This is used when passing a MathMode into the parse function
+ */
 export var MathMode;
 (function (MathMode) {
     MathMode[MathMode["ADD"] = 1] = "ADD";
@@ -61,6 +68,12 @@ export var MathMode;
     MathMode[MathMode["MULTIPLY"] = 3] = "MULTIPLY";
     MathMode[MathMode["DIVIDE"] = 4] = "DIVIDE";
 })(MathMode || (MathMode = {}));
+/**
+ *
+ * @param num1 An object containing a number's properties
+ * @param num2 An object containing a number's properties
+ * @param mathMode The math function that the number are to be parsed for
+ */
 export function parse(num1, num2, mathMode) {
     let isNeg = false, decimals = 0;
     if (num1.decimals > 0 || num2.decimals > 0) {
@@ -209,16 +222,31 @@ function shouldRun(num1, num2) {
     }
     return true;
 }
+/**
+ * PowerMode is set to the specified value
+ * Returns the current PowerMode
+ * @param mode Value (optional) to set the state of PowerMode to
+ */
 export function PowerMode(mode) {
     if (mode)
         powermode = mode;
     return powermode;
 }
+/**
+ * MaxIntegerLength is set to the specified value
+ * Returns the current MaxIntegerLength
+ * @param length Value (optional) to set the state of MaxIntegerLength to
+ */
 export function MaxIntegerLength(length) {
     if (length)
         maxNumberLength = length === "default" ? defaults.maxNumberLength : length;
     return maxNumberLength;
 }
+/**
+ * MaxDecimalLength is set to the specified value
+ * Returns the current MaxDecimalLength
+ * @param length Value (optional) to set the state of MaxDecimalLength to
+ */
 export function MaxDecimalLength(length) {
     if (length)
         maxDecimalLength = length === "default" ? defaults.maxDecimalLength : length;
@@ -268,6 +296,10 @@ function ADD(num1, num2) {
     else
         return toNumber(num1) + toNumber(num2);
 }
+/**
+ * Returns the sum of all the addends passed
+ * @param numbers A series of 2 or more addends
+ */
 export function add(...numbers) {
     const a = [...numbers];
     let permfinal = ADD(a[0], a[1]);
@@ -328,6 +360,10 @@ function SUBTRACT(num1, num2) {
     else
         return toNumber(num1) - toNumber(num2);
 }
+/**
+ * Returns
+ * @param numbers
+ */
 export function subtract(...numbers) {
     const a = [...numbers];
     let permfinal = SUBTRACT(a[0], a[1]);

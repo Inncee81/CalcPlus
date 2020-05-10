@@ -48,6 +48,10 @@ interface numberProperties extends Object {
     decimals: number;
 }
 
+/**
+ * This function takes a number string and returns the number's properties
+ * @param numberString A number but contained in a string
+ */
 export function define(numberString: string): numberProperties {
     let isNegative: boolean,
         decimals: number;
@@ -69,8 +73,17 @@ export function define(numberString: string): numberProperties {
     };
 }
 
+/**
+ * This is used when passing a MathMode into the parse function
+ */
 export enum MathMode { ADD = 1, SUBTRACT, MULTIPLY, DIVIDE }
 
+/**
+ * 
+ * @param num1 An object containing a number's properties
+ * @param num2 An object containing a number's properties
+ * @param mathMode The math function that the number are to be parsed for
+ */
 export function parse(num1: numberProperties, num2: numberProperties, mathMode: MathMode): { num1: numberProperties, num2: numberProperties, isNeg: boolean, decimals: number } {
     let isNeg: boolean = false,
         decimals: number = 0;
@@ -220,16 +233,31 @@ function shouldRun(num1: string | numberProperties, num2?: string | numberProper
     return true;
 }
 
+/**
+ * PowerMode is set to the specified value
+ * Returns the current PowerMode
+ * @param mode Value (optional) to set the state of PowerMode to
+ */
 export function PowerMode(mode?: boolean): boolean {
     if (mode) powermode = mode;
     return powermode;
 }
 
+/**
+ * MaxIntegerLength is set to the specified value
+ * Returns the current MaxIntegerLength
+ * @param length Value (optional) to set the state of MaxIntegerLength to
+ */
 export function MaxIntegerLength(length?: number | "default"): number {
     if (length) maxNumberLength = length === "default" ? defaults.maxNumberLength : length;
     return maxNumberLength;
 }
 
+/**
+ * MaxDecimalLength is set to the specified value
+ * Returns the current MaxDecimalLength
+ * @param length Value (optional) to set the state of MaxDecimalLength to
+ */
 export function MaxDecimalLength(length?: number | "default"): number {
     if (length) maxDecimalLength = length === "default" ? defaults.maxDecimalLength : length;
     return maxDecimalLength;
@@ -274,6 +302,7 @@ function ADD(num1: string | number | numberProperties, num2: string | number | n
 
                 carry = +carryChar;
             } else final.push(String(semifinal));
+
         }
 
         return {
@@ -284,6 +313,10 @@ function ADD(num1: string | number | numberProperties, num2: string | number | n
     } else return toNumber(num1) + toNumber(num2);
 }
 
+/**
+ * @param numbers A series of 2 or more addends
+ * @returns The sum of all the addends passed
+ */
 export function add(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = ADD(a[0], a[1]);
@@ -350,6 +383,10 @@ function SUBTRACT(num1: number | string | numberProperties, num2: number | strin
     } else return toNumber(num1) - toNumber(num2);
 }
 
+/**
+ * @param numbers A series of a minuhend and 1 or more subtrahends
+ * @returns The difference of the minuend and subtrahends
+ */
 export function subtract(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = SUBTRACT(a[0], a[1]);
