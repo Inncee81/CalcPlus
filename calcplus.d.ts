@@ -75,15 +75,7 @@ export declare function MaxIntegerLength(length?: number | "default"): number;
  * @param length Value (optional) to set the state of MaxDecimalLength to
  */
 export declare function MaxDecimalLength(length?: number | "default"): number;
-/**
- * Returns the sum of all the addends passed
- * @param numbers A series of 2 or more addends
- */
 export declare function add(...numbers: (string | number | numberProperties)[]): string | number;
-/**
- * Returns
- * @param numbers
- */
 export declare function subtract(...numbers: (string | number | numberProperties)[]): string | number;
 export declare function isLessThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean;
 export declare function isGreaterThan(num1: string | number | numberProperties, num2: string | number | numberProperties): boolean;

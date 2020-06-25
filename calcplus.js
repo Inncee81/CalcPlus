@@ -296,10 +296,6 @@ function ADD(num1, num2) {
     else
         return toNumber(num1) + toNumber(num2);
 }
-/**
- * Returns the sum of all the addends passed
- * @param numbers A series of 2 or more addends
- */
 export function add(...numbers) {
     const a = [...numbers];
     let permfinal = ADD(a[0], a[1]);
@@ -360,10 +356,6 @@ function SUBTRACT(num1, num2) {
     else
         return toNumber(num1) - toNumber(num2);
 }
-/**
- * Returns
- * @param numbers
- */
 export function subtract(...numbers) {
     const a = [...numbers];
     let permfinal = SUBTRACT(a[0], a[1]);
