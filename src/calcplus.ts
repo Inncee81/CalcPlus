@@ -313,10 +313,6 @@ function ADD(num1: string | number | numberProperties, num2: string | number | n
     } else return toNumber(num1) + toNumber(num2);
 }
 
-/**
- * @param numbers A series of 2 or more addends
- * @returns The sum of all the addends passed
- */
 export function add(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = ADD(a[0], a[1]);
@@ -383,10 +379,6 @@ function SUBTRACT(num1: number | string | numberProperties, num2: number | strin
     } else return toNumber(num1) - toNumber(num2);
 }
 
-/**
- * @param numbers A series of a minuhend and 1 or more subtrahends
- * @returns The difference of the minuend and subtrahends
- */
 export function subtract(...numbers: (string | number | numberProperties)[]): string | number {
     const a = [...numbers];
     let permfinal: number | numberProperties = SUBTRACT(a[0], a[1]);
