@@ -65,12 +65,12 @@ For now, it only supports ES6/NodeJS. I have plans to eventually port it to Pyth
 ### ES6 CalcPlus
 
 + [Download latest beta](https://github.com/VirxEC/CalcPlus/releases)
-+ [Download latest alpha](https://calcplus.virxcase.ga/CalcPlus.js)
++ [Download latest alpha](https://calcplus.virxcase.dev/CalcPlus.js)
 + Import latest alpha:
 
 ```html
 <script type="module">
-  import * as CalcPlus from "https://calcplus.virxcase.ga/calcplus.js";
+  import * as CalcPlus from "https://calcplus.virxcase.dev/calcplus.js";
   /*Import latest alpha*/
 </script>
 ```
