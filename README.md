@@ -2,17 +2,17 @@
 
 ## Navigation
 
-+ [VirxEC Showcase](https://www.virxcase.ga)
-+ [Preview CalcPlus ES6](https://www.virxcase.ga/CP-P)
-+ [CalcPlus Source Code](https://www.virxcase.ga/CP-S)
++ [VirxEC Showcase](https://www.virxcase.dev)
++ [Preview CalcPlus ES6](https://www.virxcase.dev/CP-P)
++ [CalcPlus Source Code](https://www.virxcase.dev/CP-S)
 + [Preview CalcPlus NodeJS on Repl.it](https://repl.it/github/VirxEC/CalcPlus)
 + [What is ES6?](#what-is-es6)
 + [About CalcPlus](#about-calcplus)
 + [The advantages of using CalcPlus](#advantages-of-using-calcplus)
 + [How does CalcPlus work?](#how-does-calcplus-work)
 + [What languages does CalcPlus support](#what-languages-does-calcplus-support)
-+ [Installing/downloading CalcPlus](#installing/downloading-calcplus)
-+ [Largest number CalcPlus can understand, written out](#what's-the-largest-number-calcplus-can-understand,-written-out)
++ [Installing/downloading CalcPlus](#installingdownloading-calcplus)
++ [Largest number CalcPlus can understand, written out](#whats-the-largest-number-calcplus-can-understand-written-out)
 + [Contact me](#contact-me)
 
 ## What is ES6
@@ -32,7 +32,7 @@ Please note that the ES6/Node version of this Library is extremely RAM efficient
 
 It is planned that once the ES6 version is done, it will be ported to be a Python 3 Library.
 
-Want to see this library in action? Just go [here](https://www.virxcase.ga/CP-P)!
+Want to see this library in action? Just go [here](https://www.virxcase.dev/CP-P)!
 
 ## Advantages of using CalcPlus
 
@@ -65,7 +65,7 @@ For now, it only supports ES6/NodeJS. I have plans to eventually port it to Pyth
 ### ES6 CalcPlus
 
 + [Download latest beta](https://github.com/VirxEC/CalcPlus/releases)
-+ [Download latest alpha](https://calcplus.virxcase.dev/CalcPlus.js)
++ [Download latest alpha](https://calcplus.virxcase.dev/calcplus.js)
 + Import latest alpha:
 
 ```html
@@ -152,9 +152,9 @@ I can't put it here. It's WAY to big. If you want to get an idea of just how big
 
   I'm in the EST time zone.
 
-  Discord: [discord.gg/Fyu8Bdd](https://discord.gg/Fyu8Bdd)
+  Discord: [discord.gg/N3ppwGu](https://discord.gg/N3ppwGu)
   
-  Email: [virx@virxcase.ga](mailto:virx@virxcase.ga)
+  Email: [virx@virxcase.dev](mailto:virx@virxcase.dev)
 
   Issues/Questions/Feature Requests: [github.com/VirxEC/CalcPlus/issues](https://github.com/VirxEC/CalcPlus/issues)
   
