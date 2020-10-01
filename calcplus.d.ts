@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 /**
- * This is the NodeJS/ModuleJS release of {@link https://github.com/VirxEC/CalcPlus CalcPlus} as seen on {@link https://www.virxcase.ga VirxEC Showcase}
+ * This is the NodeJS/ModuleJS release of {@link https://github.com/VirxEC/CalcPlus CalcPlus} as seen on {@link https://www.virxcase.dev VirxEC Showcase}
  *
- * For more information about CalcPlus, go to {@link https://calcplus.virxcase.ga/ About CalcPlus on VirxEC Showcase}
+ * For more information about CalcPlus, go to {@link https://calcplus.virxcase.dev/ About CalcPlus on VirxEC Showcase}
  *
- * To preview this library online, go to {@link https://www.virxcase.ga/CP-P Preview CalcPlus on VirxEC Showcase}
+ * To preview this library online, go to {@link https://www.virxcase.dev/CP-P Preview CalcPlus on VirxEC Showcase}
  */
 export declare function calcplus_info(): {
     name: string;
@@ -84,4 +84,5 @@ export declare function isGreaterThanEqual(num1: string | number | numberPropert
 export declare function round(item: string | number | numberProperties): string | number;
 export declare function roundDown(item: string | number | numberProperties): string | number;
 export declare function roundUp(item: string | number | numberProperties): string | number;
+export declare function multiply(...numbers: (string | number | numberProperties)[]): string | number;
 export { roundUp as ceil, roundDown as floor };
