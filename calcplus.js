@@ -29,7 +29,7 @@ export function calcplus_info() {
     };
 }
 const defaults = {
-    powermode: true,
+    powermode: false,
     maxNumberLength: String(Number.MAX_SAFE_INTEGER).length - 1,
     maxDecimalLength: 10 // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 };
@@ -366,11 +366,17 @@ function SUBTRACT(num1, num2) {
                 else {
                     let j = i - 1;
                     final[finali] = String(semifinal + 10), num1.numbers[j] = String(+num1.numbers[j] - 1);
-                    while (+num1.numbers[j] < 0 && j !== num1.decimals)
-                        num1.numbers[j] = String(+num1.numbers[j] + 10), j = j - 1, num1.numbers[j] = String(+num1.numbers[j] - 1);
+                    while (+num1.numbers[j] < 0 && j !== num1.decimals) {
+                        num1.numbers[j] = String(+num1.numbers[j] + 10);
+                        j--;
+                        num1.numbers[j] = String(+num1.numbers[j] - 1);
+                    }
                     if (num1.decimals > 0 && j === num1.decimals) {
-                        while (+num1.numbers[j] < 0 && j !== 0)
-                            num1.numbers[j] = String(+num1.numbers[j] + 10), j = j - 1, num1.numbers[j] = String(+num1.numbers[j] - 1);
+                        while (+num1.numbers[j] < 0 && j !== 0) {
+                            num1.numbers[j] = String(+num1.numbers[j] + 10);
+                            j--;
+                            num1.numbers[j] = String(+num1.numbers[j] - 1);
+                        }
                     }
                 }
             }

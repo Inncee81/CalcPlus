@@ -31,7 +31,7 @@ export function calcplus_info() {
 }
 
 const defaults: { powermode: boolean, maxNumberLength: number, maxDecimalLength: number } = {
-    powermode: true, // Feel free to change this, or use togglePowerMode();
+    powermode: false, // Feel free to change this, or use togglePowerMode();
     maxNumberLength: String(Number.MAX_SAFE_INTEGER).length - 1, // Feel free to change this, or use setMaxIntegerLength(maxIntegerLength);
     maxDecimalLength: 10 // Feel free to change this, or use setMaxDecimalLength(maxDecimalLength);
 };
