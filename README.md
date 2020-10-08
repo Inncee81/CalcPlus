@@ -23,12 +23,22 @@ If you want to write in ES6, then just do this: `<script type="module">/*ModuleJ
 
 ## About CalcPlus
 
-This is a ES6 Library that let's numbers be calculated up to:
-
-+ 64 bit OS: 2<sup>64</sup>-1 digits ***long***, or 10<sup>(2<sup>64</sup>-1)</sup>-1.
-+ 32 bit OS: 2<sup>32</sup>-1 digits ***long***, or 10<sup>(2<sup>32</sup>-1)</sup>-1.
+This is a ES6 Library that let's numbers be calculated up to 2<sup>53</sup>-1 digits ***long***, or 10<sup>(2<sup>53</sup>-1)</sup>-1.
 
 Please note that the ES6/Node version of this Library is extremely RAM efficient. The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. This is a change from built-in systems in programming languages, which hog tons of RAM but are very CPU efficient.
+
+Average execution times in ***microseconds*** on a [free repl.it account](https://repl.it/github/VirxEC/CalcPlus) (with floats `12341234.12341234` and `56785678.56785678` and with powermode off):
++ `add` - 13 
++ `subtract` - 13
++ `isLessThan` - 11
++ `isLessThanEqual` - 10
++ `isGreaterThan` - 10
++ `isGreaterThanEqual` - 14
++ `round` - 1
++ `roundUp` - 1
++ `roundDown` - 1
++ `abs` - 1
++ `multiply` - 217
 
 It is planned that once the ES6 version is done, it will be ported to be a Python 3 Library.
 
@@ -36,11 +46,13 @@ Want to see this library in action? Just go [here](https://www.virxcase.dev/CP-P
 
 ## Advantages of using CalcPlus
 
-PLEASE NOTE: CalcPlus no longer uses large integers for its limit. It instead uses a number representing the length of the biggest number that it shouldn't preform its computations on. since normal JavaScript can only understand up to 2<sup>53</sup>, so this number is 15, or 999,999,999,999,999.
+<!-- PLEASE NOTE: CalcPlus no longer uses large integers for its limit. It instead uses a number representing the length of the biggest number that it shouldn't preform its computations on. since normal JavaScript can only understand up to 2<sup>53</sup>, so this number is 15, or 999,999,999,999,999. -->
 
 Normally, you can only calculate numbers on a 64-bit OS as long as the final result is less than 18,446,744,073,709,551,616. (4,294,967,296 for a 32-bit OS.) Or, if your language supports using more RAM to calculate huge numbers without losing precision, (like Python,) then the max number is 10<sup>custom_max_integer</sup>-1.
 
-In most modern languages, when you go over the limit (we're using a 64-bit OS as an example) it just starts to lose its precision. For example, to it, 18,446,744,073,709,551,621,573 is just 18,446,744,073,709,551,620,000. That's not the case with this library. Now, you might work in some languages like Python where your language is magically able to calculate huge numbers in an instant without losing precision. However, these languages are tricking you: the larger the number gets, the more RAM it takes. With JavaScript, this hasn't been implemented yet, so this program is still extremely viable. However, even when this comes to JavaScript, it won't matter. There's a feature in CalcPlus that lets you set a threshold. Above x number, the library will kick in, saving your RAM & instead of using your CPU. Don't worry, though - If you're using a high threshold and you do something like 10<sup>2<sup>64</sup></sup>, it won't have to start from the beginning. It will instantly calculate 2<sup>64</sup> with the language (using a bit of RAM) and from there multiply 18,446,744,073,709,551,616 by itself the remaining times. If your threshold is double 2<sup>64</sup>, or 2<sup>65</sup>, then it will multiply 18,446,744,073,709,551,616 by 18,446,744,073,709,551,616 and then the algorithm will kick in - even then, the threshold will continue to speed up the process, but it's a little more complicated and I don't feel like explaining. In short, in languages that increase the max number by using up more RAM, setting the threshold is like striking the perfect balance between how much RAM you want to use, and letting the CPU take over for the missing RAM that's needed.
+<!-- In some modern languages, when you go over the limit it just starts to lose its precision. For example, to it, 18,446,744,073,709,551,621,573 is just 18,446,744,073,709,550,000,000. That's not the case with this library. Now, you might work in some languages like Python where your language is magically able to calculate huge numbers in an instant without losing precision. However, these languages are tricking you: the larger the number gets, the more RAM it takes. With JavaScript, this hasn't been implemented yet, so this program is still extremely viable. However, even when this comes to JavaScript, it won't matter. There's a feature in CalcPlus that lets you set a threshold. Above x number, the library will kick in, saving your RAM & instead of using your CPU. Don't worry, though - If you're using a high threshold and you do something like 10<sup>2<sup>64</sup></sup>, it won't have to start from the beginning. It will instantly calculate 2<sup>64</sup> with the language (using a bit of RAM) and from there multiply 18,446,744,073,709,551,616 by itself the remaining times. If your threshold is double 2<sup>64</sup>, or 2<sup>65</sup>, then it will multiply 18,446,744,073,709,551,616 by 18,446,744,073,709,551,616 and then the algorithm will kick in - even then, the threshold will continue to speed up the process, but it's a little more complicated and I don't feel like explaining. In short, in languages that increase the max number by using up more RAM, setting the threshold is like striking the perfect balance between how much RAM you want to use, and letting the CPU take over for the missing RAM that's needed. -->
+
+In some modern languages, when you go over the limit it just starts to lose its precision. For example, to it, 18,446,744,073,709,551,621,573 is just 18,446,744,073,709,550,000,000. More and more languages these days are fixing this error, but there's another really big error that they have yet to fix - float point errors ([Why is this a problem/what is that?](https://floating-point-gui.de/errors/propagation/)). CalcPlus gets rid of any and all floating-point errors, while also fixing the loss of precision in really big integers. On top of this, it's really fast! ([View the About CalcPlus section](#about-calcplus)).
 
 ## How does CalcPlus work
 
@@ -54,11 +66,11 @@ In short, it does basic function like addition & subtraction like a human would 
     3 2 1 . 0 0 5
 ```
 
-And from there, multiplication is just repeated addition, dividing is just repeated subtraction, exponents are just repeated multiplication and that kind of thing. Of course, this is very inefficient, so there are a number of optimizations to vastly speed up the process. Weak computers can instantaneously calculate 2<sup>256</sup>, which is 115792089237316195423570985008687907853269984665640564039457584007913129639936.
+And from there, multiplication is just repeated addition, dividing is just repeated subtraction, exponents are just repeated multiplication and that kind of thing. Of course, this is very inefficient, so there are a number of optimizations to vastly speed up the process. Weak computers can instantaneously calculate 2<sup>256</sup>, which is 115792089237316195423570985008687907853269984665640564039457584007913129639936. [View the About CalcPlus section](#about-calcplus) for more information on the speed of certain functions.
 
 ## What languages does CalcPlus support
 
-For now, it only supports ES6/NodeJS. I have plans to eventually port it to Python 3, and then from there who knows where.
+For now, it only supports ES6/NodeJS. I have plans to eventually port it to Python 3.
 
 ## Installing/downloading CalcPlus
 
