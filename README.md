@@ -27,7 +27,7 @@ This is a ES6 Library that let's numbers be calculated up to 2<sup>53</sup>-1 di
 
 Please note that the ES6/Node version of this Library is extremely RAM efficient. The speed of your RAM may also limit the speed of the program, but the biggest bottleneck (for speed) is most often going to be your CPU. This is a change from built-in systems in programming languages, which hog tons of RAM but are very CPU efficient.
 
-Average execution times in ***microseconds*** on a [free repl.it account](https://repl.it/github/VirxEC/CalcPlus) (with floats `12341234.12341234` and `56785678.56785678` and with powermode off):
+Average execution times in ***microseconds*** on a [free repl.it account](https://repl.it/github/VirxEC/CalcPlus) (@1.1 GHz with floats `12341234.12341234` and `56785678.56785678` and with powermode off):
 + `add` - 13 
 + `subtract` - 13
 + `isLessThan` - 11
