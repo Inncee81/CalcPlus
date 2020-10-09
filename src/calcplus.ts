@@ -26,7 +26,7 @@ export function calcplus_info() {
         name: "CalcPlus Node TypeScript/Module JavaScript Library",
         major: 0,
         minor: 5,
-        bugFix: 8
+        bugFix: 9
     };
 }
 

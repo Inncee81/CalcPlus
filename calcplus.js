@@ -25,7 +25,7 @@ export function calcplus_info() {
         name: "CalcPlus Node TypeScript/Module JavaScript Library",
         major: 0,
         minor: 5,
-        bugFix: 8
+        bugFix: 9
     };
 }
 const defaults = {
@@ -611,8 +611,6 @@ function DIVIDE(num1, num2, maxD = maxDecimalLength, i = 1) {
         if (+num2.numbers.join('') === 0)
             return;
         let final = { numbers: ["0"], decimals: 0, isNegative: false };
-        varinfo({ num1 });
-        varinfo({ num2 });
         while (isLessThanEqual(num2, num1))
             num1 = SUBTRACT(num1, num2), final = ADD(final, { numbers: ["1"], isNegative: false, decimals: 0 });
         /*if (maxD > parsed.decimals && !isLessThanEqual(num2, num1) && (typeof num1 === "object" ? +num1.numbers.join("") : num1) !== 0 && toNumber(SUBTRACT(num1, num2)) !== 0) {
