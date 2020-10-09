@@ -677,7 +677,7 @@ export function multiply(...numbers: (string | number | numberProperties)[]): st
     return typeof permfinal === "number" ? permfinal : formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative);
 }
 
-function DIVIDE(num1: string | number | numberProperties, num2: string | number | numberProperties, maxD: number = maxDecimalLength, i: number = 1): string | number {
+function DIVIDE(num1: string | number | numberProperties, num2: string | number | numberProperties, maxD: number = maxDecimalLength, i: number = 1): number | numberProperties | undefined {
     if (shouldRun(num1, num2)) {
         if (typeof num1 === "number") num1 = define(num1 + "");
         else if (typeof num1 === "string") num1 = define(num1);
@@ -685,21 +685,19 @@ function DIVIDE(num1: string | number | numberProperties, num2: string | number 
         if (typeof num2 === "number") num2 = define(num2 + "");
         else if (typeof num2 === "string") num2 = define(num2);
 
-        let parsed = parse(num1, num2, 3);
+        let parsed = parse(num1, num2, 4);
 
         num1 = parsed.num1, num2 = parsed.num2;
 
-        if (+num1.numbers.join('') === 0) return "0";
+        if (+num1.numbers.join('') === 0) return { numbers: ["0"], decimals: 0, isNegative: false };
+        if (+num2.numbers.join('') === 0) return;
 
-        let final: string | string[] = "0";
+        let final: number | numberProperties = { numbers: ["0"], decimals: 0, isNegative: false };
 
-        while (isLessThanEqual(num2, num1)) num1 = toNumberProperties(SUBTRACT(num1, num2)), final = toString(ADD(final, { numbers: ["1"], isNegative: false, decimals: 0 }));
+        while (isLessThanEqual(num2, num1)) num1 = SUBTRACT(num1, num2), final = ADD(final, { numbers: ["1"], isNegative: false, decimals: 0 });
 
-        final = final.split("")
-        if (maxD > parsed.decimals && !isLessThanEqual(num2, num1) && +num1.numbers.join("") !== 0 && toNumber(SUBTRACT(num1, num2)) !== 0) {
+        /*if (maxD > parsed.decimals && !isLessThanEqual(num2, num1) && (typeof num1 === "object" ? +num1.numbers.join("") : num1) !== 0 && toNumber(SUBTRACT(num1, num2)) !== 0) {
             if (num2.numbers[0] !== "0" && num2.numbers.length !== 1) num2.numbers.push("0");
-
-            final = final.reverse().join("");
 
             if (i !== 1) i++;
             parsed.decimals++;
@@ -710,25 +708,36 @@ function DIVIDE(num1: string | number | numberProperties, num2: string | number 
 
             for (let j = 0; j < i; j++) decimal += "0"
 
-            final = toString(ADD(final, decimal)).split("");
-        }
+            final = ADD({
+                numbers: typeof final === "object" ? final.numbers.reverse() : [...(final + "")].reverse(),
+                decimals: 0,
+                isNegative: false
+            }, decimal);
+        }*/
 
-        while (parsed.decimals > final.length) final.push("0");
-        final = formatOutput(final, parsed.decimals, parsed.isNeg);
+        final = toNumberProperties(final);
+        while (parsed.decimals > final.numbers.length) final.numbers.push("0");
 
-        return final;
+        return {
+            numbers: final.numbers,
+            decimals: parsed.decimals,
+            isNegative: parsed.isNeg
+        };
     }
     
     return toNumber(num1) / toNumber(num2);
 }
 
-export function divide(...numbers: (string | number | numberProperties)[]): string | number {
+export function divide(...numbers: (string | number | numberProperties)[]): string | number | undefined {
     const a = [...numbers];
-    let permfinal: string | number = DIVIDE(a[0], a[1]);
+    let permfinal: number | numberProperties | undefined = DIVIDE(a[0], a[1]);
 
-    for (let i = 2; i < a.length; i++) permfinal = DIVIDE(permfinal, a[i]);
+    for (let i = 2; i < a.length; i++) {
+        if (permfinal === undefined) return;
+        permfinal = DIVIDE(permfinal, a[i]);
+    }
 
-    return permfinal;
+    return typeof permfinal === "object" ? formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative) : permfinal;
 }
 
 /*function divide(...numbers: string[]): string {

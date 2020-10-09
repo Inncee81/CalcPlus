@@ -86,5 +86,5 @@ export declare function roundDown(item: string | number | numberProperties): str
 export declare function roundUp(item: string | number | numberProperties): string | number;
 export declare function abs(item: string | number | numberProperties): string | number;
 export declare function multiply(...numbers: (string | number | numberProperties)[]): string | number;
-export declare function divide(...numbers: (string | number | numberProperties)[]): string | number;
+export declare function divide(...numbers: (string | number | numberProperties)[]): string | number | undefined;
 export { roundUp as ceil, roundDown as floor };

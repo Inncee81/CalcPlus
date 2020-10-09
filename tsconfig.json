@@ -3,12 +3,12 @@
     "baseUrl": "./",
     "declaration": true,
     "declarationDir": "./",
-    "module": "esnext",
+    "module": "es6",
     "moduleResolution": "node",
     "outDir": "./",
     "sourceMap": true,
     "strict": true,
-    "target": "esnext"
+    "target": "es2016"
   },
   "exclude": [
     "./node_modules/*"

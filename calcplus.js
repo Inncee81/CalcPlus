@@ -604,41 +604,55 @@ function DIVIDE(num1, num2, maxD = maxDecimalLength, i = 1) {
             num2 = define(num2 + "");
         else if (typeof num2 === "string")
             num2 = define(num2);
-        let parsed = parse(num1, num2, 3);
+        let parsed = parse(num1, num2, 4);
         num1 = parsed.num1, num2 = parsed.num2;
         if (+num1.numbers.join('') === 0)
-            return "0";
-        let final = "0";
+            return { numbers: ["0"], decimals: 0, isNegative: false };
+        if (+num2.numbers.join('') === 0)
+            return;
+        let final = { numbers: ["0"], decimals: 0, isNegative: false };
+        varinfo({ num1 });
+        varinfo({ num2 });
         while (isLessThanEqual(num2, num1))
-            num1 = toNumberProperties(SUBTRACT(num1, num2)), final = toString(ADD(final, { numbers: ["1"], isNegative: false, decimals: 0 }));
-        final = final.split("");
-        if (maxD > parsed.decimals && !isLessThanEqual(num2, num1) && +num1.numbers.join("") !== 0 && toNumber(SUBTRACT(num1, num2)) !== 0) {
-            if (num2.numbers[0] !== "0" && num2.numbers.length !== 1)
-                num2.numbers.push("0");
-            final = final.reverse().join("");
-            if (i !== 1)
-                i++;
+            num1 = SUBTRACT(num1, num2), final = ADD(final, { numbers: ["1"], isNegative: false, decimals: 0 });
+        /*if (maxD > parsed.decimals && !isLessThanEqual(num2, num1) && (typeof num1 === "object" ? +num1.numbers.join("") : num1) !== 0 && toNumber(SUBTRACT(num1, num2)) !== 0) {
+            if (num2.numbers[0] !== "0" && num2.numbers.length !== 1) num2.numbers.push("0");
+
+            if (i !== 1) i++;
             parsed.decimals++;
+
             let decimal = DIVIDE(num1, num2, maxD - parsed.decimals, i) + "";
             parsed.decimals += define(decimal).decimals - parsed.decimals;
             decimal = decimal.replace(".", ""); // .replace(/^0/g, "");
-            for (let j = 0; j < i; j++)
-                decimal += "0";
-            final = toString(ADD(final, decimal)).split("");
-        }
-        while (parsed.decimals > final.length)
-            final.push("0");
-        final = formatOutput(final, parsed.decimals, parsed.isNeg);
-        return final;
+
+            for (let j = 0; j < i; j++) decimal += "0"
+
+            final = ADD({
+                numbers: typeof final === "object" ? final.numbers.reverse() : [...(final + "")].reverse(),
+                decimals: 0,
+                isNegative: false
+            }, decimal);
+        }*/
+        final = toNumberProperties(final);
+        while (parsed.decimals > final.numbers.length)
+            final.numbers.push("0");
+        return {
+            numbers: final.numbers,
+            decimals: parsed.decimals,
+            isNegative: parsed.isNeg
+        };
     }
     return toNumber(num1) / toNumber(num2);
 }
 export function divide(...numbers) {
     const a = [...numbers];
     let permfinal = DIVIDE(a[0], a[1]);
-    for (let i = 2; i < a.length; i++)
+    for (let i = 2; i < a.length; i++) {
+        if (permfinal === undefined)
+            return;
         permfinal = DIVIDE(permfinal, a[i]);
-    return permfinal;
+    }
+    return typeof permfinal === "object" ? formatOutput(permfinal.numbers, permfinal.decimals, permfinal.isNegative) : permfinal;
 }
 /*function divide(...numbers: string[]): string {
     function temp(num1:string|Define, num2:string|Define, maxD: number, i: number, getDec: boolean) {

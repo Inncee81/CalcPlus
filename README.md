@@ -151,7 +151,7 @@ Here's the `package.json` file:
   "author": "",
   "license": "",
   "dependencies": {
-    "@virxec/calcplus": "^0.5.8"
+    "@virxec/calcplus": "^0.5.9"
   }
 }
 ```
